@@ -21,7 +21,8 @@ def gen_avg_rgb(source_image: Image) -> tuple:
     :return:
     """
     colors = get_rgb_colors(source_image)
-    return tuple([sum([y[1][x] * y[0] for y in colors]) / sum([z[0] for z in colors]) for x in range(3)])
+    rgb_colors = tuple([sum([y[1][x] * y[0] for y in colors]) / sum([z[0] for z in colors]) for x in range(3)])
+    return tuple([int(e) for e in rgb_colors])
 
 
 def gen_avg_rgb_squared(source_image: Image) -> tuple:
