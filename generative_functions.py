@@ -75,7 +75,7 @@ def calculate_distance_between_two_3d_points(point_1, point_2) -> float:
     return math.sqrt(sum([(point_1[x] - point_2[x]) ** 2 for x in range(len(point_1))]))
 
 
-def kmeans(source_image: Image) -> list:
+def kmeans(source_image: Image) -> tuple:
     """
     Docstring.
     :param source_image:
@@ -116,7 +116,8 @@ def kmeans(source_image: Image) -> list:
             break
 
     # Getting group with largest number of colors
-    return centers[sorted(range(num_centers), key=lambda x: sum([y[0] for y in color_groups[x]]))[-1]]
+    group = centers[sorted(range(num_centers), key=lambda x: sum([y[0] for y in color_groups[x]]))[-1]]
+    return tuple([int(e) for e in group])
 
 
 def gen_common(source_image: Image):

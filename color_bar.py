@@ -65,7 +65,7 @@ def _parse_args():
         default="rgbsquared",
         type=str,
         help="""Method to use to calculate the average color.
-        Options are: rgb, hsv, hue, kmeans, common, lab, xyz, rgbsquared, resize, quantize.""",
+        Options are: rgb, hsv, hue, kmeans, common, lab, xyz, rgbsquared, resize, quantized.""",
         required=True,
     )
     parser.add_argument(
@@ -90,7 +90,7 @@ def _parse_args():
     return options.title, options.method, options.source_file, options.frames_per_second
 
 
-@Halo(text="Extracting Images", spinner="dots")
+@Halo(text="Extracting Images.", spinner="dots")
 def extract_frames(movie_input_path: str, fps: int) -> list:
     """
     Runs ffmpeg to decompose the video file into stills.
@@ -108,7 +108,7 @@ def extract_frames(movie_input_path: str, fps: int) -> list:
     return all_images
 
 
-@Halo(text="Calculating Colors", spinner="dots")
+@Halo(text="Calculating Colors.", spinner="dots")
 def get_colors(images_list: list, method: str) -> list:
     """
     Docstring.
@@ -124,7 +124,7 @@ def get_colors(images_list: list, method: str) -> list:
     return bar_colors
 
 
-@Halo(text="Rendering Image", spinner="dots")
+@Halo(text="Rendering Image.", spinner="dots")
 def create_image(all_bar_colors: list):
     """
     Docstring.
