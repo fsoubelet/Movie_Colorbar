@@ -32,7 +32,7 @@ METHOD_ACTION_MAP = {
 }
 
 
-def _parse_args():
+def parse_args():
     """
     Simple argument parser to make life easier in the command-line.
     :return: variables for each argument.
@@ -131,7 +131,7 @@ def main() -> None:
     Run the entire process.
     :return: nothing.
     """
-    title, method, source_movie, frames_per_second = _parse_args()
+    title, method, source_movie, frames_per_second = parse_args()
     images = extract_frames(source_movie, frames_per_second)
     bar_colors = get_colors(images, method)
     bar_image = create_image(bar_colors)
