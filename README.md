@@ -81,6 +81,11 @@ Rgbsquared:
   <img src="https://github.com/fsoubelet/Movie_Colorbar/blob/master/bars/sw9_trailer_rgbsquared.png"/>
 </p>
 
+Lab:
+<p align="center">
+  <img src="https://github.com/fsoubelet/Movie_Colorbar/blob/master/bars/sw9_trailer_lab.png"/>
+</p>
+
 ## License
 
 Copyright &copy; 2019 Felix Soubelet. [MIT License][license]
