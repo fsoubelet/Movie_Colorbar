@@ -6,9 +6,9 @@ from PIL import Image
 
 def get_rgb_colors(source_image: Image):
     """
-    Docstring.
-    :param source_image:
-    :return:
+    Get all the rgb colors of an image.
+    :param source_image: Pillow.Image instance.
+    :return: Returns the list of RGB colors present in the image.
     """
     image_rgb = source_image.convert("RGB")
     return image_rgb.getcolors(image_rgb.size[0] * image_rgb.size[1])
@@ -16,9 +16,9 @@ def get_rgb_colors(source_image: Image):
 
 def gen_avg_rgb(source_image: Image) -> tuple:
     """
-    Docstring.
-    :param source_image:
-    :return:
+    Get the average of each R, G and B of the colors in an image.
+    :param source_image: Pillow.Image instance.
+    :return: a tuple of R, G and B calculated averages.
     """
     colors = get_rgb_colors(source_image)
     rgb_colors = tuple([sum([y[1][x] * y[0] for y in colors]) / sum([z[0] for z in colors]) for x in range(3)])
@@ -27,9 +27,9 @@ def gen_avg_rgb(source_image: Image) -> tuple:
 
 def gen_avg_rgb_squared(source_image: Image) -> tuple:
     """
-    Docstring.
-    :param source_image:
-    :return:
+    Get the squared average of each R, G and B of the colors in an image.
+    :param source_image: Pillow.Image instance.
+    :return: a tuple of R, G and B calculated squared averages.
     """
     colors = get_rgb_colors(source_image)
     average = [sum([(y[1][x] ** 2) * y[0] for y in colors]) / float(sum([z[0] for z in colors])) for x in range(3)]
@@ -38,9 +38,9 @@ def gen_avg_rgb_squared(source_image: Image) -> tuple:
 
 def gen_avg_hsv(source_image: Image) -> tuple:
     """
-    Docstring.
-    :param source_image:
-    :return:
+    Get the average of each H, S and V of the colors in an image, as RGB.
+    :param source_image: Pillow.Image instance.
+    :return: a tuple with average H, S and V of the image, as converted to RGB.
     """
     colors = get_rgb_colors(source_image)
     colors_hsv = [(w, colorsys.rgb_to_hls(*[y / 255.0 for y in x])) for w, x in colors]
@@ -52,14 +52,14 @@ def gen_avg_hsv(source_image: Image) -> tuple:
 
 def gen_avg_hue(source_image: Image) -> tuple:
     """
-    Docstring.
-    :param source_image:
-    :return:
+    Get the average hue of the colors in an image, as RGB.
+    :param source_image: Pillow.Image instance.
+    :return: a tuple with average hue fo the image, as converted to RGB.
     """
     average_hsv = gen_avg_hsv(source_image)
     average_hsv = colorsys.rgb_to_hsv(*[x / 255.0 for x in average_hsv])
 
-    # highest value and saturation
+    # Highest value and saturation
     average_hsv = [average_hsv[0], 1.0, 1.0]
     average_rgb = colorsys.hsv_to_rgb(*average_hsv)
     return tuple([int(x * 255) for x in average_rgb])
@@ -67,24 +67,25 @@ def gen_avg_hue(source_image: Image) -> tuple:
 
 def calculate_distance_between_two_3d_points(point_1, point_2) -> float:
     """
-    Docstring.
-    :param point_1:
-    :param point_2:
-    :return:
+    Quite explicit.
+    :param point_1: Point 1 coordinates.
+    :param point_2: Point 2 coordinates.
+    :return: Distance between those two points.
     """
     return math.sqrt(sum([(point_1[x] - point_2[x]) ** 2 for x in range(len(point_1))]))
 
 
 def kmeans(source_image: Image) -> tuple:
     """
-    Docstring.
-    :param source_image:
+    Oh boy. I didn't write this...
+    :param source_image: Pillow.Image instance.
     :return:
     """
     image_rgb = source_image.convert("RGB")
     colors = image_rgb.getcolors(image_rgb.size[0] * image_rgb.size[1])
     num_centers = 5
     centers = []
+
     # Check if number of colors is less than number of centers
     if len(colors) < num_centers:
         centers = [x for _, x in colors]
@@ -120,22 +121,21 @@ def kmeans(source_image: Image) -> tuple:
     return tuple([int(e) for e in group])
 
 
-def gen_common(source_image: Image):
+def gen_most_common(source_image: Image):
     """
-    Docstring.
-    :param source_image:
-    :return:
+    Get the most common color in this image, as RGB.
+    :param source_image: Pillow.Image instance.
+    :return: a tuple with the R, G and B values of the most common color in the image.
     """
     colors = source_image.getcolors(source_image.size[0] * source_image.size[1])
     return sorted(colors)[-1][1]
 
 
-# xyz conversions refer to D65/2 standard illuminant
 def rgb_to_xyz(source_color) -> tuple:
     """
-    Docstring.
-    :param source_color:
-    :return:
+    Converts a color from the RGB to the CIE XYZ 1931 colorspace.
+    :param source_color: a tuple with R, G and B values of the color.
+    :return: a tuple with the X, Y, Z values of the color.
     """
     colors = [x / 255.0 for x in source_color]
 
@@ -154,9 +154,9 @@ def rgb_to_xyz(source_color) -> tuple:
 
 def xyz_to_rgb(source_xyz) -> tuple:
     """
-    Docstring.
-    :param source_xyz:
-    :return:
+    Converts a color from the CIE XYZ 1931 to the RGB colorspace.
+    :param source_xyz: a tuple with X, Y and Z values of the color.
+    :return: a tuple with the R, G and B values of the color.
     """
     xyz = [x / 100 for x in source_xyz]
     r_val = xyz[0] * 3.2406 + xyz[1] * -1.5372 + xyz[2] * -0.4986
@@ -174,9 +174,9 @@ def xyz_to_rgb(source_xyz) -> tuple:
 
 def xyz_to_lab(source_xyz) -> tuple:
     """
-    Docstring.
-    :param source_xyz:
-    :return:
+    Converts a color from the CIE XYZ 1931 to the LAB colorspace.
+    :param source_xyz: a tuple with X, Y, and Z values of the color.
+    :return: a tuple with the Lightness, A channel and B channel values of the color.
     """
     xyz = [source_xyz[0] / 95.047, source_xyz[1] / 100.0, source_xyz[2] / 108.883]
 
@@ -194,9 +194,9 @@ def xyz_to_lab(source_xyz) -> tuple:
 
 def lab_to_xyz(source_lab) -> tuple:
     """
-    Docstring.
-    :param source_lab:
-    :return:
+    Converts a color from the LAB to the CIE XYZ 1931 colorspace.
+    :param source_lab: a tuple with the Lightness, A channel and B channel values of the color.
+    :return: a tuple with X, Y, and Z values of the color.
     """
     y_val = (source_lab[0] + 16) / 116.0
     x_val = source_lab[1] / 500 + y_val
@@ -213,9 +213,9 @@ def lab_to_xyz(source_lab) -> tuple:
 
 def gen_avg_xyz(source_image: Image) -> tuple:
     """
-    Docstring.
-    :param source_image:
-    :return:
+    Get the average of each X, Y and Z of the colors in an image.
+    :param source_image: Pillow.Image instance.
+    :return: a tuple with the average X, Y and Z values of the image.
     """
     colors = get_rgb_colors(source_image)
     colors_xyz = [(w, rgb_to_xyz(x)) for (w, x) in colors]
@@ -226,9 +226,9 @@ def gen_avg_xyz(source_image: Image) -> tuple:
 
 def gen_avg_lab(source_image: Image) -> tuple:
     """
-    Docstring.
-    :param source_image:
-    :return:
+    Get the average of each L, A and B values of the colors in an image.
+    :param source_image: Pillow.Image instance.
+    :return: a tuple with the average L, A and B values of the image.
     """
     colors = get_rgb_colors(source_image)
     colors_lab = [(w, xyz_to_lab(rgb_to_xyz(x))) for (w, x) in colors]
@@ -238,9 +238,9 @@ def gen_avg_lab(source_image: Image) -> tuple:
 
 def gen_resized_color(source_image: Image):
     """
-    Use Pillow's image resizer to reduce the image to 1px by 1px, and return that color.
-    :param source_image:
-    :return:
+    Use Pillow's image resizer to reduce the image to 1px by 1px, and return the corresponding color.
+    :param source_image: Pillow.Image instance.
+    :return: a tuple with the R, G and B values of the image as 1 by 1 pixel.
     """
     return source_image.convert("RGB").resize((1, 1)).getcolors(1)[0][1]
 
@@ -248,7 +248,7 @@ def gen_resized_color(source_image: Image):
 def gen_quantized_color(source_image: Image):
     """
     Use Pillow's color quantization to reduce the image to one color, then return that color.
-    :param source_image:
-    :return:
+    :param source_image: Pillow.Image instance.
+    :return: a tuple with the R, G and B values of the image reduced to one collor by Pillow.
     """
     return source_image.quantize(1).convert("RGB").getcolors()[0][1]
