@@ -18,35 +18,18 @@ from generative_functions import (
 )
 
 
-def apply_method(method: str, source_image: Image):
-    """
-    Intermediate function to apply the right method to an image, based on the method name given at the commandline.
-    :param method: The method to apply to the image.
-    :param source_image: Pillow.Image instance.
-    :return: the result of said method applied to the image, as programmed in generative_functions.py
-    """
-    if method.lower == "rgb":
-        return gen_avg_rgb(source_image)
-    elif method.lower() == "hsv":
-        return gen_avg_hsv(source_image)
-    elif method.lower() == "hue":
-        return gen_avg_hue(source_image)
-    elif method.lower() == "kmeans":
-        return kmeans(source_image)
-    elif method.lower() == "common":
-        return gen_most_common(source_image)
-    elif method.lower() == "xyz":
-        return gen_avg_xyz(source_image)
-    elif method.lower() == "lab":
-        return gen_avg_lab(source_image)
-    elif method.lower() == "rgbsquared":
-        return gen_avg_rgb_squared(source_image)
-    elif method.lower() == "resize":
-        return gen_resized_color(source_image)
-    elif method.lower() == "quantized":
-        return gen_quantized_color(source_image)
-    else:
-        return gen_avg_rgb(source_image)
+METHOD_ACTION_MAP = {
+    "rgb": gen_avg_rgb,
+    "hsv": gen_avg_hsv,
+    "hue": gen_avg_hue,
+    "kmeans": kmeans,
+    "common": gen_most_common,
+    "xyz": gen_avg_xyz,
+    "lab": gen_avg_lab,
+    "rgbsquared": gen_avg_rgb_squared,
+    "resize": gen_resized_color,
+    "quantized": gen_quantized_color,
+}
 
 
 def _parse_args():
@@ -125,7 +108,7 @@ def get_colors(images_list: list, method: str) -> list:
     bar_colors = []
     for filename in images_list:
         image = Image.open(filename).resize((25, 25))
-        average_image_color = apply_method(method, image)
+        average_image_color = METHOD_ACTION_MAP[method](image)
         bar_colors.append(average_image_color)
     return bar_colors
 
