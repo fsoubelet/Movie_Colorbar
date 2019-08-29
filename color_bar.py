@@ -56,7 +56,13 @@ def _parse_args():
     """
     parser = argparse.ArgumentParser(description="Getting your average colorbar.")
     parser.add_argument(
-        "-t", "--title", dest="title", default="output", type=str, help="Filename for output.", required=True
+        "-t",
+        "--title",
+        dest="title",
+        default="output",
+        type=str,
+        help="String. Filename for output file.",
+        required=True,
     )
     parser.add_argument(
         "-m",
@@ -64,8 +70,8 @@ def _parse_args():
         dest="method",
         default="rgbsquared",
         type=str,
-        help="""Method to use to calculate the average color.
-        Options are: rgb, hsv, hue, kmeans, common, lab, xyz, rgbsquared, resize, quantized.""",
+        help="""String. Method to use to calculate the average color. Options are:
+        rgb, hsv, hue, kmeans, common, lab, xyz, rgbsquared, resize, and quantized.""",
         required=True,
     )
     parser.add_argument(
@@ -74,7 +80,7 @@ def _parse_args():
         dest="source_file",
         default=".",
         type=str,
-        help="Path to source video file to get the images from.",
+        help="String. Path to source video file to get the images from.",
         required=True,
     )
     parser.add_argument(
@@ -83,7 +89,7 @@ def _parse_args():
         dest="frames_per_second",
         default=5,
         type=int,
-        help="Number of frames to extract per second of video footage.",
+        help="Integer. Number of frames to extract per second of video footage.",
         required=False,
     )
     options = parser.parse_args()
