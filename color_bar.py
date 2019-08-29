@@ -20,10 +20,10 @@ from generative_functions import (
 
 def apply_method(method: str, source_image: Image):
     """
-    Docstring.
-    :param method:
-    :param source_image:
-    :return:
+    Intermediate function to apply the right method to an image, based on the method name given at the commandline.
+    :param method: The method to apply to the image.
+    :param source_image: Pillow.Image instance.
+    :return: the result of said method applied to the image, as programmed in generative_functions.py
     """
     if method.lower == "rgb":
         return gen_avg_rgb(source_image)
@@ -52,7 +52,7 @@ def apply_method(method: str, source_image: Image):
 def _parse_args():
     """
     Simple argument parser to make life easier in the command-line.
-    :return:
+    :return: variables for each argument.
     """
     parser = argparse.ArgumentParser(description="Getting your average colorbar.")
     parser.add_argument(
@@ -100,9 +100,9 @@ def _parse_args():
 def extract_frames(movie_input_path: str, fps: int) -> list:
     """
     Runs ffmpeg to decompose the video file into stills.
-    :param movie_input_path:
-    :param fps:
-    :return:
+    :param movie_input_path: Absolute path to the video file.
+    :param fps: Number of frames to extract per second.
+    :return: list of absolute paths to all frames extracted (and stored in an intermediate folder).
     """
     if not os.path.isdir("images"):
         os.mkdir("images")
@@ -117,10 +117,10 @@ def extract_frames(movie_input_path: str, fps: int) -> list:
 @Halo(text="Calculating Colors.", spinner="dots")
 def get_colors(images_list: list, method: str) -> list:
     """
-    Docstring.
-    :param images_list:
-    :param method:
-    :return:
+    Getting average color of each image through to the provided method.
+    :param images_list: List of absolute paths to all frames to process.
+    :param method: method to apply to each image to get its average color.
+    :return: list of computed average color for all images, one per image.
     """
     bar_colors = []
     for filename in images_list:
@@ -131,11 +131,11 @@ def get_colors(images_list: list, method: str) -> list:
 
 
 @Halo(text="Rendering Image.", spinner="dots")
-def create_image(all_bar_colors: list):
+def create_image(all_bar_colors: list) -> Image:
     """
-    Docstring.
-    :param all_bar_colors:
-    :return:
+    Create the colorbar from the computed average colors.
+    :param all_bar_colors: list of computed average color for all images, one per image.
+    :return: a Pillow.Image instance, with the colors implemented as a colorbar.
     """
     bar_image = Image.new("RGB", (len(all_bar_colors), max([1, int(len(all_bar_colors) / 2.5)])))
     bar_full_data = [x for x in all_bar_colors] * bar_image.size[1]
@@ -143,10 +143,10 @@ def create_image(all_bar_colors: list):
     return bar_image
 
 
-def main():
+def main() -> None:
     """
-    Docstring.
-    :return: 
+    Run the entire process.
+    :return: nothing.
     """
     title, method, source_movie, frames_per_second = _parse_args()
     images = extract_frames(source_movie, frames_per_second)
