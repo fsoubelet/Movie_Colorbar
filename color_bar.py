@@ -10,7 +10,7 @@ from generative_functions import (
     gen_avg_hsv,
     gen_avg_hue,
     kmeans,
-    gen_common,
+    gen_most_common,
     gen_avg_xyz,
     gen_avg_lab,
     gen_resized_color,
@@ -34,7 +34,7 @@ def apply_method(method: str, source_image: Image):
     elif method.lower() == "kmeans":
         return kmeans(source_image)
     elif method.lower() == "common":
-        return gen_common(source_image)
+        return gen_most_common(source_image)
     elif method.lower() == "xyz":
         return gen_avg_xyz(source_image)
     elif method.lower() == "lab":
