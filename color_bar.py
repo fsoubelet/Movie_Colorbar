@@ -84,8 +84,8 @@ def _parse_args():
         required=True,
     )
     parser.add_argument(
-        "-f",
-        "--fps",
+        "-fps",
+        "--frames-per-second",
         dest="frames_per_second",
         default=5,
         type=int,

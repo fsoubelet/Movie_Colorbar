@@ -1,4 +1,4 @@
-# Movie Colorbar: Turn a video into the average colors bar.
+# Movie Colorbar: Turn a video into a colorbar.
 
 A simple scrip to extract frames from a video and generate a colorbar with the average color from each frame.
 Slightly customizable in the number of frames and algorithms used.
@@ -31,7 +31,7 @@ python color_bar.py [-h] -t TITLE -m METHOD -s SOURCE_FILE
                     [-f FRAMES_PER_SECOND]
 ```
 
-The different options are:
+The different options are as bellow:
 ```
   -h, --help            show this help message and exit
   -t TITLE, --title TITLE
@@ -48,17 +48,18 @@ The different options are:
                         video footage.
 ```
 
-An example use is then:
+An example command is then:
 ```
-python color_bar.py -t sw9_trailer -m kmeans -s ~/Desktop/STARWARS_9_TRAILER.webm --fps 15
+python color_bar.py -t sw9_trailer -m kmeans -s ~/Desktop/STARWARS_9_TRAILER.webm -fps 15
 ```
 
-The script will create an `images` folder and call `fmpeg` to extract 15 images per second of footage into this folder.
+The script will create an `images` folder and call `fmpeg` to extract 15 (here) images per second of video footage into this folder.
 It will then apply the chosen method - here `kmeans` - to determine the average color of each frame.
-Finally, it creates the final colorbar with all averages and saves it in a new folder titled `bars`.
+Finally, it creates the colorbar with all averages and saves it in a new folder titled `bars`.
 The output's name is a concatenation of the provided title and the method used.
 
 Beware of the `images` folder which can become quite heavy with increased fps, you should remember to delete it.
+Similarly, you should decrease the fps for long videos such as entire movies
 
 ## TODO
 
@@ -77,7 +78,7 @@ Kmeans:
 
 Rgbsquared:
 <p align="center">
-  <img src="https://github.com/fsoubelet/Movie_Colorbar/blob/master/outputsbars/sw9_trailer_rgbsquared.png"/>
+  <img src="https://github.com/fsoubelet/Movie_Colorbar/blob/master/bars/sw9_trailer_rgbsquared.png"/>
 </p>
 
 ## License
