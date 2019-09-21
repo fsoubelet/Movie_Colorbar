@@ -80,12 +80,12 @@ Kmeans:
 
 Rgbsquared:
 <p align="center">
-  <img src="https://github.com/fsoubelet/Movie_Colorbar/blob/master/bars/sw9_trailer/SW9_rgbsquared.png"/>
+  <img src="https://github.com/fsoubelet/Movie_Colorbar/blob/master/bars/sw9_trailer/SW9_trailer_rgbsquared.png"/>
 </p>
 
 Lab:
 <p align="center">
-  <img src="https://github.com/fsoubelet/Movie_Colorbar/blob/master/bars/sw9_trailer/SW9_lab.png"/>
+  <img src="https://github.com/fsoubelet/Movie_Colorbar/blob/master/bars/sw9_trailer/SW9_trailer_lab.png"/>
 </p>
 
 ## License
