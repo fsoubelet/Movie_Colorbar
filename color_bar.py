@@ -1,3 +1,13 @@
+"""
+Color bar
+---------
+
+Created on 2019.08.28
+:author: Felix Soubelet
+
+A little script for fun that will make a video file into a color bar image. The colors are calculated from frames of
+the video according the a specified method. Enjoy.
+"""
 import argparse
 import os
 import subprocess
@@ -5,34 +15,34 @@ from pathlib import Path
 from halo import Halo
 from PIL import Image
 from generative_functions import (
-    gen_avg_rgb,
-    gen_avg_rgb_squared,
-    gen_avg_hsv,
-    gen_avg_hue,
-    kmeans,
-    gen_most_common,
-    gen_avg_xyz,
-    gen_avg_lab,
-    gen_resized_color,
-    gen_quantized_color,
+    get_avg_rgb,
+    get_avg_rgb_squared,
+    get_avg_hsv,
+    get_avg_hue,
+    get_kmeans_color,
+    get_most_common,
+    get_avg_xyz,
+    get_avg_lab,
+    get_resized_color,
+    get_quantized_color,
 )
 
 
-METHOD_ACTION_MAP = {
-    "rgb": gen_avg_rgb,
-    "hsv": gen_avg_hsv,
-    "hue": gen_avg_hue,
-    "kmeans": kmeans,
-    "common": gen_most_common,
-    "xyz": gen_avg_xyz,
-    "lab": gen_avg_lab,
-    "rgbsquared": gen_avg_rgb_squared,
-    "resize": gen_resized_color,
-    "quantized": gen_quantized_color,
+METHOD_ACTION_MAP: dict = {
+    "rgb": get_avg_rgb,
+    "hsv": get_avg_hsv,
+    "hue": get_avg_hue,
+    "kmeans": get_kmeans_color,
+    "common": get_most_common,
+    "xyz": get_avg_xyz,
+    "lab": get_avg_lab,
+    "rgbsquared": get_avg_rgb_squared,
+    "resize": get_resized_color,
+    "quantized": get_quantized_color,
 }
 
 
-def parse_arguments():
+def parse_arguments() -> tuple:
     """
     Simple argument parser to make life easier in the command-line.
     :return: variables for each argument.
@@ -129,6 +139,10 @@ def create_image(all_bar_colors: list) -> Image:
 def main() -> None:
     """
     Run the entire process.
+    Takes arguments from the commandline, namely a `title` to give to the finished product, a `method` to apply,
+    the `filepath` to source video and the number of `frames_per_second` to exctract from said video.
+    It will populate (and create if needed) a folder named `images` with every extracted image, and leave that up
+    after completing the process. It's yours to clean.
     :return: nothing.
     """
     title, method, source_movie, frames_per_second = parse_arguments()
