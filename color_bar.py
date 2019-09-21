@@ -9,8 +9,8 @@ A little script for fun that will make a video file into a color bar image. The 
 the video according the a specified method. Enjoy.
 """
 import argparse
-import os
 import subprocess
+import shutil
 from pathlib import Path
 from halo import Halo
 from PIL import Image
@@ -54,7 +54,7 @@ def parse_arguments() -> tuple:
         dest="title",
         default="output",
         type=str,
-        help="String. Filename for output file.",
+        help="String. Name that will be given to intermediate directory.",
         required=True,
     )
     parser.add_argument(
@@ -69,8 +69,8 @@ def parse_arguments() -> tuple:
     )
     parser.add_argument(
         "-s",
-        "--source-file",
-        dest="source_file",
+        "--source-path",
+        dest="source_path",
         default=".",
         type=str,
         help="String. Path to source video file to get the images from.",
@@ -86,7 +86,7 @@ def parse_arguments() -> tuple:
         required=False,
     )
     options = parser.parse_args()
-    return options.title, options.method, options.source_file, options.frames_per_second
+    return options.title, options.method, options.source_path, options.frames_per_second
 
 
 @Halo(text="Extracting Images.", spinner="dots")
@@ -97,8 +97,8 @@ def extract_frames(movie_input_path: str, fps: int) -> list:
     :param fps: Number of frames to extract per second.
     :return: list of absolute paths to all frames extracted (and stored in an intermediate folder).
     """
-    if not os.path.isdir("images"):
-        os.mkdir("images")
+    if not Path("images").is_dir():
+        Path("images").mkdir()
     command = ["ffmpeg", "-i", f"{movie_input_path}", "-vf", f"fps={fps}", "images/%05d.jpg"]
 
     _ = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -136,6 +136,44 @@ def create_image(all_bar_colors: list) -> Image:
     return bar_image
 
 
+def process_video(title: str, method: str, source_path: str, frames_per_second: int = 10) -> None:
+    """
+    Will populate a folder named `images` with every extracted image from the provided video, and create the color
+    bar from those images. Deletes said folder afterwards.
+    :param title: name to give the intermediate directory.
+    :param method: method to use to get the colors.
+    :param source_path: absolute path to the video file.
+    :param frames_per_second: number of frames to extract per second of video. You'll want to lower this parameter
+    on longer videos.
+    :return: nothing.
+    """
+    images = extract_frames(source_path, frames_per_second)
+    bar_colors = get_colors(images, method)
+    bar_image = create_image(bar_colors)
+
+    if not Path("bars").is_dir():
+        Path("bars").mkdir()
+    if not Path(f"bars/{title}").is_dir():
+        Path(f"bars/{title}").mkdir()
+    bar_image.save(f"bars/{title}/{source_path.split('/')[-1].split('.')[0]}_{method}.png")
+    shutil.rmtree("images")
+
+
+def process_dir(title: str, method: str, source_path: str, frames_per_second: int = 10) -> None:
+    """
+    Will process every video into the directory.
+    :param title: name to give the intermediate directory.
+    :param method: method to use to get the colors.
+    :param source_path: absolute path to the video file.
+    :param frames_per_second: number of frames to extract per second of video. You'll want to lower this parameter
+    on longer videos.
+    :return: nothing.
+    """
+    directory = Path(source_path)
+    for video_path in sorted(directory.iterdir()):
+        process_video(title=title, method=method, source_path=str(video_path), frames_per_second=frames_per_second)
+
+
 def main() -> None:
     """
     Run the entire process.
@@ -145,17 +183,11 @@ def main() -> None:
     after completing the process. It's yours to clean.
     :return: nothing.
     """
-    title, method, source_movie, frames_per_second = parse_arguments()
-    images = extract_frames(source_movie, frames_per_second)
-    bar_colors = get_colors(images, method)
-    bar_image = create_image(bar_colors)
-
-    if not os.path.isdir("bars"):
-        os.mkdir("bars")
-    if not os.path.isdir(f"bars/{title}"):
-        os.mkdir(f"bars/{title}")
-    bar_image.save(f"bars/{title}/{title}_{method}.png")
-    bar_image.show()
+    title, method, source_path, frames_per_second = parse_arguments()
+    if Path(source_path).is_file():
+        process_video(title=title, method=method, source_path=source_path, frames_per_second=frames_per_second)
+    elif Path(source_path).is_dir():
+        process_dir(title=title, method=method, source_path=source_path, frames_per_second=frames_per_second)
 
 
 if __name__ == "__main__":

@@ -10,7 +10,7 @@ Slightly customizable in the number of frames and algorithms used.
 
 This script runs on Python3, and requires the [`Halo`][halo] library.
 If you want to get rid of this dependency, simply comment out the three decorators in `color_bar.py`.
-It also requires that you have the amazing [ffmpgeg][ffmpeg] tool.
+It also requires that you have the amazing [ffmpgeg][ffmpeg] tool installed, and in your path.
 
 ### Install with Git
 
@@ -35,35 +35,37 @@ The different options are as bellow:
 ```
   -h, --help            show this help message and exit
   -t TITLE, --title TITLE
-                        String. Filename for output file.
+                        String. Name that will be given to intermediate
+                        directory.
   -m METHOD, --method METHOD
                         String. Method to use to calculate the average color.
                         Options are: rgb, hsv, hue, kmeans, common, lab, xyz,
                         rgbsquared, resize, and quantized.
-  -s SOURCE_FILE, --source-file SOURCE_FILE
+  -s SOURCE_PATH, --source-path SOURCE_PATH
                         String. Path to source video file to get the images
                         from.
-  -f FRAMES_PER_SECOND, --fps FRAMES_PER_SECOND
+  -fps FRAMES_PER_SECOND, --frames-per-second FRAMES_PER_SECOND
                         Integer. Number of frames to extract per second of
                         video footage.
+
 ```
 
 An example command is then:
 ```
-python color_bar.py -t sw9_trailer -m kmeans -s ~/Desktop/STARWARS_9_TRAILER.webm -fps 15
+python color_bar.py -t sw9_trailer -m rgbsquared -s ~/Desktop/STARWARS_9_TRAILER.webm -fps 25
 ```
 
-The script will create an `images` folder and call `fmpeg` to extract 15 (here) images per second of video footage into this folder.
-It will then apply the chosen method - here `kmeans` - to determine the average color of each frame.
-Finally, it creates the colorbar with all averages and saves it in a new folder titled `bars`.
-The output's name is a concatenation of the provided title and the method used.
+The script will create an `images` folder and call `ffmpeg` to extract 25 (in this cases) images per second of video footage into this folder.
+It will then apply the chosen method - here `rgbsquared` - to determine the average color of each frame.
+Finally, it creates the colorbar with all averages and saves it in a new folder titled `bars/title`, with `title` being the argument you provided.
+The output's name is a concatenation of the provided file and the method used.
+The `images` folder will be deleted afterwards.
 
-Beware of the `images` folder which can become quite heavy with increased fps, you should remember to delete it.
-Similarly, you should decrease the fps for long videos such as entire movies
+It is recommended to decrease the fps for when processing long videos such as entire movies.
 
 ## TODO
 
-- [ ] Delete the `images` folder after completion?
+- [x] Delete the `images` folder after completion?
 - [ ] Offer an option to do all at the same time.
 
 ## Output example
@@ -73,17 +75,17 @@ All methods outputs can be found in the `bars` folder of this repository.
 
 Kmeans:
 <p align="center">
-  <img src="https://github.com/fsoubelet/Movie_Colorbar/blob/master/bars/sw9_trailer_kmeans.png"/>
+  <img src="https://github.com/fsoubelet/Movie_Colorbar/blob/master/bars/sw9_trailer/SW9_trailer_kmeans.png"/>
 </p>
 
 Rgbsquared:
 <p align="center">
-  <img src="https://github.com/fsoubelet/Movie_Colorbar/blob/master/bars/sw9_trailer_rgbsquared.png"/>
+  <img src="https://github.com/fsoubelet/Movie_Colorbar/blob/master/bars/sw9_trailer/SW9_rgbsquared.png"/>
 </p>
 
 Lab:
 <p align="center">
-  <img src="https://github.com/fsoubelet/Movie_Colorbar/blob/master/bars/sw9_trailer_lab.png"/>
+  <img src="https://github.com/fsoubelet/Movie_Colorbar/blob/master/bars/sw9_trailer/SW9_lab.png"/>
 </p>
 
 ## License
