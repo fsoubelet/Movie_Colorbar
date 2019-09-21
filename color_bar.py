@@ -152,7 +152,9 @@ def main() -> None:
 
     if not os.path.isdir("bars"):
         os.mkdir("bars")
-    bar_image.save(f"bars/{title}_{method}.png")
+    if not os.path.isdir(f"bars/{title}"):
+        os.mkdir(f"bars/{title}")
+    bar_image.save(f"bars/{title}/{title}_{method}.png")
     bar_image.show()
 
 
