@@ -66,7 +66,6 @@ It is recommended to decrease the fps for when processing long videos such as en
 
 - [x] Delete the `images` folder after completion?
 - [x] Turn into a package.
-- [ ] Use multiprocessing to process the images into colors.
 - [ ] Offer an option to do all at the same time.
 
 ## Output example
@@ -75,19 +74,18 @@ Here is an example of what the script outputs, when ran on the last [Star Wars 9
 All methods outputs can be found in the `bars` folder of this repository.
 
 Kmeans:
-<p align="center">
-  <img src="https://github.com/fsoubelet/Movie_Colorbar/blob/master/bars/sw9_trailer/SW9_trailer_kmeans.png"/>
-</p>
+![Example_sw9_trailer_kmeans](bars/sw9_trailer/SW9_trailer_kmeans.png)
+
+Rgb:
+![Example_sw9_trailer_rgb](bars/sw9_trailer/SW9_trailer_rgb.png)
 
 Rgbsquared:
-<p align="center">
-  <img src="https://github.com/fsoubelet/Movie_Colorbar/blob/master/bars/sw9_trailer/SW9_trailer_rgbsquared.png"/>
-</p>
+![Example_sw9_trailer_rgbsquared](bars/sw9_trailer/SW9_trailer_rgbsquared.png)
 
 Lab:
-<p align="center">
-  <img src="https://github.com/fsoubelet/Movie_Colorbar/blob/master/bars/sw9_trailer/SW9_trailer_lab.png"/>
-</p>
+![Example_sw9_trailer_lab](bars/sw9_trailer/SW9_trailer_lab.png)
+
+
 
 ## License
 
