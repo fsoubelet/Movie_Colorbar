@@ -1,71 +1,72 @@
-# Movie Colorbar: Turn a video into a colorbar.
+<h1 align="center">
+  <b>movie_colorbar</b>
+</h1>
 
-A simple scrip to extract frames from a video and generate a colorbar with the average color from each frame.
-Slightly customizable in the number of frames and algorithms used.
-
+A simple scrip to turn a video into a colorbar.
 
 ## Install
 
 ### Prerequisites
 
-This script runs on Python3, and requires the [`Halo`][halo] library.
-If you want to get rid of this dependency, simply comment out the three decorators in `color_bar.py`.
-It also requires that you have the amazing [ffmpgeg][ffmpeg] tool installed, and in your path.
-
-### Install with Git
-
-You can install this by simply cloning the repository with:
-
+This code is compatible with `Python 3.6+`, and requires that you have [ffmpgeg][ffmpeg] installed in your path.
+You can install it in your virtual enrivonment with:
+```bash
+pip install movie_colorbar
 ```
-git clone https://github.com/fsoubelet/Movie_Colorbar.git
-```
-
 
 ## Usage
 
-The script parses arguments from the commandline.
-The usage goes as:
-
+With this package is installed in the activated enrivonment, usage is:
 ```
-python color_bar.py [-h] -t TITLE -m METHOD -s SOURCE_FILE
-                    [-f FRAMES_PER_SECOND]
+python -m movie_colorbar [-h] [-t TITLE] [-m METHOD] -s SOURCE_PATH [-f FPS]
+                         [-l LOG_LEVEL]
 ```
 
-The different options are as bellow:
-```
+Detailed options go as follows:
+```bash
+usage: __main__.py [-h] [-t TITLE] [-m METHOD] -s SOURCE_PATH [-f FPS]
+                   [-l LOG_LEVEL]
+
+Getting your average colorbar.
+
+optional arguments:
   -h, --help            show this help message and exit
   -t TITLE, --title TITLE
                         String. Name that will be given to intermediate
-                        directory.
+                        directory. Defaults to 'output'.
   -m METHOD, --method METHOD
                         String. Method to use to calculate the average color.
                         Options are: rgb, hsv, hue, kmeans, common, lab, xyz,
-                        rgbsquared, resize, and quantized.
+                        rgbsquared, resize, and quantized. Defaults to
+                        'rgbsquared'.
   -s SOURCE_PATH, --source-path SOURCE_PATH
                         String. Path to source video file to get the images
-                        from.
-  -fps FRAMES_PER_SECOND, --frames-per-second FRAMES_PER_SECOND
-                        Integer. Number of frames to extract per second of
-                        video footage.
-
+                        from. Defaults to current directory.
+  -f FPS, --fps FPS     Integer. Number of frames to extract per second of
+                        video footage. Defaults to 10.
+  -l LOG_LEVEL, --logs LOG_LEVEL
+                        The base console logging level. Can be 'debug',
+                        'info', 'warning' and 'error'. Defaults to 'info'.
 ```
 
 An example command is then:
 ```
-python color_bar.py -t sw9_trailer -m rgbsquared -s ~/Desktop/STARWARS_9_TRAILER.webm -fps 25
+python -m movie_colorbar -t sw9_trailer -m rgbsquared -s ~/Desktop/STARWARS_9_TRAILER.webm -fps 25
 ```
 
-The script will create an `images` folder and call `ffmpeg` to extract 25 (in this cases) images per second of video footage into this folder.
+The script will call `ffmpeg` to extract 25 (in this case) images per second from the video file.
 It will then apply the chosen method - here `rgbsquared` - to determine the average color of each frame.
 Finally, it creates the colorbar with all averages and saves it in a new folder titled `bars/title`, with `title` being the argument you provided.
 The output's name is a concatenation of the provided file and the method used.
-The `images` folder will be deleted afterwards.
+Giving a directory as input will process all video files in this directory.
 
 It is recommended to decrease the fps for when processing long videos such as entire movies.
 
 ## TODO
 
 - [x] Delete the `images` folder after completion?
+- [x] Turn into a package.
+- [ ] Use multiprocessing to process the images into colors.
 - [ ] Offer an option to do all at the same time.
 
 ## Output example
@@ -93,5 +94,4 @@ Lab:
 Copyright &copy; 2019 Felix Soubelet. [MIT License][license]
 
 [ffmpeg]: https://ffmpeg.org/
-[halo]: https://github.com/ManrajGrover/halo
 [license]: https://github.com/fsoubelet/Movie_Colorbar/blob/master/LICENSE

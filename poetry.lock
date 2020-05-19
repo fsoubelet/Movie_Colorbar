@@ -1,0 +1,146 @@
+[[package]]
+category = "main"
+description = "Asyncio support for PEP-567 contextvars backport."
+marker = "python_version < \"3.7\""
+name = "aiocontextvars"
+optional = false
+python-versions = ">=3.5"
+version = "0.2.2"
+
+[package.dependencies]
+[package.dependencies.contextvars]
+python = "<3.7"
+version = "2.4"
+
+[[package]]
+category = "main"
+description = "Cross-platform colored terminal text."
+marker = "sys_platform == \"win32\""
+name = "colorama"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+version = "0.4.3"
+
+[[package]]
+category = "main"
+description = "PEP 567 Backport"
+marker = "python_version < \"3.7\""
+name = "contextvars"
+optional = false
+python-versions = "*"
+version = "2.4"
+
+[package.dependencies]
+immutables = ">=0.9"
+
+[[package]]
+category = "main"
+description = "Immutable Collections"
+marker = "python_version < \"3.7\""
+name = "immutables"
+optional = false
+python-versions = ">=3.5"
+version = "0.14"
+
+[[package]]
+category = "main"
+description = "Python logging made (stupidly) simple"
+name = "loguru"
+optional = false
+python-versions = ">=3.5"
+version = "0.5.0"
+
+[package.dependencies]
+colorama = ">=0.3.4"
+win32-setctime = ">=1.0.0"
+
+[package.dependencies.aiocontextvars]
+python = "<3.7"
+version = ">=0.2.0"
+
+[package.extras]
+dev = ["codecov (>=2.0.15)", "colorama (>=0.3.4)", "flake8 (>=3.7.7)", "isort (>=4.3.20)", "tox (>=3.9.0)", "tox-travis (>=0.12)", "pytest (>=4.6.2)", "pytest-cov (>=2.7.1)", "Sphinx (>=2.2.1)", "sphinx-autobuild (>=0.7.1)", "sphinx-rtd-theme (>=0.4.3)", "black (>=19.3b0)"]
+
+[[package]]
+category = "main"
+description = "Python Imaging Library (Fork)"
+name = "pillow"
+optional = false
+python-versions = ">=3.5"
+version = "7.1.2"
+
+[[package]]
+category = "main"
+description = "A small Python utility to set file creation time on Windows"
+marker = "sys_platform == \"win32\""
+name = "win32-setctime"
+optional = false
+python-versions = ">=3.5"
+version = "1.0.1"
+
+[package.extras]
+dev = ["pytest (>=4.6.2)", "black (>=19.3b0)"]
+
+[metadata]
+content-hash = "b9a5e578aadc14ffbe25129c1c835a7199bdb41a95fabc84370bade72b031667"
+python-versions = "^3.6"
+
+[metadata.files]
+aiocontextvars = [
+    {file = "aiocontextvars-0.2.2-py2.py3-none-any.whl", hash = "sha256:885daf8261818767d8f7cbd79f9d4482d118f024b6586ef6e67980236a27bfa3"},
+    {file = "aiocontextvars-0.2.2.tar.gz", hash = "sha256:f027372dc48641f683c559f247bd84962becaacdc9ba711d583c3871fb5652aa"},
+]
+colorama = [
+    {file = "colorama-0.4.3-py2.py3-none-any.whl", hash = "sha256:7d73d2a99753107a36ac6b455ee49046802e59d9d076ef8e47b61499fa29afff"},
+    {file = "colorama-0.4.3.tar.gz", hash = "sha256:e96da0d330793e2cb9485e9ddfd918d456036c7149416295932478192f4436a1"},
+]
+contextvars = [
+    {file = "contextvars-2.4.tar.gz", hash = "sha256:f38c908aaa59c14335eeea12abea5f443646216c4e29380d7bf34d2018e2c39e"},
+]
+immutables = [
+    {file = "immutables-0.14-cp35-cp35m-macosx_10_14_x86_64.whl", hash = "sha256:860666fab142401a5535bf65cbd607b46bc5ed25b9d1eb053ca8ed9a1a1a80d6"},
+    {file = "immutables-0.14-cp35-cp35m-manylinux1_x86_64.whl", hash = "sha256:ce01788878827c3f0331c254a4ad8d9721489a5e65cc43e19c80040b46e0d297"},
+    {file = "immutables-0.14-cp36-cp36m-macosx_10_14_x86_64.whl", hash = "sha256:8797eed4042f4626b0bc04d9cf134208918eb0c937a8193a2c66df5041e62d2e"},
+    {file = "immutables-0.14-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:33ce2f977da7b5e0dddd93744862404bdb316ffe5853ec853e53141508fa2e6a"},
+    {file = "immutables-0.14-cp36-cp36m-win_amd64.whl", hash = "sha256:6c8eace4d98988c72bcb37c05e79aae756832738305ae9497670482a82db08bc"},
+    {file = "immutables-0.14-cp37-cp37m-macosx_10_14_x86_64.whl", hash = "sha256:ab6c18b7b2b2abc83e0edc57b0a38bf0915b271582a1eb8c7bed1c20398f8040"},
+    {file = "immutables-0.14-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:c099212fd6504513a50e7369fe281007c820cf9d7bb22a336486c63d77d6f0b2"},
+    {file = "immutables-0.14-cp37-cp37m-win_amd64.whl", hash = "sha256:714aedbdeba4439d91cb5e5735cb10631fc47a7a69ea9cc8ecbac90322d50a4a"},
+    {file = "immutables-0.14-cp38-cp38-macosx_10_14_x86_64.whl", hash = "sha256:1c11050c49e193a1ec9dda1747285333f6ba6a30bbeb2929000b9b1192097ec0"},
+    {file = "immutables-0.14-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:c453e12b95e1d6bb4909e8743f88b7f5c0c97b86a8bc0d73507091cb644e3c1e"},
+    {file = "immutables-0.14-cp38-cp38-win_amd64.whl", hash = "sha256:ef9da20ec0f1c5853b5c8f8e3d9e1e15b8d98c259de4b7515d789a606af8745e"},
+    {file = "immutables-0.14.tar.gz", hash = "sha256:a0a1cc238b678455145bae291d8426f732f5255537ed6a5b7645949704c70a78"},
+]
+loguru = [
+    {file = "loguru-0.5.0-py3-none-any.whl", hash = "sha256:4688d9e1f31d70e1ec7ccce5305967bc28f377eb1048d009108c11faebe05bcf"},
+    {file = "loguru-0.5.0.tar.gz", hash = "sha256:1e0e6ff59be5e22f863d909ca989e34bb14c21b374f6af45281e603d003dbb96"},
+]
+pillow = [
+    {file = "Pillow-7.1.2-cp35-cp35m-macosx_10_10_intel.whl", hash = "sha256:ae2b270f9a0b8822b98655cb3a59cdb1bd54a34807c6c56b76dd2e786c3b7db3"},
+    {file = "Pillow-7.1.2-cp35-cp35m-manylinux1_i686.whl", hash = "sha256:d23e2aa9b969cf9c26edfb4b56307792b8b374202810bd949effd1c6e11ebd6d"},
+    {file = "Pillow-7.1.2-cp35-cp35m-manylinux1_x86_64.whl", hash = "sha256:b532bcc2f008e96fd9241177ec580829dee817b090532f43e54074ecffdcd97f"},
+    {file = "Pillow-7.1.2-cp35-cp35m-win32.whl", hash = "sha256:12e4bad6bddd8546a2f9771485c7e3d2b546b458ae8ff79621214119ac244523"},
+    {file = "Pillow-7.1.2-cp35-cp35m-win_amd64.whl", hash = "sha256:9744350687459234867cbebfe9df8f35ef9e1538f3e729adbd8fde0761adb705"},
+    {file = "Pillow-7.1.2-cp36-cp36m-macosx_10_10_x86_64.whl", hash = "sha256:f54be399340aa602066adb63a86a6a5d4f395adfdd9da2b9a0162ea808c7b276"},
+    {file = "Pillow-7.1.2-cp36-cp36m-manylinux1_i686.whl", hash = "sha256:1f694e28c169655c50bb89a3fa07f3b854d71eb47f50783621de813979ba87f3"},
+    {file = "Pillow-7.1.2-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:f784aad988f12c80aacfa5b381ec21fd3f38f851720f652b9f33facc5101cf4d"},
+    {file = "Pillow-7.1.2-cp36-cp36m-win32.whl", hash = "sha256:b37bb3bd35edf53125b0ff257822afa6962649995cbdfde2791ddb62b239f891"},
+    {file = "Pillow-7.1.2-cp36-cp36m-win_amd64.whl", hash = "sha256:b67a6c47ed963c709ed24566daa3f95a18f07d3831334da570c71da53d97d088"},
+    {file = "Pillow-7.1.2-cp37-cp37m-macosx_10_10_x86_64.whl", hash = "sha256:eaa83729eab9c60884f362ada982d3a06beaa6cc8b084cf9f76cae7739481dfa"},
+    {file = "Pillow-7.1.2-cp37-cp37m-manylinux1_i686.whl", hash = "sha256:f46e0e024346e1474083c729d50de909974237c72daca05393ee32389dabe457"},
+    {file = "Pillow-7.1.2-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:0e2a3bceb0fd4e0cb17192ae506d5f082b309ffe5fc370a5667959c9b2f85fa3"},
+    {file = "Pillow-7.1.2-cp37-cp37m-win32.whl", hash = "sha256:ccc9ad2460eb5bee5642eaf75a0438d7f8887d484490d5117b98edd7f33118b7"},
+    {file = "Pillow-7.1.2-cp37-cp37m-win_amd64.whl", hash = "sha256:b943e71c2065ade6fef223358e56c167fc6ce31c50bc7a02dd5c17ee4338e8ac"},
+    {file = "Pillow-7.1.2-cp38-cp38-macosx_10_10_x86_64.whl", hash = "sha256:04766c4930c174b46fd72d450674612ab44cca977ebbcc2dde722c6933290107"},
+    {file = "Pillow-7.1.2-cp38-cp38-manylinux1_i686.whl", hash = "sha256:f455efb7a98557412dc6f8e463c1faf1f1911ec2432059fa3e582b6000fc90e2"},
+    {file = "Pillow-7.1.2-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:ee94fce8d003ac9fd206496f2707efe9eadcb278d94c271f129ab36aa7181344"},
+    {file = "Pillow-7.1.2-cp38-cp38-win32.whl", hash = "sha256:4b02b9c27fad2054932e89f39703646d0c543f21d3cc5b8e05434215121c28cd"},
+    {file = "Pillow-7.1.2-cp38-cp38-win_amd64.whl", hash = "sha256:3d25dd8d688f7318dca6d8cd4f962a360ee40346c15893ae3b95c061cdbc4079"},
+    {file = "Pillow-7.1.2-pp373-pypy36_pp73-win32.whl", hash = "sha256:0f01e63c34f0e1e2580cc0b24e86a5ccbbfa8830909a52ee17624c4193224cd9"},
+    {file = "Pillow-7.1.2-py3.8-macosx-10.9-x86_64.egg", hash = "sha256:70e3e0d99a0dcda66283a185f80697a9b08806963c6149c8e6c5f452b2aa59c0"},
+    {file = "Pillow-7.1.2.tar.gz", hash = "sha256:a0b49960110bc6ff5fead46013bcb8825d101026d466f3a4de3476defe0fb0dd"},
+]
+win32-setctime = [
+    {file = "win32_setctime-1.0.1-py3-none-any.whl", hash = "sha256:568fd636c68350bcc54755213fe01966fe0a6c90b386c0776425944a0382abef"},
+    {file = "win32_setctime-1.0.1.tar.gz", hash = "sha256:b47e5023ec7f0b4962950902b15bc56464a380d869f59d27dbf9ab423b23e8f9"},
+]
