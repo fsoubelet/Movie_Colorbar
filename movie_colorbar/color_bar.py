@@ -8,11 +8,8 @@ Created on 2019.08.28
 A little script for fun that will make a video file into a color bar image. The colors are
 calculated from frames of the video according the a specified method. Enjoy.
 """
-import argparse
-import multiprocessing
 import shutil
 import subprocess
-import sys
 from pathlib import Path
 
 from loguru import logger
@@ -222,109 +219,3 @@ def process_dir(title: str, method: str, source_path: str, frames_per_second: in
             )
         else:
             logger.warning(f"File '{source_path}' is not a video, skipping")
-
-
-def main() -> None:
-    """
-    Run the entire process. Will populate (and create if needed) a folder named `images` with
-    every extracted image, and leave that up after completing the process. It's yours to clean.
-
-    Returns:
-        Nothing.
-    """
-    commandline_arguments = _parse_arguments()
-    _set_logger_level(commandline_arguments.log_level)
-
-    if commandline_arguments.method not in METHOD_ACTION_MAP.keys():
-        logger.error("Invalid method given")
-        raise ValueError(f"'{commandline_arguments.method}' is not an accepted method")
-
-    if Path(commandline_arguments.source_path).is_file():
-        process_video(
-            title=commandline_arguments.title,
-            method=commandline_arguments.method,
-            source_path=commandline_arguments.source_path,
-            frames_per_second=commandline_arguments.fps,
-        )
-    elif Path(commandline_arguments.source_path).is_dir():
-        process_dir(
-            title=commandline_arguments.title,
-            method=commandline_arguments.method,
-            source_path=commandline_arguments.source_path,
-            frames_per_second=commandline_arguments.fps,
-        )
-    logger.success("All done!")
-
-
-def _parse_arguments() -> tuple:
-    """
-    Simple argument parser to make life easier in the command-line.
-    """
-    parser = argparse.ArgumentParser(description="Getting your average colorbar.")
-    parser.add_argument(
-        "-t",
-        "--title",
-        dest="title",
-        default="output",
-        type=str,
-        help="String. Name that will be given to intermediate directory. Defaults to 'output'.",
-    )
-    parser.add_argument(
-        "-m",
-        "--method",
-        dest="method",
-        default="rgbsquared",
-        type=str,
-        help="""String. Method to use to calculate the average color. Options are:
-        rgb, hsv, hue, kmeans, common, lab, xyz, rgbsquared, resize, and quantized. Defaults to 
-        'rgbsquared'.""",
-    )
-    parser.add_argument(
-        "-s",
-        "--source-path",
-        dest="source_path",
-        default=".",
-        type=str,
-        help="String. Path to source video file to get the images from. Defaults to current "
-        "directory.",
-        required=True,
-    )
-    parser.add_argument(
-        "-f",
-        "--fps",
-        dest="fps",
-        default=10,
-        type=int,
-        help="Integer. Number of frames to extract per second of video footage. Defaults to 10.",
-    )
-    parser.add_argument(
-        "-l",
-        "--logs",
-        dest="log_level",
-        type=str,
-        default="info",
-        help="The base console logging level. Can be 'debug', 'info', 'warning' and 'error'. "
-        "Defaults to 'info'.",
-    )
-    return parser.parse_args()
-
-
-def _set_logger_level(log_level: str = "info") -> None:
-    """
-    Sets the logger level to the one provided at the commandline.
-
-    Default loguru handler will have DEBUG level and ID 0.
-    We need to first remove this default handler and add ours with the wanted level.
-
-    Args:
-        log_level: string, the default logging level to print out.
-
-    Returns:
-        Nothing, acts in place.
-    """
-    logger.remove(0)
-    logger.add(sys.stderr, level=log_level.upper())
-
-
-if __name__ == "__main__":
-    main()
