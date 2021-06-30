@@ -12,7 +12,7 @@ loguru = "^0.5.0"
 typer = "^0.3.2"
 
 [tool.poetry.dev-dependencies]
-typer-cli = "^0.0.11"
+typer-cli = "^0.0.12"
 
 [tool.poetry.scripts]
 colorbar = "movie_colorbar.__main__:app"
