@@ -2,7 +2,7 @@
   <b>movie_colorbar</b>
 </h1>
 
-A simple scrip to turn a video into a colorbar.
+A simple script to turn a video into a colorbar.
 
 ## Install
 
