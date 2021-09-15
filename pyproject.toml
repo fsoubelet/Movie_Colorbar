@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "movie_colorbar"
-version = "0.2.0"
+version = "0.2.1"
 description = "Turn a video into a colorbar"
 authors = ["Felix Soubelet <felix.soubelet@liverpool.ac.uk>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.6"
-Pillow = "^7.1.2"
+Pillow = "^8.3.2"
 loguru = "^0.5.0"
 typer = "^0.3.2"
 
