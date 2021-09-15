@@ -88,11 +88,15 @@ __Rgbsquared:__
 __Lab:__
 ![Example_sw9_trailer_lab](bars/sw9_trailer/SW9_trailer_lab.png)
 
+---
+
+<div align="center">
+  <sub><strong>Made with ♥︎ by fsoubelet</strong></sub>
+  <br>
+  <sub><strong>MIT &copy 2019 Felix Soubelet</strong></sub>
+</div>
 
 
-## License
-
-Copyright &copy; 2019-2020 Felix Soubelet. [MIT License][license]
 
 [ffmpeg]: https://ffmpeg.org/
 [license]: https://github.com/fsoubelet/Movie_Colorbar/blob/master/LICENSE
