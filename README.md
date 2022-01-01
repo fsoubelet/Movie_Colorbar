@@ -8,7 +8,7 @@ A simple script to turn a video into a colorbar.
 
 ### Prerequisites
 
-This code is compatible with `Python 3.6+`, and requires that you have [ffmpgeg][ffmpeg] installed in your path.
+This code is compatible with `Python 3.7+`, and requires that you have [ffmpgeg][ffmpeg] installed in your path.
 You can install it in your virtual enrivonment with:
 ```bash
 pip install movie_colorbar
