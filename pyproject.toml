@@ -7,7 +7,7 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.7"
-Pillow = "^9.0"
+Pillow = "^9.1"
 loguru = "^0.6"
 typer = "^0.3"
 
