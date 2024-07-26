@@ -8,10 +8,11 @@ A simple script to turn a video into a colorbar.
 
 ### Prerequisites
 
-This code is compatible with `Python 3.7+`, and requires that you have [ffmpgeg][ffmpeg] installed in your path.
+This code is compatible with all currently supported Python versions, and requires that you have [ffmpgeg][ffmpeg] installed in your path.
 You can install it in your virtual enrivonment with:
+
 ```bash
-pip install movie_colorbar
+python -m pip install movie_colorbar
 ```
 
 ## Usage
@@ -19,40 +20,40 @@ pip install movie_colorbar
 With this package is installed in the activated enrivonment, it can be called through `python -m movie_colorbar` or through a newly created `colorbar` command.
 
 Detailed usage goes as follows:
+
 ```bash
-Usage: colorbar [OPTIONS] [SOURCE_PATH]
-
-  Turn a video into a colorbar.
-
-Arguments:
-  [SOURCE_PATH]  Location, relative or absolute, of the source video file to
-                 get the images from.  [default: .]
-
-
-Options:
-  --title TEXT          Name that will be given to the output directory.
-                        [default: output]
-
-  --method TEXT         Method used to calculate the average color. Options
-                        are: 'rgb', 'hsv', 'hue', 'kmeans', 'common', 'lab',
-                        'xyz', 'rgbsquared', 'resize' and 'quantized'.
-                        [default: rgbsquared]
-
-  --fps INTEGER         Number of frames to extract per second of video
-                        footage.  [default: 10]
-
-  --log-level TEXT      The base console logging level. Can be 'debug',
-                        'info', 'warning' and 'error'.  [default: info]
-
-  --install-completion  Install completion for the current shell.
-  --show-completion     Show completion for the current shell, to copy it or
-                        customize the installation.
-
-  --help                Show this message and exit.
+ Usage: python -m movie_colorbar [OPTIONS] [SOURCE_PATH]                                      
+                                                                                              
+ Turn a video into a colorbar.                                                                
+                                                                                              
+╭─ Arguments ────────────────────────────────────────────────────────────────────────────────╮
+│   source_path      [SOURCE_PATH]  Location, relative or absolute, of the source video file │
+│                                   to get the images from.                                  │
+│                                   [default: .]                                             │
+╰────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Options ──────────────────────────────────────────────────────────────────────────────────╮
+│ --title                     TEXT     Name that will be given to the output directory.      │
+│                                      [default: output]                                     │
+│ --method                    TEXT     Method used to calculate the average color. Options   │
+│                                      are: 'rgb', 'hsv', 'hue', 'kmeans', 'common', 'lab',  │
+│                                      'xyz', 'rgbsquared', 'resize' and 'quantized'.        │
+│                                      [default: rgbsquared]                                 │
+│ --fps                       INTEGER  Number of frames to extract per second of video       │
+│                                      footage.                                              │
+│                                      [default: 10]                                         │
+│ --log-level                 TEXT     The base console logging level. Can be 'debug',       │
+│                                      'info', 'warning' and 'error'.                        │
+│                                      [default: info]                                       │
+│ --install-completion                 Install completion for the current shell.             │
+│ --show-completion                    Show completion for the current shell, to copy it or  │
+│                                      customize the installation.                           │
+│ --help                               Show this message and exit.                           │
+╰────────────────────────────────────────────────────────────────────────────────────────────╯
 ```
 
 An example command is then:
-```
+
+```bash
 python -m movie_colorbar ~/Desktop/STARWARS_9_TRAILER.webm --title sw9_trailer --method rgbsquared --fps 25
 ```
 
@@ -66,7 +67,7 @@ It is recommended to decrease the fps when processing long videos such as entire
 
 ## TODO
 
-- [x] Delete the `images` folder after completion?
+- [x] Delete the `images` folder after completion.
 - [x] Turn into a package.
 - [x] Improving the command line experience.
 - [ ] Offer an option to do all at the same time.
@@ -96,7 +97,4 @@ __Lab:__
   <sub><strong>MIT &copy 2019 Felix Soubelet</strong></sub>
 </div>
 
-
-
 [ffmpeg]: https://ffmpeg.org/
-[license]: https://github.com/fsoubelet/Movie_Colorbar/blob/master/LICENSE
