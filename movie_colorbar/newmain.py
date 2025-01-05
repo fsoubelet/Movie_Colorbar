@@ -65,17 +65,20 @@ def main(inputpath: Path, outputpath: Path, method: str, fps: int, log_level: st
             logger.info("No output file name provided, constructing one from input file and method")
             outputpath = f"{inputpath.stem}_{method}.png"
         process_video(
-            title=outputpath,
+            inputpath,
+            outputpath,
             method=method,
-            source_path=inputpath,
             frames_per_second=fps,
         )
 
     elif inputpath.is_dir():
+        if outputpath is None:  # default value if not provided
+            logger.info("No output directory provided, using default 'bars' directory")
+            outputpath = Path("bars")
         process_dir(
-            title=title,
+            inputpath,
+            outputpath,
             method=method,
-            source_path=source_path,
             frames_per_second=fps,
         )
 

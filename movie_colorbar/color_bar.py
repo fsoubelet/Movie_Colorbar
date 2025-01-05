@@ -163,7 +163,7 @@ def _is_handled_video(file_path_string: str = None):
     return Path(file_path_string).suffix.lower() in VALID_VIDEO_EXTENSIONS
 
 
-def process_video(outputpath: Path, method: str, inputpath: Path, frames_per_second: int = 10) -> None:
+def process_video(inputpath: Path, outputpath: Path, method: str, frames_per_second: int = 10) -> None:
     """
     Will populate a folder named `images` with every extracted image from the provided video,
     and create the color bar from those images. Deletes said folder afterwards.
@@ -187,7 +187,7 @@ def process_video(outputpath: Path, method: str, inputpath: Path, frames_per_sec
     shutil.rmtree("images")
 
 
-def process_dir(outputpath: Path, method: str, inputpath: Path, frames_per_second: int = 10) -> None:
+def process_dir(inputpath: Path, outputdir: Path, method: str, frames_per_second: int = 10) -> None:
     """
     Will process every video into the directory.
 
@@ -202,15 +202,18 @@ def process_dir(outputpath: Path, method: str, inputpath: Path, frames_per_secon
         Nothing.
     """
     logger.info("Provided path is a directory, now processing all videos")
-    directory = Path(inputpath)
 
-    for file_path in sorted(directory.iterdir()):
-        if _is_handled_video(file_path):
-            output_file = outputpath / f"{file_path.stem}_{method}.png"
+    if not outputdir.is_dir():
+        logger.debug("Creating output directory")
+        outputdir.mkdir()
+
+    for video_path in sorted(inputpath.iterdir()):
+        if _is_handled_video(video_path):
+            output_file = outputdir / f"{video_path.stem}_{method}.png"
             process_video(
-                title=output_file,
+                video_path,
+                output_file,
                 method=method,
-                inputpath=str(file_path),
                 frames_per_second=frames_per_second,
             )
         else:
