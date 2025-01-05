@@ -163,7 +163,7 @@ def _is_handled_video(file_path_string: str = None):
     return Path(file_path_string).suffix.lower() in VALID_VIDEO_EXTENSIONS
 
 
-def process_video(outputpath: Path, method: str, source_path: str, frames_per_second: int = 10) -> None:
+def process_video(outputpath: Path, method: str, inputpath: Path, frames_per_second: int = 10) -> None:
     """
     Will populate a folder named `images` with every extracted image from the provided video,
     and create the color bar from those images. Deletes said folder afterwards.
@@ -171,12 +171,12 @@ def process_video(outputpath: Path, method: str, source_path: str, frames_per_se
     Args:
         title: Path, name to give the intermediate directory.
         method: string, method to use to get the colors.
-        source_path: string, absolute path to the video file.
+        inputpath: Path, absolute path to the video file.
         frames_per_second: integer, number of frames to extract per second of video. You'll want to
                            lower this parameter on longer videos.
     """
-    logger.info(f"Processing video at '{source_path}'")
-    images = extract_frames(source_path, frames_per_second)
+    logger.info(f"Processing video at '{inputpath}'")
+    images = extract_frames(inputpath, frames_per_second)
     bar_colors = get_images_colors(images, method)
     bar_image = create_colorbar(bar_colors)
 
@@ -187,14 +187,14 @@ def process_video(outputpath: Path, method: str, source_path: str, frames_per_se
     shutil.rmtree("images")
 
 
-def process_dir(title: str, method: str, source_path: str, frames_per_second: int = 10) -> None:
+def process_dir(outputpath: Path, method: str, inputpath: Path, frames_per_second: int = 10) -> None:
     """
     Will process every video into the directory.
 
     Args:
         title: string, name to give the intermediate directory.
         method: string, method to use to get the colors.
-        source_path: string, absolute path to the video file.
+        inputpath: string, absolute path to the video file.
         frames_per_second: integer, number of frames to extract per second of video. You'll want to
                            lower this parameter on longer videos.
 
@@ -202,15 +202,16 @@ def process_dir(title: str, method: str, source_path: str, frames_per_second: in
         Nothing.
     """
     logger.info("Provided path is a directory, now processing all videos")
-    directory = Path(source_path)
+    directory = Path(inputpath)
 
     for file_path in sorted(directory.iterdir()):
         if _is_handled_video(file_path):
+            output_file = outputpath / f"{file_path.stem}_{method}.png"
             process_video(
-                title=title,
+                title=output_file,
                 method=method,
-                source_path=str(file_path),
+                inputpath=str(file_path),
                 frames_per_second=frames_per_second,
             )
         else:
-            logger.warning(f"File '{source_path}' is not a video, skipping")
+            logger.warning(f"File '{inputpath}' is not a video, skipping")
