@@ -8,8 +8,10 @@ Created on 2019.08.28
 A little script for fun that will make a video file into a color bar image. The colors are
 calculated from frames of the video according the a specified method. Enjoy.
 """
+
 import shutil
 import subprocess
+
 from pathlib import Path
 
 from loguru import logger
@@ -90,13 +92,18 @@ def extract_frames(movie_input_path: str, fps: int) -> list:
         logger.debug("Creating 'images' directory to store the video's frames")
         images_directory.mkdir()
     else:
-        logger.error(
-            "A directory named 'images' already exists, please remove it to avoid " "accidents"
-        )
+        logger.error("A directory named 'images' already exists, please remove it to avoid accidents")
         raise IsADirectoryError("The 'images'  directory should not exist")
 
     logger.info(f"Running ffmpeg, extracting {fps} frames per second of video")
-    command = ["ffmpeg", "-i", f"{movie_input_path}", "-vf", f"fps={fps}", "images/%05d.jpg"]
+    command = [
+        "ffmpeg",
+        "-i",
+        f"{movie_input_path}",
+        "-vf",
+        f"fps={fps}",
+        "images/%05d.jpg",
+    ]
     _ = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     logger.debug("Gathering frames")
@@ -143,7 +150,7 @@ def create_colorbar(all_bar_colors: list) -> Image:
     return bar_image
 
 
-def _is_video(file_path_string: str = None):
+def _is_handled_video(file_path_string: str = None):
     """
     Check that the file extension is a valid video format.
 
@@ -156,37 +163,25 @@ def _is_video(file_path_string: str = None):
     return Path(file_path_string).suffix.lower() in VALID_VIDEO_EXTENSIONS
 
 
-def process_video(title: str, method: str, source_path: str, frames_per_second: int = 10) -> None:
+def process_video(outputpath: Path, method: str, source_path: str, frames_per_second: int = 10) -> None:
     """
     Will populate a folder named `images` with every extracted image from the provided video,
     and create the color bar from those images. Deletes said folder afterwards.
 
     Args:
-        title: string, name to give the intermediate directory.
+        title: Path, name to give the intermediate directory.
         method: string, method to use to get the colors.
         source_path: string, absolute path to the video file.
         frames_per_second: integer, number of frames to extract per second of video. You'll want to
                            lower this parameter on longer videos.
-
-    Returns:
-        Nothing.
     """
     logger.info(f"Processing video at '{source_path}'")
-    bars_directory = Path("bars")
     images = extract_frames(source_path, frames_per_second)
     bar_colors = get_images_colors(images, method)
     bar_image = create_colorbar(bar_colors)
 
-    if not bars_directory.is_dir():
-        logger.debug("'bars' directory is absent, it will be created")
-        bars_directory.mkdir()
-
-    if not (bars_directory / f"{title}").is_dir():
-        logger.debug(f"'bars/{title}' directory is absent, it will be created")
-        (bars_directory / f"{title}").mkdir()
-
-    bar_image.save(f"bars/{title}/{Path(source_path).stem}_{method}.png")
-    logger.success(f"Created bar at 'bars/{title}/{Path(source_path).stem}_{method}.png'")
+    bar_image.save(outputpath)
+    logger.success(f"Saved created colorbar at '{outputpath}'")
 
     logger.info("Cleanup: removing 'images' directory")
     shutil.rmtree("images")
@@ -210,7 +205,7 @@ def process_dir(title: str, method: str, source_path: str, frames_per_second: in
     directory = Path(source_path)
 
     for file_path in sorted(directory.iterdir()):
-        if _is_video(file_path):
+        if _is_handled_video(file_path):
             process_video(
                 title=title,
                 method=method,
