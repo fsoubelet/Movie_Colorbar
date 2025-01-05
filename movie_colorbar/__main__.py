@@ -3,9 +3,11 @@ Running the tool from the commandline, if it is installed in your environment.
 """
 
 import sys
+
 from pathlib import Path
 
 import typer
+
 from loguru import logger
 
 from movie_colorbar.color_bar import METHOD_ACTION_MAP, process_dir, process_video
@@ -19,13 +21,19 @@ def create(
         ".",
         help="Location, relative or absolute, of the source video file to get the images from.",
     ),
-    title: str = typer.Option("output", help="Name that will be given to the output directory.",),
+    title: str = typer.Option(
+        "output",
+        help="Name that will be given to the output directory.",
+    ),
     method: str = typer.Option(
         "rgbsquared",
         help="Method used to calculate the average color. Options are: 'rgb', 'hsv', 'hue', "
         "'kmeans', 'common', 'lab', 'xyz', 'rgbsquared', 'resize' and 'quantized'.",
     ),
-    fps: int = typer.Option(10, help="Number of frames to extract per second of video footage.",),
+    fps: int = typer.Option(
+        10,
+        help="Number of frames to extract per second of video footage.",
+    ),
     log_level: str = typer.Option(
         "info",
         help="The base console logging level. Can be 'debug', 'info', 'warning' and 'error'.",
@@ -40,11 +48,17 @@ def create(
 
     if Path(source_path).is_file():
         process_video(
-            title=title, method=method, source_path=source_path, frames_per_second=fps,
+            title=title,
+            method=method,
+            source_path=source_path,
+            frames_per_second=fps,
         )
     elif Path(source_path).is_dir():
         process_dir(
-            title=title, method=method, source_path=source_path, frames_per_second=fps,
+            title=title,
+            method=method,
+            source_path=source_path,
+            frames_per_second=fps,
         )
     logger.success("All done!")
 
