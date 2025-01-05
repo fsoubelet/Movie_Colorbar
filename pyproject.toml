@@ -48,6 +48,40 @@ dependencies = [
 homepage = "https://github.com/fsoubelet/Movie_Colorbar"
 repository = "https://github.com/fsoubelet/Movie_Colorbar"
 
+# ----- Dev Tools Configuration ----- #
+
+[tool.isort]
+atomic = true
+ensure_newline_before_comments = true
+filter_files = true
+force_grid_wrap = 0
+force_single_line = false
+include_trailing_comma = true
+known_first_party = "movie_colorbar"
+line_length = 110
+lines_between_types = 1
+multi_line_output = 3
+use_parentheses = true
+profile = "black"
+
+[tool.black]
+line-length = 110
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
 [tool.ruff]
 # Generate Python 3.9-compatible code.
 target-version = "py39"
