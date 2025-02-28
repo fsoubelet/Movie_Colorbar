@@ -5,7 +5,23 @@ Colors
 Helper functions to handle color calculations and conversions.
 """
 
+from colorsys import hls_to_rgb as _hls_to_rgb
+from colorsys import hsv_to_rgb as _hsv_to_rgb
+from colorsys import rgb_to_hls as _rgb_to_hls
+from colorsys import rgb_to_hsv as _rgb_to_hsv
+from colorsys import rgb_to_yiq as _rgb_to_yiq
+from colorsys import yiq_to_rgb as _yiq_to_rgb
+
 from new.jit import maybe_jit
+
+# We re-export the colorsys functions with a
+# potential JIT-compilation by numba
+rgb_to_yiq = maybe_jit(_rgb_to_yiq)
+yiq_to_rgb = maybe_jit(_yiq_to_rgb)
+rgb_to_hls = maybe_jit(_rgb_to_hls)
+hls_to_rgb = maybe_jit(_hls_to_rgb)
+rgb_to_hsv = maybe_jit(_rgb_to_hsv)
+hsv_to_rgb = maybe_jit(_hsv_to_rgb)
 
 
 @maybe_jit
