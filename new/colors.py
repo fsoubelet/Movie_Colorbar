@@ -158,3 +158,49 @@ def convert_xyz_to_lab(X: float, Y: float, Z: float) -> tuple[float, float, floa
     A = 500 * (xf - yf)
     B = 200 * (yf - zf)
     return L, A, B
+
+
+@maybe_jit
+def convert_lab_to_xyz(L: float, A: float, B: float) -> tuple[float, float, float]:
+    """
+    Converts a color from the LAB to the CIE XYZ 1931 colorspace.
+    The colorsys module does not provide an implementation for this
+    conversion so I wrote a custom one.
+
+    Optimized for Numba JIT compilation.
+
+    Parameters
+    ----------
+    L : float
+        The lightness value of the color.
+    A : float
+        The A channel value of the color.
+    B : float
+        The B channel value of the color.
+
+    Returns
+    -------
+    tuple[float, float, float]
+        A tuple with the X, Y, Z values of the color.
+    """
+    # Calculate the intermediate XYZ values
+    yf = (L + 16) / 116
+    xf = A / 500 + yf
+    zf = yf - B / 200
+
+    # Reverse the nonlinear transformation for XYZ components
+    def reverse_nonlinear_transform(value: float) -> float:
+        if value**3 > 0.008856:
+            return value**3
+        return (value - 16.0 / 116.0) / 7.787
+
+    # These are the normalized XYZ by reference white (D65 illuminant)
+    x = reverse_nonlinear_transform(xf)
+    y = reverse_nonlinear_transform(yf)
+    z = reverse_nonlinear_transform(zf)
+
+    # Scale back by the reference white (D65 illuminant)
+    X = x * 95.047
+    Y = y * 100.0
+    Z = z * 108.883
+    return X, Y, Z
