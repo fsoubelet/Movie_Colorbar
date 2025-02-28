@@ -50,7 +50,7 @@ def convert_rgb_to_xyz(r: float, g: float, b: float) -> tuple[float, float, floa
 
 
 @maybe_jit
-def convert_xyz_to_rgb(x: float, y: float, z:float) -> tuple[float, float, float]:
+def convert_xyz_to_rgb(X: float, Y: float, Z: float) -> tuple[float, float, float]:
     """
     Converts a color from CIE XYZ 1931 to the sRGB colorspace.
     The colorsys module does not provide an implementation for this
@@ -60,11 +60,11 @@ def convert_xyz_to_rgb(x: float, y: float, z:float) -> tuple[float, float, float
 
     Parameters
     ----------
-    x : float
+    X : float
         The X value of the color (0-100).
-    y : float
+    Y : float
         The Y value of the color (0-100).
-    z : float
+    Z : float
         The Z value of the color (0-100).
 
     Returns
@@ -73,14 +73,14 @@ def convert_xyz_to_rgb(x: float, y: float, z:float) -> tuple[float, float, float
         A tuple with the R, G, B values of the color.
     """
     # Normalize XYZ to the [0, 1] range
-    x /= 100.0
-    y /= 100.0
-    z /= 100.0
+    x = X / 100.0
+    y = Y / 100.0
+    z = Z / 100.0
 
     # Apply the inverse transformation matrix (D65 illuminant)
     # to compute the linear RGB components
     rl = x * 3.2406 + y * -1.5372 + z * -0.4986
-    gl = x * -0.9689 + y * 1.8758 + z * 0.0415
+    gl = x * -0.9689 + y  * 1.8758 + z * 0.0415
     bl = x * 0.0557 + y * -0.2040 + z * 1.0570
 
     #  Apply gamma correction to each color channel and
