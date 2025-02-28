@@ -259,105 +259,105 @@ def get_quantized_color(source_image: Image) -> list:
     return source_image.quantize(1).convert("RGB").getcolors()[0][1]
 
 
-def convert_rgb_to_xyz(source_color_rgb: tuple) -> tuple:
-    """
-    Converts a color from the RGB to the CIE XYZ 1931 colorspace.
+# def convert_rgb_to_xyz(source_color_rgb: tuple) -> tuple:
+#     """
+#     Converts a color from the RGB to the CIE XYZ 1931 colorspace.
 
-    Args:
-        source_color_rgb:  a tuple with R, G and B values of the color.
+#     Args:
+#         source_color_rgb:  a tuple with R, G and B values of the color.
 
-    Returns:
-        a tuple with the X, Y, Z values of the color.
-    """
-    logger.trace("Converting RGB components to XYZ")
-    colors = [x / 255.0 for x in source_color_rgb]
+#     Returns:
+#         a tuple with the X, Y, Z values of the color.
+#     """
+#     logger.trace("Converting RGB components to XYZ")
+#     colors = [x / 255.0 for x in source_color_rgb]
 
-    for index in range(3):
-        if colors[index] > 0.04045:
-            colors[index] = ((colors[index] + 0.055) / 1.055) ** 2.4
-        else:
-            colors[index] /= 12.92
-    colors = [100 * x for x in colors]
+#     for index in range(3):
+#         if colors[index] > 0.04045:
+#             colors[index] = ((colors[index] + 0.055) / 1.055) ** 2.4
+#         else:
+#             colors[index] /= 12.92
+#     colors = [100 * x for x in colors]
 
-    x_val = colors[0] * 0.4124 + colors[1] * 0.3575 + colors[2] * 0.1805
-    y_val = colors[0] * 0.2126 + colors[1] * 0.7152 + colors[2] * 0.0722
-    z_val = colors[0] * 0.0193 + colors[1] * 0.1192 + colors[2] * 0.9505
-    return x_val, y_val, z_val
-
-
-def convert_xyz_to_rgb(source_color_xyz: tuple) -> tuple:
-    """
-    Converts a color from the CIE XYZ 1931 to the RGB colorspace.
-
-    Args:
-        source_color_xyz:  a tuple with X, Y and Z values of the color.
-
-    Returns:
-         a tuple with the R, G and B values of the color.
-    """
-    logger.trace("Converting XYZ components to RGB")
-    xyz = [x / 100 for x in source_color_xyz]
-    r_val = xyz[0] * 3.2406 + xyz[1] * -1.5372 + xyz[2] * -0.4986
-    g_val = xyz[0] * -0.9689 + xyz[1] * 1.8758 + xyz[2] * 0.0415
-    b_val = xyz[0] * 0.0557 + xyz[1] * -0.2040 + xyz[2] * 1.0570
-    color = [r_val, g_val, b_val]
-
-    for index in range(3):
-        if color[index] > 0.0031308:
-            color[index] = 1.055 * (color[index] ** (1 / 2.4)) - 0.055
-        else:
-            color[index] *= 12.92
-    return tuple(int(x * 255) for x in color)
+#     x_val = colors[0] * 0.4124 + colors[1] * 0.3575 + colors[2] * 0.1805
+#     y_val = colors[0] * 0.2126 + colors[1] * 0.7152 + colors[2] * 0.0722
+#     z_val = colors[0] * 0.0193 + colors[1] * 0.1192 + colors[2] * 0.9505
+#     return x_val, y_val, z_val
 
 
-def convert_xyz_to_lab(source_color_xyz: tuple) -> tuple:
-    """
-    Converts a color from the CIE XYZ 1931 to the LAB colorspace.
+# def convert_xyz_to_rgb(source_color_xyz: tuple) -> tuple:
+#     """
+#     Converts a color from the CIE XYZ 1931 to the RGB colorspace.
 
-    Args:
-        source_color_xyz: a tuple with X, Y, and Z values of the color.
+#     Args:
+#         source_color_xyz:  a tuple with X, Y and Z values of the color.
 
-    Returns:
-        a tuple with the Lightness, A channel and B channel values of the color.
-    """
-    logger.trace("Converting XYZ components to LAB")
-    xyz = [
-        source_color_xyz[0] / 95.047,
-        source_color_xyz[1] / 100.0,
-        source_color_xyz[2] / 108.883,
-    ]
+#     Returns:
+#          a tuple with the R, G and B values of the color.
+#     """
+    # logger.trace("Converting XYZ components to RGB")
+    # xyz = [x / 100 for x in source_color_xyz]
+    # r_val = xyz[0] * 3.2406 + xyz[1] * -1.5372 + xyz[2] * -0.4986
+    # g_val = xyz[0] * -0.9689 + xyz[1] * 1.8758 + xyz[2] * 0.0415
+    # b_val = xyz[0] * 0.0557 + xyz[1] * -0.2040 + xyz[2] * 1.0570
+    # color = [r_val, g_val, b_val]
 
-    for index in range(3):
-        if xyz[index] > 0.008856:
-            xyz[index] = xyz[index] ** (1.0 / 3)
-        else:
-            xyz[index] = (7.787 * xyz[index]) + (16.0 / 116)
-
-    l_val = (116 * xyz[1]) - 16
-    a_val = 500 * (xyz[0] - xyz[1])
-    b_val = 200 * (xyz[1] - xyz[2])
-    return l_val, a_val, b_val
+    # for index in range(3):
+    #     if color[index] > 0.0031308:
+    #         color[index] = 1.055 * (color[index] ** (1 / 2.4)) - 0.055
+    #     else:
+    #         color[index] *= 12.92
+    # return tuple(int(x * 255) for x in color)
 
 
-def convert_lab_to_xyz(source_color_lab: tuple) -> tuple:
-    """
-    Converts a color from the LAB to the CIE XYZ 1931 colorspace.
+# def convert_xyz_to_lab(source_color_xyz: tuple) -> tuple:
+#     """
+#     Converts a color from the CIE XYZ 1931 to the LAB colorspace.
 
-    Args:
-        source_color_lab: a tuple with the Lightness, A channel and B channel values of the color.
+#     Args:
+#         source_color_xyz: a tuple with X, Y, and Z values of the color.
 
-    Returns:
-        a tuple with X, Y, and Z values of the color.
-    """
-    logger.trace("Converting LAB components to XYZ")
-    y_val = (source_color_lab[0] + 16) / 116.0
-    x_val = source_color_lab[1] / 500 + y_val
-    z_val = y_val - source_color_lab[2] / 200.0
-    xyz = [x_val, y_val, z_val]
+#     Returns:
+#         a tuple with the Lightness, A channel and B channel values of the color.
+#     """
+#     logger.trace("Converting XYZ components to LAB")
+#     xyz = [
+#         source_color_xyz[0] / 95.047,
+#         source_color_xyz[1] / 100.0,
+#         source_color_xyz[2] / 108.883,
+#     ]
 
-    for index in range(3):
-        if xyz[index] ** 3 > 0.008856:
-            xyz[index] = xyz[index] ** 3
-        else:
-            xyz[index] = (xyz[index] - 16 / 116.0) / 7.787
-    return xyz[0] * 95.047, xyz[1] * 100, xyz[2] * 108.883
+#     for index in range(3):
+#         if xyz[index] > 0.008856:
+#             xyz[index] = xyz[index] ** (1.0 / 3)
+#         else:
+#             xyz[index] = (7.787 * xyz[index]) + (16.0 / 116)
+
+#     l_val = (116 * xyz[1]) - 16
+#     a_val = 500 * (xyz[0] - xyz[1])
+#     b_val = 200 * (xyz[1] - xyz[2])
+#     return l_val, a_val, b_val
+
+
+# def convert_lab_to_xyz(source_color_lab: tuple) -> tuple:
+#     """
+#     Converts a color from the LAB to the CIE XYZ 1931 colorspace.
+
+#     Args:
+#         source_color_lab: a tuple with the Lightness, A channel and B channel values of the color.
+
+#     Returns:
+#         a tuple with X, Y, and Z values of the color.
+#     """
+#     logger.trace("Converting LAB components to XYZ")
+#     y_val = (source_color_lab[0] + 16) / 116.0
+#     x_val = source_color_lab[1] / 500 + y_val
+#     z_val = y_val - source_color_lab[2] / 200.0
+#     xyz = [x_val, y_val, z_val]
+
+#     for index in range(3):
+#         if xyz[index] ** 3 > 0.008856:
+#             xyz[index] = xyz[index] ** 3
+#         else:
+#             xyz[index] = (xyz[index] - 16 / 116.0) / 7.787
+#     return xyz[0] * 95.047, xyz[1] * 100, xyz[2] * 108.883
