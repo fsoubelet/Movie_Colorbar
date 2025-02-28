@@ -4,7 +4,6 @@ Colors
 
 Helper functions to handle color calculations and conversions.
 """
-from tokenize import maybe
 from new.jit import maybe_jit
 
 
@@ -50,6 +49,7 @@ def convert_rgb_to_xyz(r: float, g: float, b: float) -> tuple[float, float, floa
     return x, y, z
 
 
+@maybe_jit
 def convert_xyz_to_rgb(x: float, y: float, z:float) -> tuple[float, float, float]:
     """
     Converts a color from CIE XYZ 1931 to the sRGB colorspace.
