@@ -4,6 +4,7 @@ Colors
 
 Helper functions to handle color calculations and conversions.
 """
+
 from new.jit import maybe_jit
 
 
@@ -30,9 +31,15 @@ def convert_rgb_to_xyz(r: float, g: float, b: float) -> tuple[float, float, floa
     tuple[float, float, float]
         A tuple with the X, Y, Z values of the color.
     """
+    # To make sure we are in the [0, 1] range
+    def range_normalize(value: float) -> float:
+        if value > 1.0:
+            return value / 255.0
+        return value
+
     # Normalize and gamma correct each color channel
     def normalize_and_correct_gamma(value: float) -> float:
-        value /= 255.0  # normalize to [0, 1] range
+        value = range_normalize(value)
         if value > 0.04045:
             return ((value + 0.055) / 1.055) ** 2.4
         return value / 12.92
@@ -72,19 +79,23 @@ def convert_xyz_to_rgb(X: float, Y: float, Z: float) -> tuple[float, float, floa
     tuple[float, float, float]
         A tuple with the R, G, B values of the color.
     """
-    # Normalize XYZ to the [0, 1] range
-    x = X / 100.0
-    y = Y / 100.0
-    z = Z / 100.0
+    # To make sure we are in the [0, 1] range
+    def range_normalize(value: float) -> float:
+        if value > 1.0:
+            return value / 100.0
+        return value
+
+    x = range_normalize(X)
+    y = range_normalize(Y)
+    z = range_normalize(Z)
 
     # Apply the inverse transformation matrix (D65 illuminant)
     # to compute the linear RGB components
     rl = x * 3.2406 + y * -1.5372 + z * -0.4986
-    gl = x * -0.9689 + y  * 1.8758 + z * 0.0415
+    gl = x * -0.9689 + y * 1.8758 + z * 0.0415
     bl = x * 0.0557 + y * -0.2040 + z * 1.0570
 
-    #  Apply gamma correction to each color channel and
-    # clamp to [0, 1] range then scale to [0, 255]
+    #  Apply gamma correction to each color channel
     def correct_gamma(value: float) -> float:
         if value > 0.0031308:
             return 1.055 * (value ** (1 / 2.4)) - 0.055
