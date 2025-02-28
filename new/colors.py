@@ -31,6 +31,7 @@ def convert_rgb_to_xyz(r: float, g: float, b: float) -> tuple[float, float, floa
     tuple[float, float, float]
         A tuple with the X, Y, Z values of the color.
     """
+
     # To make sure we are in the [0, 1] range
     def range_normalize(value: float) -> float:
         if value > 1.0:
@@ -79,6 +80,7 @@ def convert_xyz_to_rgb(X: float, Y: float, Z: float) -> tuple[float, float, floa
     tuple[float, float, float]
         A tuple with the R, G, B values of the color.
     """
+
     # To make sure we are in the [0, 1] range
     def range_normalize(value: float) -> float:
         if value > 1.0:
@@ -111,3 +113,48 @@ def convert_xyz_to_rgb(X: float, Y: float, Z: float) -> tuple[float, float, floa
     g = max(0, min(1, g)) * 255
     b = max(0, min(1, b)) * 255
     return r, g, b
+
+
+@maybe_jit
+def convert_xyz_to_lab(X: float, Y: float, Z: float) -> tuple[float, float, float]:
+    """
+    Converts a color from the CIE XYZ 1931 to the LAB colorspace.
+    The colorsys module does not provide an implementation for this
+    conversion so I wrote a custom one.
+
+    Optimized for Numba JIT compilation.
+
+    Parameters
+    ----------
+    X : float
+        The X value of the color (0-100).
+    Y : float
+        The Y value of the color (0-100).
+    Z : float
+        The Z value of the color (0-100).
+
+    Returns
+    -------
+    tuple[float, float, float]
+        A tuple with the Lightness (L), A channel and B channel values.
+    """
+    # Normalize XYZ by reference white (D65 illuminant)
+    x = X / 95.047
+    y = Y / 100.0
+    z = Z / 108.883
+
+    # Nonlinear transformation to align with human perception
+    def nonlinear_transform(value: float) -> float:
+        if value > 0.008856:
+            return value ** (1 / 3)
+        return 7.787 * value + 16.0 / 116.0
+
+    xf = nonlinear_transform(x)
+    yf = nonlinear_transform(y)
+    zf = nonlinear_transform(z)
+
+    # Compute the LAB components
+    L = 116 * yf - 16
+    A = 500 * (xf - yf)
+    B = 200 * (yf - zf)
+    return L, A, B
