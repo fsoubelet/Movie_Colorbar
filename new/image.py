@@ -17,7 +17,7 @@ from new.jit import maybe_jit
 
 def get_rgb_counts_and_colors(image: Image) -> list[tuple[int, tuple[int, int, int]]]:
     """
-    Get the RGB colors of an image.
+    Get the RGB colors of the image.
 
     Parameters
     ----------
@@ -38,7 +38,7 @@ def get_rgb_counts_and_colors(image: Image) -> list[tuple[int, tuple[int, int, i
 
 def get_average_rgb(image: Image) -> tuple[int, int, int]:
     """
-    Get the average R, G and B values of the colors in an image.
+    Get the average R, G and B values of the colors in the image.
     The values are weighted by the number of pixels of each color.
 
     Parameters
@@ -73,7 +73,7 @@ def get_average_rgb(image: Image) -> tuple[int, int, int]:
 
 def get_average_rgb_squared(image: Image) -> tuple[int, int, int]:
     """
-    Get the squared averaged R, G and B values of the colors in an image.
+    Get the squared averaged R, G and B values of the colors in the image.
     The values are weighted by the number of pixels of each color.
 
     Parameters
@@ -108,7 +108,7 @@ def get_average_rgb_squared(image: Image) -> tuple[int, int, int]:
 
 def get_average_hsv_as_rgb(image: Image) -> tuple[int, int, int]:
     """
-    Get the average H, S and V values of the colors in an image,
+    Get the average H, S and V values of the colors in the image,
     as an RGB color to be displayed.
 
     Parameters
@@ -149,7 +149,7 @@ def get_average_hsv_as_rgb(image: Image) -> tuple[int, int, int]:
 
 def get_average_hue_as_rgb(image: Image) -> tuple[int, int, int]:
     """
-    Get the average hue of the colors in an image,
+    Get the average hue of the colors in the image,
     as an RGB color to be displayed.
 
     Parameters
@@ -184,7 +184,7 @@ def get_average_hue_as_rgb(image: Image) -> tuple[int, int, int]:
 
 def get_kmeans_color_as_rgb(image: Image) -> tuple[int, int, int]:
     """
-    Compute the dominant (average) color of an image using a simplified
+    Compute the dominant (average) color of the image using a simplified
     k-means algorithm. Returns the RGB color of the dominant average.
 
     The function extracts the weighted RGB colors from the image and applies
