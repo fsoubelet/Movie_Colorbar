@@ -181,19 +181,19 @@ def get_rgb_colors(source_image: Image) -> list:
 #     return tuple(int(e) for e in group)
 
 
-def get_most_common_colors_as_rgb(source_image: Image) -> tuple:
-    """
-    Get the most common color in this image, as RGB.
+# def get_most_common_colors_as_rgb(source_image: Image) -> tuple:
+#     """
+#     Get the most common color in this image, as RGB.
 
-    Args:
-        source_image: a Pillow.Image instance.
+#     Args:
+#         source_image: a Pillow.Image instance.
 
-    Returns:
-        a tuple with the R, G and B values of the most common color in the image.
-    """
-    logger.trace("Getting most common color")
-    colors = source_image.getcolors(source_image.size[0] * source_image.size[1])
-    return sorted(colors)[-1][1]
+#     Returns:
+#         a tuple with the R, G and B values of the most common color in the image.
+#     """
+#     logger.trace("Getting most common color")
+#     colors = source_image.getcolors(source_image.size[0] * source_image.size[1])
+#     return sorted(colors)[-1][1]
 
 
 def get_average_xyz(source_image: Image) -> tuple:
@@ -231,18 +231,18 @@ def get_average_lab(source_image: Image) -> tuple:
     return convert_xyz_to_rgb(convert_lab_to_xyz(average))
 
 
-def get_resized_1px_rgb(source_image: Image) -> list:
-    """
-    Get the image's 1px by 1px equivalent, and return the R, G and B channels of this pixel.
+# def get_resized_1px_rgb(source_image: Image) -> list:
+#     """
+#     Get the image's 1px by 1px equivalent, and return the R, G and B channels of this pixel.
 
-    Args:
-        source_image: a Pillow.Image instance.
+#     Args:
+#         source_image: a Pillow.Image instance.
 
-    Returns:
-        a tuple with the R, G and B values of the image as 1 by 1 pixel.
-    """
-    logger.trace("Resizing image to 1 pixel")
-    return source_image.resize((1, 1)).convert("RGB").getcolors(1)[0][1]
+#     Returns:
+#         a tuple with the R, G and B values of the image as 1 by 1 pixel.
+#     """
+#     logger.trace("Resizing image to 1 pixel")
+#     return source_image.resize((1, 1)).convert("RGB").getcolors(1)[0][1]
 
 
 # def get_quantized_color(source_image: Image) -> list:
