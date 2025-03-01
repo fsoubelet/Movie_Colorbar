@@ -6,6 +6,7 @@ Small module with different functions to handle parsing
 of images and extracting color information from them.
 """
 
+import random
 from loguru import logger
 from PIL import Image
 
@@ -180,10 +181,15 @@ def get_average_hue(image: Image) -> tuple[int, int, int]:
     return tuple(int(val * 255) for val in hue_color_rgb)
 
 
-def get_kmeans_color(image: Image) -> tuple[int, int, int]:
+def get_kmeans_color(source_image: Image) -> tuple:
     """
-    Get the average color of an image using the KMeans algorithm,
-    as an RGB color to be displayed.
+    Compute the dominant (average) color of an image using a simplified
+    k-means algorithm. Returns the RGB color of the dominant average.
+
+    The function extracts the weighted RGB colors from the image and applies
+    k-means clustering  (with a default of 5 clusters) to group similar colors.
+    It then returns the center of the cluster with the largest total pixel count
+    as the dominant color.
 
     Parameters
     ----------
@@ -196,7 +202,79 @@ def get_kmeans_color(image: Image) -> tuple[int, int, int]:
         A tuple with the R, G, B values corresponding to
         the kmean-average color of the image.
     """
-    logger.trace("Computing KMeans color of the image")
+    counts_and_colors = get_rgb_counts_and_colors(source_image)
+    logger.trace("Starting k-means algorithm, defaulting to 5 clusters")
+
+    # Number of clusters (centers) to use.
+    nclusters = 5
+    centers: list[tuple[int, int, int]] = []  # holds RGB colors
+
+    # If there are fewer unique colors than k, use all available
+    # colors, and naturally the centers are the unique colors
+    logger.trace("Checking number of colors vs number of clusters")
+    ncolors = len(counts_and_colors)
+    if ncolors < nclusters:
+        nclusters = ncolors
+        centers = [rgb_color for _, rgb_color in counts_and_colors]
+        logger.trace("Set number of clusters to number of unique colors")
+    else:
+        # Randomly select nclusters distinct starting centers.
+        logger.trace("Selecting random starting centers")
+        while len(centers) < nclusters:
+            rgb_candidate = random.choice(counts_and_colors)[1]
+            if rgb_candidate not in centers:
+                centers.append(rgb_candidate)
+
+    # Iterate to update centers (up to 20 iterations)
+    logger.trace("Iterating on means")
+    for iteration in range(20):
+        previous_centers = centers.copy()
+        color_groups = [[] for _ in range(nclusters)]
+
+        # Assign each color to the closest center.
+        for count, color in counts_and_colors:
+            logger.trace("Determining closest center for current color")
+            distances = [euclidean_distance_3d(center, color) for center in centers]
+            closest_index = distances.index(min(distances))
+            color_groups[closest_index].append((count, color))
+
+        # Update centers as weighted averages of the groups
+        logger.trace("Calculating new centers from groups' weighted averages")
+        new_centers: list[tuple[int, int, int]] = []
+        for i in range(nclusters):
+            group = color_groups[i]
+            if group:
+                total_count = sum(count for count, _ in group)
+                avg_color = tuple(
+                    sum(count * color[channel] for count, color in group) / total_count
+                    for channel in range(3)
+                )
+                new_centers.append(avg_color)
+            else:
+                # If a cluster is empty, retain the previous center
+                new_centers.append(centers[i])
+
+        # We update the centers with the newly determined ones
+        centers = new_centers
+
+        # We compute the total movement of centers
+        logger.trace("Calculating total shift of centers")
+        total_shift = sum(
+            euclidean_distance_3d(centers[i], previous_centers[i]) for i in range(nclusters)
+        )
+
+        logger.trace(f"Iteration {iteration + 1}: Total center shift = {total_shift}")
+        if total_shift < 4:
+            logger.trace("Converged")
+            break
+
+    # Select the cluster with the largest total pixel count
+    logger.trace("Selecting the dominant color as center with the largest pixel count")
+    cluster_counts = [sum(count for count, _ in group) for group in color_groups]
+    dominant_index = cluster_counts.index(max(cluster_counts))
+    dominant_color = centers[dominant_index]
+
+    return tuple(int(channel) for channel in dominant_color)
 
 
 # ----- Some useful JIT-compiled (maybe) functions ----- #
