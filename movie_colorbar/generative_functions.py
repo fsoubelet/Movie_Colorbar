@@ -67,42 +67,42 @@ def get_rgb_colors(source_image: Image) -> list:
 #     return tuple(int(math.sqrt(x)) for x in average_rgb_squared)
 
 
-def get_average_hsv(source_image: Image) -> tuple:
-    """
-    Get the average of each H, S and V of the colors in an image, as RGB.
+# def get_average_hsv(source_image: Image) -> tuple:
+#     """
+#     Get the average of each H, S and V of the colors in an image, as RGB.
 
-    Args:
-        source_image: a Pillow.Image instance.
+#     Args:
+#         source_image: a Pillow.Image instance.
 
-    Returns:
-        a tuple with average H, S and V of the image, as converted to RGB.
-    """
-    logger.trace("Extracting average HSV components of the image")
-    colors = get_rgb_colors(source_image)
-    colors_hsv = [(w, colorsys.rgb_to_hsv(*[y / 255.0 for y in x])) for w, x in colors]
-    average = [sum(y[1][x] * y[0] for y in colors_hsv) / sum(z[0] for z in colors_hsv) for x in range(3)]
-    average_rgb = colorsys.hsv_to_rgb(*average)
-    return tuple(int(x * 255) for x in average_rgb)
+#     Returns:
+#         a tuple with average H, S and V of the image, as converted to RGB.
+#     """
+#     logger.trace("Extracting average HSV components of the image")
+#     colors = get_rgb_colors(source_image)
+#     colors_hsv = [(w, colorsys.rgb_to_hsv(*[y / 255.0 for y in x])) for w, x in colors]
+#     average = [sum(y[1][x] * y[0] for y in colors_hsv) / sum(z[0] for z in colors_hsv) for x in range(3)]
+#     average_rgb = colorsys.hsv_to_rgb(*average)
+#     return tuple(int(x * 255) for x in average_rgb)
 
 
-def get_average_hue(source_image: Image) -> tuple:
-    """
-    Get the average hue of the colors in an image, as RGB.
+# def get_average_hue(source_image: Image) -> tuple:
+#     """
+#     Get the average hue of the colors in an image, as RGB.
 
-    Args:
-        source_image: a Pillow.Image instance.
+#     Args:
+#         source_image: a Pillow.Image instance.
 
-    Returns:
-        a tuple with average hue for the image, as converted to RGB.
-    """
-    logger.trace("Extracting average hue components of the image")
-    average_hsv = get_average_hsv(source_image)
-    average_hsv = colorsys.rgb_to_hsv(*[x / 255.0 for x in average_hsv])
+#     Returns:
+#         a tuple with average hue for the image, as converted to RGB.
+#     """
+#     logger.trace("Extracting average hue components of the image")
+#     average_hsv = get_average_hsv(source_image)
+#     average_hsv = colorsys.rgb_to_hsv(*[x / 255.0 for x in average_hsv])
 
-    # Highest value and saturation
-    average_hsv = [average_hsv[0], 1.0, 1.0]
-    average_rgb = colorsys.hsv_to_rgb(*average_hsv)
-    return tuple(int(x * 255) for x in average_rgb)
+#     # Highest value and saturation
+#     average_hsv = [average_hsv[0], 1.0, 1.0]
+#     average_rgb = colorsys.hsv_to_rgb(*average_hsv)
+#     return tuple(int(x * 255) for x in average_rgb)
 
 
 def calculate_distance_between_two_3d_points(point_1, point_2) -> float:
