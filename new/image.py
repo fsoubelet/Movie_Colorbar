@@ -147,7 +147,7 @@ def get_average_hsv_as_rgb(image: Image) -> tuple[int, int, int]:
     return int(avg_r * 255), int(avg_g * 255), int(avg_b * 255)
 
 
-def get_average_hue(image: Image) -> tuple[int, int, int]:
+def get_average_hue_as_rgb(image: Image) -> tuple[int, int, int]:
     """
     Get the average hue of the colors in an image,
     as an RGB color to be displayed.
@@ -182,7 +182,7 @@ def get_average_hue(image: Image) -> tuple[int, int, int]:
     return tuple(int(val * 255) for val in hue_color_rgb)
 
 
-def get_kmeans_color(image: Image) -> tuple[int, int, int]:
+def get_kmeans_color_as_rgb(image: Image) -> tuple[int, int, int]:
     """
     Compute the dominant (average) color of an image using a simplified
     k-means algorithm. Returns the RGB color of the dominant average.
@@ -276,6 +276,33 @@ def get_kmeans_color(image: Image) -> tuple[int, int, int]:
     dominant_color = centers[dominant_index]
 
     return tuple(int(channel) for channel in dominant_color)
+
+
+def get_most_common_color_as_rgb(image: Image) -> tuple[int, int, int]:
+    """
+    Determine the most common color in the image,
+    as an RGB color to be displayed.
+
+    Parameters
+    ----------
+    image : PIL.Image
+        The image to extract the color from.
+
+    Returns
+    -------
+    tuple[int, int, int]
+        A tuple containing the RGB values (R, G, B) of the most
+        common color.
+    """
+    logger.trace("Determining the most common color in the image")
+    counts_and_colors = get_rgb_counts_and_colors(image)
+
+    # Sort the list of (count, color) by count and take highest
+    # this is 10x faster than sorted(counts_and_colors)[-1] :)
+    most_common_color = max(counts_and_colors, key=lambda x: x[0])
+
+    # And we return the RGB values from this entry
+    return most_common_color[1]
 
 
 def get_quantized_color_as_rgb(image: Image) -> tuple[int, int, int]:
