@@ -204,4 +204,4 @@ def euclidean_distance_3d(point1: tuple[float, float, float], point2: tuple[floa
     dx = point1[0] - point2[0]
     dy = point1[1] - point2[1]
     dz = point1[2] - point2[2]
-    return (dx**2 + dy**2 + dy**2)**0.5
+    return (dx**2 + dy**2 + dz**2)**0.5
