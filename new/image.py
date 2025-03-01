@@ -305,6 +305,30 @@ def get_quantized_color_as_rgb(image: Image) -> tuple[int, int, int]:
     return quantized_image_rgb.getcolors()[0][1]
 
 
+def get_resized_1px_rgb(image: Image) -> tuple[int, int, int]:
+    """
+    Compute the image's average color of by resizing it to a 1x1 pixel.
+    It is computationaly efficient but remains an approximation.
+
+    Parameters
+    ----------
+    image : PIL.Image
+        The image to extract the color from.
+
+    Returns
+    -------
+    tuple[int, int, int]
+        A tuple containing the RGB values (R, G, B) of the 1x1 pixel
+        equivalent of the image.
+    """
+    logger.trace("Resizing the image to 1x1 pixel to get the average color")
+    resized_image_rgb = image.resize((1, 1)).convert("RGB")
+
+    # Get the dominant color and return it directly
+    # (.getcolors() returns a list of (count, color))
+    return resized_image_rgb.getcolors()[0][1]
+
+
 # ----- Some useful JIT-compiled (maybe) functions ----- #
 
 
