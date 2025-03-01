@@ -11,7 +11,7 @@ from loguru import logger
 from new.colors import *
 
 
-def get_rgb_colors(image: Image) -> list[tuple[int, int, int]]:
+def get_rgb_colors_and_counts(image: Image) -> list[tuple[int, tuple[int, int, int]]]:
     """
     Get the RGB colors of an image.
 
@@ -22,9 +22,12 @@ def get_rgb_colors(image: Image) -> list[tuple[int, int, int]]:
 
     Returns
     -------
-    list
-        A list of RGB colors as tuples.
+    list[tuple[int, tuple[int, int, int]]]
+        A list of the count for each color, and the RGB values
+        for the given color. An entry in this list might read:
+        (3378, (41, 33, 29))  # 3378 pixels with RGB values (41, 33, 29)
     """
     logger.trace("Extracting RGB pixels from Image")
     img_rgb = image.convert("RGB")
-    return list(img_rgb.getdata())
+    return img_rgb.getcolors(img_rgb.size[0] * img_rgb.size[1])
+
