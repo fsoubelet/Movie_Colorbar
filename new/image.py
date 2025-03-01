@@ -181,7 +181,7 @@ def get_average_hue(image: Image) -> tuple[int, int, int]:
     return tuple(int(val * 255) for val in hue_color_rgb)
 
 
-def get_kmeans_color(source_image: Image) -> tuple:
+def get_kmeans_color(image: Image) -> tuple:
     """
     Compute the dominant (average) color of an image using a simplified
     k-means algorithm. Returns the RGB color of the dominant average.
@@ -202,7 +202,7 @@ def get_kmeans_color(source_image: Image) -> tuple:
         A tuple with the R, G, B values corresponding to
         the kmean-average color of the image.
     """
-    counts_and_colors = get_rgb_counts_and_colors(source_image)
+    counts_and_colors = get_rgb_counts_and_colors(image)
     logger.trace("Starting k-means algorithm, defaulting to 5 clusters")
 
     # Number of clusters (centers) to use.
