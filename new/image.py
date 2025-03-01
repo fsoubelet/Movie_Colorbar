@@ -9,7 +9,7 @@ of images and extracting color information from them.
 from loguru import logger
 from PIL import Image
 
-from new.colors import convert_hsv_to_rgb, convert_rgb_to_hsv
+from new.colors import cs_hsv_to_rgb, cs_rgb_to_hsv
 
 
 def get_rgb_counts_and_colors(image: Image) -> list[tuple[int, tuple[int, int, int]]]:
@@ -128,7 +128,7 @@ def get_average_hsv_as_rgb(image: Image) -> tuple[int, int, int]:
 
     for count, (r, g, b) in counts_and_colors:
         # Get HSV values from RGB - colorsys wants RGB in [0, 1] range
-        h, s, v = convert_rgb_to_hsv(r / 255.0, g / 255.0, b / 255.0)
+        h, s, v = cs_rgb_to_hsv(r / 255.0, g / 255.0, b / 255.0)
         total_pixels += count
         total_h += count * h
         total_s += count * s
@@ -140,7 +140,7 @@ def get_average_hsv_as_rgb(image: Image) -> tuple[int, int, int]:
 
     # Get the corresponding RGB values for the average HSV color and
     # scale them back to [0, 255] range (colorsys works in [0, 1])
-    avg_r, avg_g, avg_b = convert_hsv_to_rgb(avg_h, avg_s, avg_v)
+    avg_r, avg_g, avg_b = cs_hsv_to_rgb(avg_h, avg_s, avg_v)
     return int(avg_r * 255), int(avg_g * 255), int(avg_b * 255)
 
 
@@ -168,12 +168,12 @@ def get_average_hue(image: Image) -> tuple[int, int, int]:
     # Convert the average RGB to the [0, 1] scale required by
     # the HSV conversion function from colorsys (JIT-compiled)
     scaled_avg = tuple(val / 255.0 for val in avg_hsv_as_rgb)
-    avg_hsv = convert_rgb_to_hsv(*scaled_avg)
+    avg_hsv = cs_rgb_to_hsv(*scaled_avg)
 
     # Use the hue from avg_hsv with full saturation and brightness
     # and convert to get the RGB representation
     hue_color_hsv = (avg_hsv[0], 1.0, 1.0)
-    hue_color_rgb = convert_hsv_to_rgb(*hue_color_hsv)
+    hue_color_rgb = cs_hsv_to_rgb(*hue_color_hsv)
 
     # Scale the RGB values back to [0, 255] before returning
     return tuple(int(val * 255) for val in hue_color_rgb)
