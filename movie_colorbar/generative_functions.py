@@ -31,40 +31,40 @@ def get_rgb_colors(source_image: Image) -> list:
     return image_rgb.getcolors(image_rgb.size[0] * image_rgb.size[1])
 
 
-def get_average_rgb(source_image: Image) -> tuple:
-    """
-    Get the average of each R, G and B components of the colors in an image.
+# def get_average_rgb(source_image: Image) -> tuple:
+#     """
+#     Get the average of each R, G and B components of the colors in an image.
 
-    Args:
-        source_image: a Pillow.Image instance.
+#     Args:
+#         source_image: a Pillow.Image instance.
 
-    Returns:
-         a tuple of R, G and B calculated averages.
-    """
-    colors = get_rgb_colors(source_image)
+#     Returns:
+#          a tuple of R, G and B calculated averages.
+#     """
+#     colors = get_rgb_colors(source_image)
 
-    logger.trace("Computing average RGB components of the image")
-    rgb_colors = tuple(sum(y[1][x] * y[0] for y in colors) / sum(z[0] for z in colors) for x in range(3))
-    return tuple(int(e) for e in rgb_colors)
+#     logger.trace("Computing average RGB components of the image")
+#     rgb_colors = tuple(sum(y[1][x] * y[0] for y in colors) / sum(z[0] for z in colors) for x in range(3))
+#     return tuple(int(e) for e in rgb_colors)
 
 
-def get_average_rgb_squared(source_image: Image) -> tuple:
-    """
-    Get the squared average of each R, G and B of the colors in an image.
+# def get_average_rgb_squared(source_image: Image) -> tuple:
+#     """
+#     Get the squared average of each R, G and B of the colors in an image.
 
-    Args:
-        source_image: a Pillow.Image instance.
+#     Args:
+#         source_image: a Pillow.Image instance.
 
-    Returns:
-        a tuple of R, G and B calculated squared averages.
-    """
-    colors = get_rgb_colors(source_image)
-    logger.trace("Computing average RGB components squared of the image")
-    average_rgb_squared = [
-        sum((y[1][x] ** 2) * y[0] for y in colors) / float(sum(z[0] for z in colors)) for x in range(3)
-    ]
+#     Returns:
+#         a tuple of R, G and B calculated squared averages.
+#     """
+#     colors = get_rgb_colors(source_image)
+#     logger.trace("Computing average RGB components squared of the image")
+#     average_rgb_squared = [
+#         sum((y[1][x] ** 2) * y[0] for y in colors) / float(sum(z[0] for z in colors)) for x in range(3)
+#     ]
 
-    return tuple(int(math.sqrt(x)) for x in average_rgb_squared)
+#     return tuple(int(math.sqrt(x)) for x in average_rgb_squared)
 
 
 def get_average_hsv(source_image: Image) -> tuple:
@@ -79,7 +79,7 @@ def get_average_hsv(source_image: Image) -> tuple:
     """
     logger.trace("Extracting average HSV components of the image")
     colors = get_rgb_colors(source_image)
-    colors_hsv = [(w, colorsys.rgb_to_hls(*[y / 255.0 for y in x])) for w, x in colors]
+    colors_hsv = [(w, colorsys.rgb_to_hsv(*[y / 255.0 for y in x])) for w, x in colors]
     average = [sum(y[1][x] * y[0] for y in colors_hsv) / sum(z[0] for z in colors_hsv) for x in range(3)]
     average_rgb = colorsys.hsv_to_rgb(*average)
     return tuple(int(x * 255) for x in average_rgb)
