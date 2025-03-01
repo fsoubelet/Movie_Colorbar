@@ -7,11 +7,11 @@ of images and extracting color information from them.
 """
 
 from PIL import Image
-
+from loguru import logger
 from new.colors import *
 
 
-def get_rgb_colors(image: Image) -> list:
+def get_rgb_colors(image: Image) -> list[tuple[int, int, int]]:
     """
     Get the RGB colors of an image.
 
@@ -23,7 +23,8 @@ def get_rgb_colors(image: Image) -> list:
     Returns
     -------
     list
-        A list of RGB colors.
+        A list of RGB colors as tuples.
     """
-
-    # return list(image.getdata())
+    logger.trace("Extracting RGB pixels from Image")
+    img_rgb = image.convert("RGB")
+    return list(img_rgb.getdata())
