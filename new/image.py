@@ -33,7 +33,7 @@ def get_rgb_counts_and_colors(image: Image) -> list[tuple[int, tuple[int, int, i
     return img_rgb.getcolors(img_rgb.size[0] * img_rgb.size[1])
 
 
-def get_average_rgb(image: Image) -> tuple[float, float, float]:
+def get_average_rgb(image: Image) -> tuple[int, int, int]:
     """
     Get the average R, G and B values of the colors in an image.
     The values are weighted by the number of pixels of each color.
@@ -49,7 +49,7 @@ def get_average_rgb(image: Image) -> tuple[float, float, float]:
         A tuple with the average R, G and B values of the image.
     """
     counts_and_colors = get_rgb_counts_and_colors(image)
-
+    logger.trace("Computing average RGB components of the image")
     total_pixels = 0
     total_r = 0
     total_g = 0
