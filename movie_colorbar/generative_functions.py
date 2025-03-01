@@ -242,7 +242,7 @@ def get_resized_1px_rgb(source_image: Image) -> list:
         a tuple with the R, G and B values of the image as 1 by 1 pixel.
     """
     logger.trace("Resizing image to 1 pixel")
-    return source_image.convert("RGB").resize((1, 1)).getcolors(1)[0][1]
+    return source_image.resize((1, 1)).convert("RGB").getcolors(1)[0][1]
 
 
 # def get_quantized_color(source_image: Image) -> list:
