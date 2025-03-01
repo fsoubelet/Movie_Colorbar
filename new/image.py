@@ -10,6 +10,7 @@ from loguru import logger
 from PIL import Image
 
 from new.colors import cs_hsv_to_rgb, cs_rgb_to_hsv
+from new.jit import maybe_jit
 
 
 def get_rgb_counts_and_colors(image: Image) -> list[tuple[int, tuple[int, int, int]]]:
@@ -177,3 +178,30 @@ def get_average_hue(image: Image) -> tuple[int, int, int]:
 
     # Scale the RGB values back to [0, 255] before returning
     return tuple(int(val * 255) for val in hue_color_rgb)
+
+
+
+# ----- Some useful JIT-compiled (maybe) functions ----- #
+
+
+@maybe_jit
+def euclidean_distance_3d(point1: tuple[float, float, float], point2: tuple[float, float, float]) -> float:
+    """
+    Calculate the Euclidean distance between two 3D points.
+
+    Parameters
+    ----------
+    point1 : tuple[float, float, float]
+        The first 3D point's coordinates.
+    point2 : tuple[float, float, float]
+        The second 3D point's coordinates.
+
+    Returns
+    -------
+    float
+        The Euclidean distance between the two points.
+    """
+    dx = point1[0] - point2[0]
+    dy = point1[1] - point2[1]
+    dz = point1[2] - point2[2]
+    return (dx**2 + dy**2 + dy**2)**0.5
