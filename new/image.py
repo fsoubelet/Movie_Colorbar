@@ -103,7 +103,7 @@ def get_average_rgb_squared(image: Image) -> tuple[int, int, int]:
     return int(avg_r2**0.5), int(avg_g2**0.5), int(avg_b2**0.5)
 
 
-def get_average_hsv(image: Image) -> tuple[int, int, int]:
+def get_average_hsv_as_rgb(image: Image) -> tuple[int, int, int]:
     """
     Get the average H, S and V values of the colors in an image,
     as an RGB color to be displayed.
@@ -142,3 +142,38 @@ def get_average_hsv(image: Image) -> tuple[int, int, int]:
     # scale them back to [0, 255] range (colorsys works in [0, 1])
     avg_r, avg_g, avg_b = convert_hsv_to_rgb(avg_h, avg_s, avg_v)
     return int(avg_r * 255), int(avg_g * 255), int(avg_b * 255)
+
+
+def get_average_hue(image: Image) -> tuple[int, int, int]:
+    """
+    Get the average hue of the colors in an image,
+    as an RGB color to be displayed.
+
+    Parameters
+    ----------
+    image : PIL.Image
+        The image to extract the colors from.
+
+    Returns
+    -------
+    tuple[int, int, int]
+        A tuple with the R, G, B values corresponding to the
+        average hue color of the image.
+    """
+    logger.trace("Computing average hue of the image")
+
+    # Get RGB representation of average HSV color
+    avg_hsv_as_rgb = get_average_hsv_as_rgb(image)
+
+    # Convert the average RGB to the [0, 1] scale required by
+    # the HSV conversion function from colorsys (JIT-compiled)
+    scaled_avg = tuple(val / 255.0 for val in avg_hsv_as_rgb)
+    avg_hsv = convert_rgb_to_hsv(*scaled_avg)
+
+    # Use the hue from avg_hsv with full saturation and brightness
+    # and convert to get the RGB representation
+    hue_color_hsv = (avg_hsv[0], 1.0, 1.0)
+    hue_color_rgb = convert_hsv_to_rgb(*hue_color_hsv)
+
+    # Scale the RGB values back to [0, 255] before returning
+    return tuple(int(val * 255) for val in hue_color_rgb)
