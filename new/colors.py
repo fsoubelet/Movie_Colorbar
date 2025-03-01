@@ -16,12 +16,12 @@ from new.jit import maybe_jit
 
 # We re-export the colorsys functions with a
 # potential JIT-compilation by numba
-rgb_to_yiq = maybe_jit(_rgb_to_yiq)
-yiq_to_rgb = maybe_jit(_yiq_to_rgb)
-rgb_to_hls = maybe_jit(_rgb_to_hls)
-hls_to_rgb = maybe_jit(_hls_to_rgb)
-rgb_to_hsv = maybe_jit(_rgb_to_hsv)
-hsv_to_rgb = maybe_jit(_hsv_to_rgb)
+convert_rgb_to_yiq = maybe_jit(_rgb_to_yiq)
+convert_yiq_to_rgb = maybe_jit(_yiq_to_rgb)
+convert_rgb_to_hls = maybe_jit(_rgb_to_hls)
+convert_hls_to_rgb = maybe_jit(_hls_to_rgb)
+convert_rgb_to_hsv = maybe_jit(_rgb_to_hsv)
+convert_hsv_to_rgb = maybe_jit(_hsv_to_rgb)
 
 
 @maybe_jit
