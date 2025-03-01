@@ -180,12 +180,32 @@ def get_average_hue(image: Image) -> tuple[int, int, int]:
     return tuple(int(val * 255) for val in hue_color_rgb)
 
 
+def get_kmeans_color(image: Image) -> tuple[int, int, int]:
+    """
+    Get the average color of an image using the KMeans algorithm,
+    as an RGB color to be displayed.
+
+    Parameters
+    ----------
+    image : PIL.Image
+        The image to extract the colors from.
+
+    Returns
+    -------
+    tuple[int, int, int]
+        A tuple with the R, G, B values corresponding to
+        the kmean-average color of the image.
+    """
+    logger.trace("Computing KMeans color of the image")
+
 
 # ----- Some useful JIT-compiled (maybe) functions ----- #
 
 
 @maybe_jit
-def euclidean_distance_3d(point1: tuple[float, float, float], point2: tuple[float, float, float]) -> float:
+def euclidean_distance_3d(
+    point1: tuple[float, float, float], point2: tuple[float, float, float]
+) -> float:
     """
     Calculate the Euclidean distance between two 3D points.
 
@@ -204,4 +224,4 @@ def euclidean_distance_3d(point1: tuple[float, float, float], point2: tuple[floa
     dx = point1[0] - point2[0]
     dy = point1[1] - point2[1]
     dz = point1[2] - point2[2]
-    return (dx**2 + dy**2 + dz**2)**0.5
+    return (dx**2 + dy**2 + dz**2) ** 0.5
