@@ -245,18 +245,18 @@ def get_resized_1px_rgb(source_image: Image) -> list:
     return source_image.convert("RGB").resize((1, 1)).getcolors(1)[0][1]
 
 
-def get_quantized_color(source_image: Image) -> list:
-    """
-    Use Pillow's color quantization to reduce the image to one color, then return that color.
+# def get_quantized_color(source_image: Image) -> list:
+#     """
+#     Use Pillow's color quantization to reduce the image to one color, then return that color.
 
-    Args:
-        source_image:
+#     Args:
+#         source_image:
 
-    Returns:
-         a tuple with the R, G and B values of the image reduced to one collor by Pillow.
-    """
-    logger.trace("Quantizing image to 1 color")
-    return source_image.quantize(1).convert("RGB").getcolors()[0][1]
+#     Returns:
+#          a tuple with the R, G and B values of the image reduced to one collor by Pillow.
+#     """
+#     logger.trace("Quantizing image to 1 color")
+#     return source_image.quantize(1).convert("RGB").getcolors()[0][1]
 
 
 # def convert_rgb_to_xyz(source_color_rgb: tuple) -> tuple:
