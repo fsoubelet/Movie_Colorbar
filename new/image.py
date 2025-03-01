@@ -84,7 +84,7 @@ def get_average_rgb_squared(image: Image) -> tuple[int, int, int]:
         A tuple with the squared averaged R, G and B values of the image.
     """
     counts_and_colors = get_rgb_counts_and_colors(image)
-    logger.trace("Computing average RGB components of the image")
+    logger.trace("Computing square-averaged RGB components of the image")
     total_pixels = 0
     total_r2 = 0
     total_g2 = 0
@@ -101,3 +101,5 @@ def get_average_rgb_squared(image: Image) -> tuple[int, int, int]:
     avg_b2 = total_b2 / total_pixels
 
     return int(avg_r2**0.5), int(avg_g2**0.5), int(avg_b2**0.5)
+
+
