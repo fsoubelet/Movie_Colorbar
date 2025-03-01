@@ -7,6 +7,7 @@ of images and extracting color information from them.
 """
 
 import random
+
 from loguru import logger
 from PIL import Image
 
@@ -275,6 +276,33 @@ def get_kmeans_color(image: Image) -> tuple[int, int, int]:
     dominant_color = centers[dominant_index]
 
     return tuple(int(channel) for channel in dominant_color)
+
+
+def get_quantized_color_as_rgb(image: Image) -> tuple[int, int, int]:
+    """
+    Reduce the image to a single dominant color using Pillow's
+    quantization method. Pillow's built-in color quantization
+    compresses the image to a  palette containing only one color.
+    We then retrieve the equivalent RGB value of that color, which
+    represents the most prominent color in the image.
+
+    Parameters
+    ----------
+    image : PIL.Image
+        The image to extract the color from.
+
+    Returns
+    -------
+    tuple[int, int, int]
+        A tuple containing the RGB values (R, G, B) of the quantized
+        dominant color.
+    """
+    logger.trace("Quantizing the image to a single dominant color")
+    quantized_image_rgb = image.quantize(colors=1).convert("RGB")
+
+    # Get the dominant color and return it directly
+    # (.getcolors() returns a list of (count, color))
+    return quantized_image_rgb.getcolors()[0][1]
 
 
 # ----- Some useful JIT-compiled (maybe) functions ----- #
