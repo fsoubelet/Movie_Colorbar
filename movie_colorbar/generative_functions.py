@@ -105,80 +105,80 @@ def get_rgb_colors(source_image: Image) -> list:
 #     return tuple(int(x * 255) for x in average_rgb)
 
 
-def calculate_distance_between_two_3d_points(point_1, point_2) -> float:
-    """
-    Get the euclidean distance between two 3d points.
+# def calculate_distance_between_two_3d_points(point_1, point_2) -> float:
+#     """
+#     Get the euclidean distance between two 3d points.
 
-    Args:
-        point_1: Point 1 coordinates.
-        point_2: Point 2 coordinates.
+#     Args:
+#         point_1: Point 1 coordinates.
+#         point_2: Point 2 coordinates.
 
-    Returns:
-        Distance between those two points.
-    """
-    logger.trace(f"Computing Euclidean distance between {point_1} and {point_2}")
-    return math.sqrt(sum((point_1[x] - point_2[x]) ** 2 for x in range(len(point_1))))
+#     Returns:
+#         Distance between those two points.
+#     """
+#     logger.trace(f"Computing Euclidean distance between {point_1} and {point_2}")
+#     return math.sqrt(sum((point_1[x] - point_2[x]) ** 2 for x in range(len(point_1))))
 
 
-def get_kmeans_color(source_image: Image) -> tuple:
-    """
-    Get the average color of an image, using the kmeans method.
+# def get_kmeans_color(source_image: Image) -> tuple:
+#     """
+#     Get the average color of an image, using the kmeans method.
 
-    Args:
-        source_image: a Pillow.Image instance.
+#     Args:
+#         source_image: a Pillow.Image instance.
 
-    Returns:
-        a tuple of the color.
-    """
-    logger.trace("Starting kmeans algorithm")
-    colors_rgb = get_rgb_colors(source_image)
-    num_centers = 5
-    centers = []
+#     Returns:
+#         a tuple of the color.
+#     """
+#     logger.trace("Starting kmeans algorithm")
+#     colors_rgb = get_rgb_colors(source_image)
+#     num_centers = 5
+#     centers = []
 
-    logger.trace("Checking if number of colors is less than number of centers")
-    if len(colors_rgb) < num_centers:
-        centers = [x for _, x in colors_rgb]
-        num_centers = len(colors_rgb)
+#     logger.trace("Checking if number of colors is less than number of centers")
+#     if len(colors_rgb) < num_centers:
+#         centers = [x for _, x in colors_rgb]
+#         num_centers = len(colors_rgb)
 
-    logger.trace("Choosing random starting centers")
-    while len(centers) != num_centers:
-        random_color = random.choice(colors_rgb)[1]
-        if random_color not in centers:
-            centers.append(random_color)
+#     logger.trace("Choosing random starting centers")
+#     while len(centers) != num_centers:
+#         random_color = random.choice(colors_rgb)[1]
+#         if random_color not in centers:
+#             centers.append(random_color)
 
-    logger.trace("Iterating on means")
-    for _ in range(20):
-        previous_centers = centers[:]
-        color_groups = [[] for _ in range(num_centers)]
-        for element in colors_rgb:
-            logger.trace("Calculating the center with the smallest distance to the color")
-            min_distance_index = sorted(
-                range(num_centers),
-                key=lambda x: calculate_distance_between_two_3d_points(centers[x], element[1]),
-            )[0]
-            logger.trace("Appending determined color to the group")
-            color_groups[min_distance_index].append(element)
+#     logger.trace("Iterating on means")
+#     for _ in range(20):
+#         previous_centers = centers[:]
+#         color_groups = [[] for _ in range(num_centers)]
+#         for element in colors_rgb:
+#             logger.trace("Calculating the center with the smallest distance to the color")
+#             min_distance_index = sorted(
+#                 range(num_centers),
+#                 key=lambda x: calculate_distance_between_two_3d_points(centers[x], element[1]),
+#             )[0]
+#             logger.trace("Appending determined color to the group")
+#             color_groups[min_distance_index].append(element)
 
-        logger.trace("Calculating new centers")
-        centers = [
-            tuple(sum(y[1][x] * y[0] for y in group) / sum(z[0] for z in group) for x in range(3))
-            for group in color_groups
-        ]
+#         logger.trace("Calculating new centers")
+#         centers = [
+#             tuple(sum(y[1][x] * y[0] for y in group) / sum(z[0] for z in group) for x in range(3))
+#             for group in color_groups
+#         ]
 
-        logger.trace("Calculating center difference")
-        difference = sum(
-            calculate_distance_between_two_3d_points(centers[x], previous_centers[x])
-            for x in range(num_centers)
-        )
+#         logger.trace("Calculating center difference")
+#         difference = sum(
+#             calculate_distance_between_two_3d_points(centers[x], previous_centers[x])
+#             for x in range(num_centers)
+#         )
 
-        logger.trace("Checking beakoff point")
-        if difference < 4:
-            logger.trace("Converged")
-            break
+#         logger.trace("Checking beakoff point")
+#         if difference < 4:
+#             logger.trace("Converged")
+#             break
 
-    logger.trace("Getting group with largest number of colors")
-    group = centers[sorted(range(num_centers), key=lambda x: sum(y[0] for y in color_groups[x]))[-1]]
-    return tuple(int(e) for e in group)
+#     logger.trace("Getting group with largest number of colors")
+#     group = centers[sorted(range(num_centers), key=lambda x: sum(y[0] for y in color_groups[x]))[-1]]
+#     return tuple(int(e) for e in group)
 
 
 def get_most_common_colors_as_rgb(source_image: Image) -> tuple:
