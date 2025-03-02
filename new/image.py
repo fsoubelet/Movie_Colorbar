@@ -11,7 +11,7 @@ import random
 from loguru import logger
 from PIL import Image
 
-from new.colors import cs_hsv_to_rgb, cs_rgb_to_hsv
+from new.colors import convert_rgb_to_xyz, convert_xyz_to_rgb, cs_hsv_to_rgb, cs_rgb_to_hsv
 from new.jit import maybe_jit
 
 
@@ -180,6 +180,48 @@ def get_average_hue_as_rgb(image: Image) -> tuple[int, int, int]:
 
     # Scale the RGB values back to [0, 255] before returning
     return tuple(int(val * 255) for val in hue_color_rgb)
+
+
+def get_average_xyz_as_rgb(image: Image) -> tuple[int, int, int]:
+    """
+    Get the average X, Y and Z values of the colors in the image,
+    as an RGB color to be displayed.
+
+    Parameters
+    ----------
+    image : PIL.Image
+        The image to extract the colors from.
+
+    Returns
+    -------
+    tuple[float, float, float]
+        A tuple with the R, G, B values corresponding to the
+        average HSV color of the image.
+    """
+    counts_and_colors = get_rgb_counts_and_colors(image)
+    logger.trace("Extracting average XYZ components of the image.")
+
+    # Step 2: Convert RGB colors to XYZ and weight by pixel counts
+    count_and_xyz = [(count, convert_rgb_to_xyz(*rgb)) for count, rgb in counts_and_colors]
+
+    weighted_x_sum = 0
+    weighted_y_sum = 0
+    weighted_z_sum = 0
+    total_weight = sum(weight for weight, _ in counts_and_colors)
+
+    # Step 3: Convert each RGB color to XYZ and calculate weighted sums
+    for weight, (x, y, z) in count_and_xyz:
+        weighted_x_sum += weight * x
+        weighted_y_sum += weight * y
+        weighted_z_sum += weight * z
+
+    # Step 4: Calculate the average X, Y, Z values
+    avg_x = weighted_x_sum / total_weight
+    avg_y = weighted_y_sum / total_weight
+    avg_z = weighted_z_sum / total_weight
+
+    avg_r, avg_g, avg_b = convert_xyz_to_rgb(avg_x, avg_y, avg_z)
+    return int(avg_r), int(avg_g), int(avg_b)
 
 
 def get_kmeans_color_as_rgb(image: Image) -> tuple[int, int, int]:
