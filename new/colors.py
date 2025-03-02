@@ -114,10 +114,10 @@ def convert_xyz_to_rgb(X: float, Y: float, Z: float) -> tuple[float, float, floa
     b = correct_gamma(bl)
 
     # Clamp values to the [0, 1] range and scale to [0, 255]
-    r = max(0, min(1, r)) * 255
-    g = max(0, min(1, g)) * 255
-    b = max(0, min(1, b)) * 255
-    return r, g, b
+    R = max(0, min(1, r)) * 255
+    G = max(0, min(1, g)) * 255
+    B = max(0, min(1, b)) * 255
+    return R, G, B
 
 
 @maybe_jit
