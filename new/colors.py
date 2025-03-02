@@ -25,7 +25,7 @@ cs_hsv_to_rgb = maybe_jit(_hsv_to_rgb)
 
 
 @maybe_jit
-def convert_rgb_to_xyz(r: float, g: float, b: float) -> tuple[float, float, float]:
+def convert_rgb_to_xyz(R: float, G: float, B: float) -> tuple[float, float, float]:
     """
     Converts a color from the sRGB to the CIE XYZ 1931 colorspace.
     The colorsys module does not provide an implementation for this
@@ -35,11 +35,11 @@ def convert_rgb_to_xyz(r: float, g: float, b: float) -> tuple[float, float, floa
 
     Parameters
     ----------
-    r : float
+    R : float
         The red value of the color (0-255).
-    g : float
+    G : float
         The green value of the color (0-255).
-    b : float
+    B : float
         The blue value of the color (0-255).
 
     Returns
@@ -61,9 +61,9 @@ def convert_rgb_to_xyz(r: float, g: float, b: float) -> tuple[float, float, floa
             return ((value + 0.055) / 1.055) ** 2.4
         return value / 12.92
 
-    r = normalize_and_correct_gamma(r)
-    g = normalize_and_correct_gamma(g)
-    b = normalize_and_correct_gamma(b)
+    r = normalize_and_correct_gamma(R)
+    g = normalize_and_correct_gamma(G)
+    b = normalize_and_correct_gamma(B)
 
     # Compute XYZ using the transformation matrix (D65 illuminant)
     # and also scale to be in the [0, 100] range
