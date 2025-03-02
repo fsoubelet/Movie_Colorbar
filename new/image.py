@@ -118,7 +118,7 @@ def get_average_hsv_as_rgb(image: Image) -> tuple[int, int, int]:
 
     Returns
     -------
-    tuple[float, float, float]
+    tuple[int, int, int]
         A tuple with the R, G, B values corresponding to the
         average HSV color of the image.
     """
@@ -194,32 +194,30 @@ def get_average_xyz_as_rgb(image: Image) -> tuple[int, int, int]:
 
     Returns
     -------
-    tuple[float, float, float]
+    tuple[int, int, int]
         A tuple with the R, G, B values corresponding to the
         average HSV color of the image.
     """
     counts_and_colors = get_rgb_counts_and_colors(image)
     logger.trace("Extracting average XYZ components of the image.")
+    total_pixels = 0
+    total_weighted_x = 0
+    total_weighted_y = 0
+    total_weighted_z = 0
 
-    # Step 2: Convert RGB colors to XYZ and weight by pixel counts
-    count_and_xyz = [(count, convert_rgb_to_xyz(*rgb)) for count, rgb in counts_and_colors]
+    for count, (r, g, b) in counts_and_colors:
+        # Get XYZ values from RGB
+        x, y, z = convert_rgb_to_xyz(r, g, b)
+        total_pixels += count
+        total_weighted_x += count * x
+        total_weighted_y += count * y
+        total_weighted_z += count * z
 
-    weighted_x_sum = 0
-    weighted_y_sum = 0
-    weighted_z_sum = 0
-    total_weight = sum(weight for weight, _ in counts_and_colors)
+    avg_x = total_weighted_x / total_pixels
+    avg_y = total_weighted_y / total_pixels
+    avg_z = total_weighted_z / total_pixels
 
-    # Step 3: Convert each RGB color to XYZ and calculate weighted sums
-    for weight, (x, y, z) in count_and_xyz:
-        weighted_x_sum += weight * x
-        weighted_y_sum += weight * y
-        weighted_z_sum += weight * z
-
-    # Step 4: Calculate the average X, Y, Z values
-    avg_x = weighted_x_sum / total_weight
-    avg_y = weighted_y_sum / total_weight
-    avg_z = weighted_z_sum / total_weight
-
+    # Get the corresponding RGB values for the average XYZ color
     avg_r, avg_g, avg_b = convert_xyz_to_rgb(avg_x, avg_y, avg_z)
     return int(avg_r), int(avg_g), int(avg_b)
 
