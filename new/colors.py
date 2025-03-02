@@ -48,15 +48,9 @@ def convert_rgb_to_xyz(R: float, G: float, B: float) -> tuple[float, float, floa
         A tuple with the X, Y, Z values of the color.
     """
 
-    # To make sure we are in the [0, 1] range
-    def range_normalize(value: float) -> float:
-        if value > 1.0:
-            return value / 255.0
-        return value
-
     # Normalize and gamma correct each color channel
     def normalize_and_correct_gamma(value: float) -> float:
-        value = range_normalize(value)
+        value = value / 255.0  # To make sure we are in the [0, 1] range
         if value > 0.04045:
             return ((value + 0.055) / 1.055) ** 2.4
         return value / 12.92
@@ -98,14 +92,9 @@ def convert_xyz_to_rgb(X: float, Y: float, Z: float) -> tuple[float, float, floa
     """
 
     # To make sure we are in the [0, 1] range
-    def range_normalize(value: float) -> float:
-        if value > 1.0:
-            return value / 100.0
-        return value
-
-    x = range_normalize(X)
-    y = range_normalize(Y)
-    z = range_normalize(Z)
+    x = X / 100
+    y = Y / 100
+    z = Z / 100
 
     # Apply the inverse transformation matrix (D65 illuminant)
     # to compute the linear RGB components
