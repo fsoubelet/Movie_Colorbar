@@ -61,10 +61,10 @@ def convert_rgb_to_xyz(R: float, G: float, B: float) -> tuple[float, float, floa
 
     # Compute XYZ using the transformation matrix (D65 illuminant)
     # and also scale to be in the [0, 100] range
-    x = 100 * (r * 0.4124 + g * 0.3576 + b * 0.1805)
-    y = 100 * (r * 0.2126 + g * 0.7152 + b * 0.0722)
-    z = 100 * (r * 0.0193 + g * 0.1192 + b * 0.9505)
-    return x, y, z
+    X = 100 * (r * 0.4124 + g * 0.3576 + b * 0.1805)
+    Y = 100 * (r * 0.2126 + g * 0.7152 + b * 0.0722)
+    Z = 100 * (r * 0.0193 + g * 0.1192 + b * 0.9505)
+    return X, Y, Z
 
 
 @maybe_jit
