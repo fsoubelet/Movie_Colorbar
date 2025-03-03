@@ -2,7 +2,7 @@
 Image
 -----
 
-Small module with different functions to handle parsing
+Module with different functions to handle parsing
 of images and extracting color information from them.
 """
 
