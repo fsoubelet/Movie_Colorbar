@@ -11,7 +11,7 @@ import random
 from loguru import logger
 from PIL import Image
 
-from new.colors import convert_rgb_to_xyz, convert_xyz_to_rgb, cs_hsv_to_rgb, cs_rgb_to_hsv
+from new.colors import convert_rgb_to_xyz, convert_xyz_to_rgb, cs_hsv_to_rgb, cs_rgb_to_hsv, convert_xyz_to_lab, convert_lab_to_xyz
 from new.jit import maybe_jit
 
 
@@ -220,6 +220,30 @@ def get_average_xyz_as_rgb(image: Image) -> tuple[int, int, int]:
     # Get the corresponding RGB values for the average XYZ color
     avg_r, avg_g, avg_b = convert_xyz_to_rgb(avg_x, avg_y, avg_z)
     return int(avg_r), int(avg_g), int(avg_b)
+
+
+def get_average_lab_as_rgb(image: Image) -> tuple[int, int, int]:
+    """
+    Get the average L (lightness), A channel and B channel of the
+    colors in the image, as an RGB color to be displayed.
+
+    Parameters
+    ----------
+    image : PIL.Image
+        The image to extract the colors from.
+
+    Returns
+    -------
+    tuple[int, int, int]
+        A tuple with the R, G, B values corresponding to the
+        average HSV color of the image.
+    """
+    counts_and_colors = get_rgb_counts_and_colors(image)
+    logger.trace("Extracting average LAB components of the image")
+
+    colors_lab = [(w, convert_xyz_to_lab(*convert_rgb_to_xyz(*x))) for (w, x) in counts_and_colors]
+    average = tuple(sum(y[1][x] * y[0] for y in colors_lab) / sum(z[0] for z in colors_lab) for x in range(3))
+    return convert_xyz_to_rgb(*convert_lab_to_xyz(*average))
 
 
 def get_kmeans_color_as_rgb(image: Image) -> tuple[int, int, int]:
