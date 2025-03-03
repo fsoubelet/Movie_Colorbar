@@ -2,8 +2,8 @@
 Image
 -----
 
-Module with different functions to handle parsing
-of images and extracting color information from them.
+Module with functions to handle parsing images
+and extracting color information from them.
 """
 
 import random

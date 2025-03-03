@@ -1,6 +1,6 @@
 """
-Bar
----
+Extract
+-------
 
 Module with different functions to handle splitting a
 video into many images, and turning these images into

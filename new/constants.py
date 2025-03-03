@@ -2,7 +2,7 @@
 Constants
 ---------
 
-Module with different constants used in the project.
+Module with constants used in the project.
 """
 
 # ----- Methods ----- #

@@ -2,7 +2,7 @@
 Colors
 ------
 
-Helper functions to handle color calculations and conversions.
+Module with functions to handle color calculations and conversions.
 """
 
 from colorsys import hls_to_rgb as _hls_to_rgb
