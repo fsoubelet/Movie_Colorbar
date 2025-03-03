@@ -1,4 +1,18 @@
-from new.constants import COMMON, HSV, HUE, KMEANS, LAB, QUANTIZED, RESIZE, RGB, RGB_SQUARED, XYZ
+from pathlib import Path
+
+from new.constants import (
+    COMMON,
+    HSV,
+    HUE,
+    KMEANS,
+    LAB,
+    QUANTIZED,
+    RESIZE,
+    RGB,
+    RGB_SQUARED,
+    VALID_VIDEO_EXTENSIONS,
+    XYZ,
+)
 from new.image import (
     get_average_hsv_as_rgb,
     get_average_hue_as_rgb,
@@ -26,3 +40,24 @@ METHOD_ACTION_MAP: dict = {
     RGB_SQUARED: get_average_rgb_squared,
     XYZ: get_average_xyz_as_rgb,
 }
+
+
+# ----- Helpers ----- #
+
+
+def _check_is_handled_video(video: Path) -> None:
+    """
+    Check that the file extension is a handled video format.
+
+    Parameters
+    ----------
+    video : pathlib.Path
+        Path to the video file.
+
+    Raises
+    ------
+    ValueError
+        If the video file is not a handled video format.
+    """
+    if video.suffix.lower() not in VALID_VIDEO_EXTENSIONS:
+        raise ValueError(f"Video file {video.name} is not a handled video format.")
