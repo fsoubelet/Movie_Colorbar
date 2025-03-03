@@ -36,11 +36,11 @@ def convert_rgb_to_xyz(R: float, G: float, B: float) -> tuple[float, float, floa
     Parameters
     ----------
     R : float
-        The red value of the color (0-255).
+        The red component of the color (0-255).
     G : float
-        The green value of the color (0-255).
+        The green component of the color (0-255).
     B : float
-        The blue value of the color (0-255).
+        The blue component of the color (0-255).
 
     Returns
     -------
@@ -88,7 +88,7 @@ def convert_xyz_to_rgb(X: float, Y: float, Z: float) -> tuple[float, float, floa
     Returns
     -------
     tuple[float, float, float]
-        A tuple with the R, G, B values of the color.
+        A tuple with the R, G, and B components of the color.
     """
 
     # To make sure we are in the [0, 1] range

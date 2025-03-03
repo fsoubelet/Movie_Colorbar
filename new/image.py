@@ -24,7 +24,7 @@ from new.jit import maybe_jit
 
 def get_rgb_counts_and_colors(image: Image) -> list[tuple[int, tuple[int, int, int]]]:
     """
-    Get the RGB colors of the image.
+    Get the RGB components of the image.
 
     Parameters
     ----------
@@ -34,9 +34,10 @@ def get_rgb_counts_and_colors(image: Image) -> list[tuple[int, tuple[int, int, i
     Returns
     -------
     list[tuple[int, tuple[int, int, int]]]
-        A list of the count for each color, and the RGB values
-        for the given color. An entry in this list might read:
-        (3378, (41, 33, 29))  # 3378 pixels with RGB values (41, 33, 29)
+        A list of the pixel count for each color, and the R,
+        G and B components for the given color. An entry in
+        this list might read:
+        (3378, (41, 33, 29))  # 3378 pixels with RGB (41, 33, 29)
     """
     logger.trace("Extracting RGB pixels from Image")
     img_rgb = image.convert("RGB")
@@ -45,7 +46,7 @@ def get_rgb_counts_and_colors(image: Image) -> list[tuple[int, tuple[int, int, i
 
 def get_average_rgb(image: Image) -> tuple[int, int, int]:
     """
-    Get the average R, G and B values of the colors in the image.
+    Get the average R, G and B components of the colors in the image.
     The values are weighted by the number of pixels of each color.
 
     Parameters
@@ -56,7 +57,7 @@ def get_average_rgb(image: Image) -> tuple[int, int, int]:
     Returns
     -------
     tuple[int, int, int]
-        A tuple with the average R, G and B values of the image.
+        A tuple with the average R, G and B components of the image.
     """
     counts_and_colors = get_rgb_counts_and_colors(image)
     logger.trace("Computing average RGB components of the image")
@@ -80,8 +81,9 @@ def get_average_rgb(image: Image) -> tuple[int, int, int]:
 
 def get_average_rgb_squared(image: Image) -> tuple[int, int, int]:
     """
-    Get the squared averaged R, G and B values of the colors in the image.
-    The values are weighted by the number of pixels of each color.
+    Get the squared averaged R, G and B components of the colors
+    in the image. The values are weighted by the number of pixels
+    of each color.
 
     Parameters
     ----------
@@ -91,7 +93,8 @@ def get_average_rgb_squared(image: Image) -> tuple[int, int, int]:
     Returns
     -------
     tuple[int, int, int]
-        A tuple with the squared averaged R, G and B values of the image.
+        A tuple with the squared averaged R, G and B components
+        of the image's pixels.
     """
     counts_and_colors = get_rgb_counts_and_colors(image)
     logger.trace("Computing square-averaged RGB components of the image")
@@ -115,8 +118,8 @@ def get_average_rgb_squared(image: Image) -> tuple[int, int, int]:
 
 def get_average_hsv_as_rgb(image: Image) -> tuple[int, int, int]:
     """
-    Get the average H, S and V values of the colors in the image,
-    as an RGB color to be displayed.
+    Get the average H (hue), S (saturation) and V (value) values
+    of the image's pixels, as RGB components (for display).
 
     Parameters
     ----------
@@ -126,8 +129,8 @@ def get_average_hsv_as_rgb(image: Image) -> tuple[int, int, int]:
     Returns
     -------
     tuple[int, int, int]
-        A tuple with the R, G, B values corresponding to the
-        average HSV color of the image.
+        A tuple with the R, G and B components corresponding
+        to the average H, S and V of the image's pixels.
     """
     counts_and_colors = get_rgb_counts_and_colors(image)
     logger.trace("Computing average HSV components of the image")
@@ -156,8 +159,8 @@ def get_average_hsv_as_rgb(image: Image) -> tuple[int, int, int]:
 
 def get_average_hue_as_rgb(image: Image) -> tuple[int, int, int]:
     """
-    Get the average hue of the colors in the image,
-    as an RGB color to be displayed.
+    Get the average hue of the image's pixels, as RGB
+    components (for display).
 
     Parameters
     ----------
@@ -167,8 +170,9 @@ def get_average_hue_as_rgb(image: Image) -> tuple[int, int, int]:
     Returns
     -------
     tuple[int, int, int]
-        A tuple with the R, G, B values corresponding to the
-        average hue color of the image.
+        A tuple with the R, G and B components corresponding to
+        the average hue of the image's pixels, assuming full
+        saturation and brightness.
     """
     logger.trace("Computing average hue of the image")
 
@@ -191,8 +195,8 @@ def get_average_hue_as_rgb(image: Image) -> tuple[int, int, int]:
 
 def get_average_xyz_as_rgb(image: Image) -> tuple[int, int, int]:
     """
-    Get the average X, Y and Z values of the colors in the image,
-    as an RGB color to be displayed.
+    Get the average X, Y and Z values of the image's pixels,
+    as RGB components (for display).
 
     Parameters
     ----------
@@ -202,8 +206,8 @@ def get_average_xyz_as_rgb(image: Image) -> tuple[int, int, int]:
     Returns
     -------
     tuple[int, int, int]
-        A tuple with the R, G, B values corresponding to the
-        average HSV color of the image.
+        A tuple with the R, G and B components corresponding
+        to the average X, Y and Z values of the image's pixels.
     """
     counts_and_colors = get_rgb_counts_and_colors(image)
     logger.trace("Extracting average XYZ components of the image.")
@@ -232,7 +236,7 @@ def get_average_xyz_as_rgb(image: Image) -> tuple[int, int, int]:
 def get_average_lab_as_rgb(image: Image) -> tuple[int, int, int]:
     """
     Get the average L (lightness), A channel and B channel of the
-    colors in the image, as an RGB color to be displayed.
+    image's pixels, as RGB components (for display).
 
     Parameters
     ----------
@@ -242,8 +246,9 @@ def get_average_lab_as_rgb(image: Image) -> tuple[int, int, int]:
     Returns
     -------
     tuple[int, int, int]
-        A tuple with the R, G, B values corresponding to the
-        average HSV color of the image.
+        A tuple with the R, G and B components corresponding to
+        the average L (lightness), and A channel & B channel of
+        the image's pixels.
     """
     counts_and_colors = get_rgb_counts_and_colors(image)
     logger.trace("Extracting average LAB components of the image")
@@ -275,9 +280,10 @@ def get_average_lab_as_rgb(image: Image) -> tuple[int, int, int]:
 def get_kmeans_color_as_rgb(image: Image) -> tuple[int, int, int]:
     """
     Compute the dominant (average) color of the image using a simplified
-    k-means algorithm. Returns the RGB color of the dominant average.
+    k-means algorithm. Returns the dominant average color's RGB components
+    (for display).
 
-    The function extracts the weighted RGB colors from the image and applies
+    The function extracts the weighted RGB components from the image and applies
     k-means clustering  (with a default of 5 clusters) to group similar colors.
     It then returns the center of the cluster with the largest total pixel count
     as the dominant color.
@@ -290,8 +296,8 @@ def get_kmeans_color_as_rgb(image: Image) -> tuple[int, int, int]:
     Returns
     -------
     tuple[int, int, int]
-        A tuple with the R, G, B values corresponding to
-        the kmean-average color of the image.
+        A tuple with the R, G and B components corresponding
+        to the dominant average color color of the image.
     """
     counts_and_colors = get_rgb_counts_and_colors(image)
     logger.trace("Starting k-means algorithm, defaulting to 5 clusters")
@@ -370,8 +376,8 @@ def get_kmeans_color_as_rgb(image: Image) -> tuple[int, int, int]:
 
 def get_most_common_color_as_rgb(image: Image) -> tuple[int, int, int]:
     """
-    Determine the most common color in the image,
-    as an RGB color to be displayed.
+    Determine the most common color in the image, by pixel count,
+    returned as RGB components (for display).
 
     Parameters
     ----------
@@ -381,8 +387,8 @@ def get_most_common_color_as_rgb(image: Image) -> tuple[int, int, int]:
     Returns
     -------
     tuple[int, int, int]
-        A tuple containing the RGB values (R, G, B) of the most
-        common color.
+        A tuple with the R, G and B components of the most
+        common color in the image (by pixel count).
     """
     logger.trace("Determining the most common color in the image")
     counts_and_colors = get_rgb_counts_and_colors(image)
@@ -397,11 +403,10 @@ def get_most_common_color_as_rgb(image: Image) -> tuple[int, int, int]:
 
 def get_quantized_color_as_rgb(image: Image) -> tuple[int, int, int]:
     """
-    Reduce the image to a single dominant color using Pillow's
-    quantization method. Pillow's built-in color quantization
-    compresses the image to a  palette containing only one color.
-    We then retrieve the equivalent RGB value of that color, which
-    represents the most prominent color in the image.
+    Reduces the image to a single dominant color using Pillow's
+    quantization method, then retrieves the equivalent R, G, B
+    components of that color, which represents the most prominent
+    color in the image.
 
     Parameters
     ----------
@@ -411,7 +416,7 @@ def get_quantized_color_as_rgb(image: Image) -> tuple[int, int, int]:
     Returns
     -------
     tuple[int, int, int]
-        A tuple containing the RGB values (R, G, B) of the quantized
+        A tuple with the R, G and B components of the quantized
         dominant color.
     """
     logger.trace("Quantizing the image to a single dominant color")
@@ -435,7 +440,7 @@ def get_resized_1px_rgb(image: Image) -> tuple[int, int, int]:
     Returns
     -------
     tuple[int, int, int]
-        A tuple containing the RGB values (R, G, B) of the 1x1 pixel
+        A tuple with the R, G and B components of the 1x1 pixel
         equivalent of the image.
     """
     logger.trace("Resizing the image to 1x1 pixel to get the average color")
