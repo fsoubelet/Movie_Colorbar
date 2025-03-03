@@ -25,7 +25,6 @@ from new.image import (
     get_most_common_color_as_rgb,
     get_quantized_color_as_rgb,
     get_resized_1px_rgb,
-    get_rgb_counts_and_colors,
 )
 
 # ----- Mapping methods to called function ----- #
