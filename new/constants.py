@@ -7,16 +7,16 @@ Module with different constants used in the project.
 
 # ----- Methods ----- #
 
-RGB: str = "rgb"
+COMMON: str = "common"
 HSV: str = "hsv"
 HUE: str = "hue"
 KMEANS: str = "kmeans"
-COMMON: str = "common"
-XYZ: str = "xyz"
 LAB: str = "lab"
-RGB_SQUARED: str = "rgbsquared"
-RESIZE: str = "resize"
 QUANTIZED: str = "quantized"
+RESIZE: str = "resize"
+RGB: str = "rgb"
+RGB_SQUARED: str = "rgbsquared"
+XYZ: str = "xyz"
 
 
 # ----- Extensions ----- #
