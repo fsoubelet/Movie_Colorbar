@@ -31,187 +31,187 @@ def get_rgb_colors(source_image: Image) -> list:
     return image_rgb.getcolors(image_rgb.size[0] * image_rgb.size[1])
 
 
-# def get_average_rgb(source_image: Image) -> tuple:
-#     """
-#     Get the average of each R, G and B components of the colors in an image.
+def get_average_rgb(source_image: Image) -> tuple:
+    """
+    Get the average of each R, G and B components of the colors in an image.
 
-#     Args:
-#         source_image: a Pillow.Image instance.
+    Args:
+        source_image: a Pillow.Image instance.
 
-#     Returns:
-#          a tuple of R, G and B calculated averages.
-#     """
-#     colors = get_rgb_colors(source_image)
+    Returns:
+         a tuple of R, G and B calculated averages.
+    """
+    colors = get_rgb_colors(source_image)
 
-#     logger.trace("Computing average RGB components of the image")
-#     rgb_colors = tuple(sum(y[1][x] * y[0] for y in colors) / sum(z[0] for z in colors) for x in range(3))
-#     return tuple(int(e) for e in rgb_colors)
-
-
-# def get_average_rgb_squared(source_image: Image) -> tuple:
-#     """
-#     Get the squared average of each R, G and B of the colors in an image.
-
-#     Args:
-#         source_image: a Pillow.Image instance.
-
-#     Returns:
-#         a tuple of R, G and B calculated squared averages.
-#     """
-#     colors = get_rgb_colors(source_image)
-#     logger.trace("Computing average RGB components squared of the image")
-#     average_rgb_squared = [
-#         sum((y[1][x] ** 2) * y[0] for y in colors) / float(sum(z[0] for z in colors)) for x in range(3)
-#     ]
-
-#     return tuple(int(math.sqrt(x)) for x in average_rgb_squared)
+    logger.trace("Computing average RGB components of the image")
+    rgb_colors = tuple(sum(y[1][x] * y[0] for y in colors) / sum(z[0] for z in colors) for x in range(3))
+    return tuple(int(e) for e in rgb_colors)
 
 
-# def get_average_hsv(source_image: Image) -> tuple:
-#     """
-#     Get the average of each H, S and V of the colors in an image, as RGB.
+def get_average_rgb_squared(source_image: Image) -> tuple:
+    """
+    Get the squared average of each R, G and B of the colors in an image.
 
-#     Args:
-#         source_image: a Pillow.Image instance.
+    Args:
+        source_image: a Pillow.Image instance.
 
-#     Returns:
-#         a tuple with average H, S and V of the image, as converted to RGB.
-#     """
-#     logger.trace("Extracting average HSV components of the image")
-#     colors = get_rgb_colors(source_image)
-#     colors_hsv = [(w, colorsys.rgb_to_hsv(*[y / 255.0 for y in x])) for w, x in colors]
-#     average = [sum(y[1][x] * y[0] for y in colors_hsv) / sum(z[0] for z in colors_hsv) for x in range(3)]
-#     average_rgb = colorsys.hsv_to_rgb(*average)
-#     return tuple(int(x * 255) for x in average_rgb)
+    Returns:
+        a tuple of R, G and B calculated squared averages.
+    """
+    colors = get_rgb_colors(source_image)
+    logger.trace("Computing average RGB components squared of the image")
+    average_rgb_squared = [
+        sum((y[1][x] ** 2) * y[0] for y in colors) / float(sum(z[0] for z in colors)) for x in range(3)
+    ]
 
-
-# def get_average_hue(source_image: Image) -> tuple:
-#     """
-#     Get the average hue of the colors in an image, as RGB.
-
-#     Args:
-#         source_image: a Pillow.Image instance.
-
-#     Returns:
-#         a tuple with average hue for the image, as converted to RGB.
-#     """
-#     logger.trace("Extracting average hue components of the image")
-#     average_hsv = get_average_hsv(source_image)
-#     average_hsv = colorsys.rgb_to_hsv(*[x / 255.0 for x in average_hsv])
-
-#     # Highest value and saturation
-#     average_hsv = [average_hsv[0], 1.0, 1.0]
-#     average_rgb = colorsys.hsv_to_rgb(*average_hsv)
-#     return tuple(int(x * 255) for x in average_rgb)
+    return tuple(int(math.sqrt(x)) for x in average_rgb_squared)
 
 
-# def calculate_distance_between_two_3d_points(point_1, point_2) -> float:
-#     """
-#     Get the euclidean distance between two 3d points.
+def get_average_hsv(source_image: Image) -> tuple:
+    """
+    Get the average of each H, S and V of the colors in an image, as RGB.
 
-#     Args:
-#         point_1: Point 1 coordinates.
-#         point_2: Point 2 coordinates.
+    Args:
+        source_image: a Pillow.Image instance.
 
-#     Returns:
-#         Distance between those two points.
-#     """
-#     logger.trace(f"Computing Euclidean distance between {point_1} and {point_2}")
-#     return math.sqrt(sum((point_1[x] - point_2[x]) ** 2 for x in range(len(point_1))))
-
-
-# def get_kmeans_color(source_image: Image) -> tuple:
-#     """
-#     Get the average color of an image, using the kmeans method.
-
-#     Args:
-#         source_image: a Pillow.Image instance.
-
-#     Returns:
-#         a tuple of the color.
-#     """
-#     logger.trace("Starting kmeans algorithm")
-#     colors_rgb = get_rgb_colors(source_image)
-#     num_centers = 5
-#     centers = []
-
-#     logger.trace("Checking if number of colors is less than number of centers")
-#     if len(colors_rgb) < num_centers:
-#         centers = [x for _, x in colors_rgb]
-#         num_centers = len(colors_rgb)
-
-#     logger.trace("Choosing random starting centers")
-#     while len(centers) != num_centers:
-#         random_color = random.choice(colors_rgb)[1]
-#         if random_color not in centers:
-#             centers.append(random_color)
-
-#     logger.trace("Iterating on means")
-#     for _ in range(20):
-#         previous_centers = centers[:]
-#         color_groups = [[] for _ in range(num_centers)]
-#         for element in colors_rgb:
-#             logger.trace("Calculating the center with the smallest distance to the color")
-#             min_distance_index = sorted(
-#                 range(num_centers),
-#                 key=lambda x: calculate_distance_between_two_3d_points(centers[x], element[1]),
-#             )[0]
-#             logger.trace("Appending determined color to the group")
-#             color_groups[min_distance_index].append(element)
-
-#         logger.trace("Calculating new centers")
-#         centers = [
-#             tuple(sum(y[1][x] * y[0] for y in group) / sum(z[0] for z in group) for x in range(3))
-#             for group in color_groups
-#         ]
-
-#         logger.trace("Calculating center difference")
-#         difference = sum(
-#             calculate_distance_between_two_3d_points(centers[x], previous_centers[x])
-#             for x in range(num_centers)
-#         )
-
-#         logger.trace("Checking beakoff point")
-#         if difference < 4:
-#             logger.trace("Converged")
-#             break
-
-#     logger.trace("Getting group with largest number of colors")
-#     group = centers[sorted(range(num_centers), key=lambda x: sum(y[0] for y in color_groups[x]))[-1]]
-#     return tuple(int(e) for e in group)
+    Returns:
+        a tuple with average H, S and V of the image, as converted to RGB.
+    """
+    logger.trace("Extracting average HSV components of the image")
+    colors = get_rgb_colors(source_image)
+    colors_hsv = [(w, colorsys.rgb_to_hsv(*[y / 255.0 for y in x])) for w, x in colors]
+    average = [sum(y[1][x] * y[0] for y in colors_hsv) / sum(z[0] for z in colors_hsv) for x in range(3)]
+    average_rgb = colorsys.hsv_to_rgb(*average)
+    return tuple(int(x * 255) for x in average_rgb)
 
 
-# def get_most_common_colors_as_rgb(source_image: Image) -> tuple:
-#     """
-#     Get the most common color in this image, as RGB.
+def get_average_hue(source_image: Image) -> tuple:
+    """
+    Get the average hue of the colors in an image, as RGB.
 
-#     Args:
-#         source_image: a Pillow.Image instance.
+    Args:
+        source_image: a Pillow.Image instance.
 
-#     Returns:
-#         a tuple with the R, G and B values of the most common color in the image.
-#     """
-#     logger.trace("Getting most common color")
-#     colors = source_image.getcolors(source_image.size[0] * source_image.size[1])
-#     return sorted(colors)[-1][1]
+    Returns:
+        a tuple with average hue for the image, as converted to RGB.
+    """
+    logger.trace("Extracting average hue components of the image")
+    average_hsv = get_average_hsv(source_image)
+    average_hsv = colorsys.rgb_to_hsv(*[x / 255.0 for x in average_hsv])
+
+    # Highest value and saturation
+    average_hsv = [average_hsv[0], 1.0, 1.0]
+    average_rgb = colorsys.hsv_to_rgb(*average_hsv)
+    return tuple(int(x * 255) for x in average_rgb)
 
 
-# def get_average_xyz(source_image: Image) -> tuple:
-#     """
-#     Get the average of each X, Y and Z of the colors in an image.
+def calculate_distance_between_two_3d_points(point_1, point_2) -> float:
+    """
+    Get the euclidean distance between two 3d points.
 
-#     Args:
-#         source_image: a Pillow.Image instance.
+    Args:
+        point_1: Point 1 coordinates.
+        point_2: Point 2 coordinates.
 
-#     Returns:
-#         a tuple with the average X, Y and Z values of the image.
-#     """
-#     logger.trace("Extracting average XYZ components of the image.")
-#     colors = get_rgb_colors(source_image)
-#     colors_xyz = [(w, convert_rgb_to_xyz(x)) for (w, x) in colors]
+    Returns:
+        Distance between those two points.
+    """
+    logger.trace(f"Computing Euclidean distance between {point_1} and {point_2}")
+    return math.sqrt(sum((point_1[x] - point_2[x]) ** 2 for x in range(len(point_1))))
 
-#     average = tuple(sum(y[1][x] * y[0] for y in colors_xyz) / sum(z[0] for z in colors_xyz) for x in range(3))
-#     return convert_xyz_to_rgb(average)
+
+def get_kmeans_color(source_image: Image) -> tuple:
+    """
+    Get the average color of an image, using the kmeans method.
+
+    Args:
+        source_image: a Pillow.Image instance.
+
+    Returns:
+        a tuple of the color.
+    """
+    logger.trace("Starting kmeans algorithm")
+    colors_rgb = get_rgb_colors(source_image)
+    num_centers = 5
+    centers = []
+
+    logger.trace("Checking if number of colors is less than number of centers")
+    if len(colors_rgb) < num_centers:
+        centers = [x for _, x in colors_rgb]
+        num_centers = len(colors_rgb)
+
+    logger.trace("Choosing random starting centers")
+    while len(centers) != num_centers:
+        random_color = random.choice(colors_rgb)[1]
+        if random_color not in centers:
+            centers.append(random_color)
+
+    logger.trace("Iterating on means")
+    for _ in range(20):
+        previous_centers = centers[:]
+        color_groups = [[] for _ in range(num_centers)]
+        for element in colors_rgb:
+            logger.trace("Calculating the center with the smallest distance to the color")
+            min_distance_index = sorted(
+                range(num_centers),
+                key=lambda x: calculate_distance_between_two_3d_points(centers[x], element[1]),
+            )[0]
+            logger.trace("Appending determined color to the group")
+            color_groups[min_distance_index].append(element)
+
+        logger.trace("Calculating new centers")
+        centers = [
+            tuple(sum(y[1][x] * y[0] for y in group) / sum(z[0] for z in group) for x in range(3))
+            for group in color_groups
+        ]
+
+        logger.trace("Calculating center difference")
+        difference = sum(
+            calculate_distance_between_two_3d_points(centers[x], previous_centers[x])
+            for x in range(num_centers)
+        )
+
+        logger.trace("Checking beakoff point")
+        if difference < 4:
+            logger.trace("Converged")
+            break
+
+    logger.trace("Getting group with largest number of colors")
+    group = centers[sorted(range(num_centers), key=lambda x: sum(y[0] for y in color_groups[x]))[-1]]
+    return tuple(int(e) for e in group)
+
+
+def get_most_common_colors_as_rgb(source_image: Image) -> tuple:
+    """
+    Get the most common color in this image, as RGB.
+
+    Args:
+        source_image: a Pillow.Image instance.
+
+    Returns:
+        a tuple with the R, G and B values of the most common color in the image.
+    """
+    logger.trace("Getting most common color")
+    colors = source_image.getcolors(source_image.size[0] * source_image.size[1])
+    return sorted(colors)[-1][1]
+
+
+def get_average_xyz(source_image: Image) -> tuple:
+    """
+    Get the average of each X, Y and Z of the colors in an image.
+
+    Args:
+        source_image: a Pillow.Image instance.
+
+    Returns:
+        a tuple with the average X, Y and Z values of the image.
+    """
+    logger.trace("Extracting average XYZ components of the image.")
+    colors = get_rgb_colors(source_image)
+    colors_xyz = [(w, convert_rgb_to_xyz(x)) for (w, x) in colors]
+
+    average = tuple(sum(y[1][x] * y[0] for y in colors_xyz) / sum(z[0] for z in colors_xyz) for x in range(3))
+    return convert_xyz_to_rgb(average)
 
 
 def get_average_lab(source_image: Image) -> tuple:
@@ -231,32 +231,32 @@ def get_average_lab(source_image: Image) -> tuple:
     return convert_xyz_to_rgb(convert_lab_to_xyz(average))
 
 
-# def get_resized_1px_rgb(source_image: Image) -> list:
-#     """
-#     Get the image's 1px by 1px equivalent, and return the R, G and B channels of this pixel.
+def get_resized_1px_rgb(source_image: Image) -> list:
+    """
+    Get the image's 1px by 1px equivalent, and return the R, G and B channels of this pixel.
 
-#     Args:
-#         source_image: a Pillow.Image instance.
+    Args:
+        source_image: a Pillow.Image instance.
 
-#     Returns:
-#         a tuple with the R, G and B values of the image as 1 by 1 pixel.
-#     """
-#     logger.trace("Resizing image to 1 pixel")
-#     return source_image.resize((1, 1)).convert("RGB").getcolors(1)[0][1]
+    Returns:
+        a tuple with the R, G and B values of the image as 1 by 1 pixel.
+    """
+    logger.trace("Resizing image to 1 pixel")
+    return source_image.resize((1, 1)).convert("RGB").getcolors(1)[0][1]
 
 
-# def get_quantized_color(source_image: Image) -> list:
-#     """
-#     Use Pillow's color quantization to reduce the image to one color, then return that color.
+def get_quantized_color(source_image: Image) -> list:
+    """
+    Use Pillow's color quantization to reduce the image to one color, then return that color.
 
-#     Args:
-#         source_image:
+    Args:
+        source_image:
 
-#     Returns:
-#          a tuple with the R, G and B values of the image reduced to one collor by Pillow.
-#     """
-#     logger.trace("Quantizing image to 1 color")
-#     return source_image.quantize(1).convert("RGB").getcolors()[0][1]
+    Returns:
+         a tuple with the R, G and B values of the image reduced to one collor by Pillow.
+    """
+    logger.trace("Quantizing image to 1 color")
+    return source_image.quantize(1).convert("RGB").getcolors()[0][1]
 
 
 def convert_rgb_to_xyz(source_color_rgb: tuple) -> tuple:
