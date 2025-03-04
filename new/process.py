@@ -68,7 +68,7 @@ def process_video(
 
 
 def process_directory(
-    directory: Path, method: str, fps: int, outputdir: Path, cleanup: bool = False
+    directory: Path, method: str, fps: int, outputdir: Path, cleanup: bool = True
 ) -> None:
     """
     Handles the creation of colorbars from all videos in a
@@ -91,7 +91,7 @@ def process_directory(
         from.
     cleanup : bool, optional
         Flag to remove the extracted frames directories
-        after creating the colorbars (default `False`).
+        after creating the colorbars (default `True`).
     """
     logger.info(f"Processing all videos in '{directory.name}'")
     outputdir.mkdir(exist_ok=True)
