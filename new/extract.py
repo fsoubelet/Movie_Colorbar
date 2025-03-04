@@ -53,14 +53,14 @@ def extract_frames_from_video(
     if fps <= 0:
         raise ValueError("FPS must be a positive integer.")
 
-    logger.info("Extracting frames from video")
+    logger.debug("Extracting frames from video")
     output_dir.mkdir(exist_ok=True)
 
     # Define the output file pattern and ffmpeg command
     pattern = output_dir / f"%05d.{file_format}"
     command = ["ffmpeg", "-i", str(video), "-vf", f"fps={fps}", str(pattern)]
 
-    logger.info(f"Running ffmpeg with command: {' '.join(command)}")
+    logger.debug(f"Running ffmpeg with command: {' '.join(command)}")
     result = subprocess.run(command, capture_output=True, text=True)
 
     # Check for ffmpeg errors

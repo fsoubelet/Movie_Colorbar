@@ -88,7 +88,7 @@ def create_colorbar_from_images(images: list[Path], method: str) -> Image:
     PIL.Image
         A PIL.Image of the colorbar.
     """
-    logger.info(f"Extracting colors from images, according to method {method}")
+    logger.debug(f"Extracting colors from images, according to method {method}")
 
     def process_image(img_path: Path) -> tuple[int, int, int]:
         """Load a single image and compute its color according to method."""
