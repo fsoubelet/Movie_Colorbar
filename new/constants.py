@@ -5,18 +5,22 @@ Constants
 Module with constants used in the project.
 """
 
+from enum import Enum
+
 # ----- Methods ----- #
 
-COMMON: str = "common"
-HSV: str = "hsv"
-HUE: str = "hue"
-KMEANS: str = "kmeans"
-LAB: str = "lab"
-QUANTIZED: str = "quantized"
-RESIZE: str = "resize"
-RGB: str = "rgb"
-RGB_SQUARED: str = "rgbsquared"
-XYZ: str = "xyz"
+
+class Methods(str, Enum):
+    common: str = "common"
+    hsv: str = "hsv"
+    hue: str = "hue"
+    kmeans: str = "kmeans"
+    lab: str = "lab"
+    quantized: str = "quantized"
+    resize: str = "resize"
+    rgb: str = "rgb"
+    rgb_squared: str = "rgbsquared"
+    xyz: str = "xyz"
 
 
 # ----- Extensions ----- #
@@ -50,3 +54,15 @@ VALID_VIDEO_EXTENSIONS: tuple[str, ...] = (
     ".m4v",
     ".flv",
 )
+
+
+# ----- Logging ----- #
+
+
+class LogLevels(str, Enum):
+    trace: str = "trace"
+    debug: str = "debug"
+    info: str = "info"
+    warning: str = "warning"
+    error: str = "error"
+    critical: str = "critical"
