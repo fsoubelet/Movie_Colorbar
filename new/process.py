@@ -29,6 +29,12 @@ def process_video(
     compute colors from the frames, make a colorbar image and
     save it to disk.
 
+    Note
+    ----
+    The extracted frames are saved in a temporary directory
+    named `images_{video.stem}`, placed in the same directory
+    as the output colorbar image.
+
     Parameters
     ----------
     video : pathlib.Path
@@ -49,7 +55,7 @@ def process_video(
         return
 
     logger.info(f"Creating colorbar from '{video.name}'")
-    images_dir = video.parent / f"images_{video.stem}"
+    images_dir = outputpath.parent / f"images_{video.stem}"
     images: list[Path] = extract_frames_from_video(video, images_dir, fps)
 
     colorbar: Image = create_colorbar_from_images(images, method)
