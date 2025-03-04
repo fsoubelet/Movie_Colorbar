@@ -1,5 +1,7 @@
 from pathlib import Path
 
+from PIL import Image
+
 from new.constants import (
     COMMON,
     HSV,
@@ -41,11 +43,15 @@ METHOD_ACTION_MAP: dict = {
     XYZ: get_average_xyz_as_rgb,
 }
 
+# ----- Functions to Turn Create Colorbars ----- #
+
+
+
 
 # ----- Helpers ----- #
 
 
-def _check_is_handled_video(video: Path) -> None:
+def _is_handled_video(video: Path) -> bool:
     """
     Check that the file extension is a handled video format.
 
@@ -54,10 +60,9 @@ def _check_is_handled_video(video: Path) -> None:
     video : pathlib.Path
         Path to the video file.
 
-    Raises
-    ------
-    ValueError
-        If the video file is not a handled video format.
+    Returns
+    -------
+    bool
+        True if the video is a valid format, False otherwise.
     """
-    if video.suffix.lower() not in VALID_VIDEO_EXTENSIONS:
-        raise ValueError(f"Video file {video.name} is not a handled video format.")
+    return video.suffix.lower() in VALID_VIDEO_EXTENSIONS
