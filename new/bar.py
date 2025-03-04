@@ -107,23 +107,3 @@ def create_colorbar_from_images(images: list[Path], method: str) -> Image:
     bar_data = [rgb for rgb in bar_colors] * height  # repeat colors for all rows
     bar_img.putdata(bar_data)  # fill the image
     return bar_img
-
-
-# ----- Helpers ----- #
-
-
-def _is_handled_video(video: Path) -> bool:
-    """
-    Check that the file extension is a handled video format.
-
-    Parameters
-    ----------
-    video : pathlib.Path
-        Path to the video file.
-
-    Returns
-    -------
-    bool
-        True if the video is a valid format, False otherwise.
-    """
-    return video.suffix.lower() in VALID_VIDEO_EXTENSIONS
