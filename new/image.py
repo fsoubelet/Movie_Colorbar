@@ -261,7 +261,7 @@ def get_average_lab_as_rgb(image: Image) -> tuple[int, int, int]:
     for count, (r, g, b) in counts_and_colors:
         # Convert RGB → XYZ → LAB (bit convoluted)
         x, y, z = convert_rgb_to_xyz(r, g, b)
-        l, a, b = convert_xyz_to_lab(x, y, z)
+        l, a, b = convert_xyz_to_lab(x, y, z)  # noqa: E741
         total_pixels += count
         total_weighted_l += count * l
         total_weighted_a += count * a

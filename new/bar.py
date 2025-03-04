@@ -29,7 +29,6 @@ from new.constants import (
     RESIZE,
     RGB,
     RGB_SQUARED,
-    VALID_VIDEO_EXTENSIONS,
     XYZ,
 )
 from new.image import (
