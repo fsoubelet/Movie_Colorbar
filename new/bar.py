@@ -1,3 +1,11 @@
+"""
+Extract
+-------
+
+Module with functions to handle the creation of
+a colorbar from images extracted from a video.
+"""
+
 from pathlib import Path
 
 from loguru import logger

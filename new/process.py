@@ -1,3 +1,12 @@
+"""
+Extract
+-------
+
+Module with high level functions to handle processing
+a video into a colorbar, or all videos into a provided
+folder into colorbars.
+"""
+
 from pathlib import Path
 
 from new.constants import VALID_VIDEO_EXTENSIONS
