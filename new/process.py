@@ -21,7 +21,7 @@ from new.extract import extract_frames_from_video
 
 
 def process_video(
-    video: Path, method: str, fps: int, outputpath: Path, cleanup: bool = False
+    video: Path, method: str, fps: int, outputpath: Path, cleanup: bool = True
 ) -> None:
     """
     Handles the creation of a colorbar from a video, with the
@@ -48,7 +48,7 @@ def process_video(
         Path where to save the colorbar image.
     cleanup : bool, optional
         Flag to remove the extracted frames directory
-        after creating the colorbar (default `False`).
+        after creating the colorbar (default `True`).
     """
     if not _is_handled_video(video):
         logger.warning(f"File '{video.name}' is not a supported format, skipping")
