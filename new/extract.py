@@ -72,5 +72,5 @@ def extract_frames_from_video(
     logger.debug("Gathering extracted frames")
     images = sorted(output_dir.iterdir(), key=lambda x: int(x.stem))
 
-    logger.info(f"Successfully extracted {len(images)} images from {video.name}")
+    logger.debug(f"Successfully extracted {len(images)} images from {video.name}")
     return images
