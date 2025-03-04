@@ -44,6 +44,12 @@ dependencies = [
     "typer >= 0.10",
 ]
 
+[project.optional-dependencies]
+fast = [
+    "numba >= 0.60.0",
+    "joblib >= 1.4",
+]
+
 [project.urls]
 homepage = "https://github.com/fsoubelet/Movie_Colorbar"
 repository = "https://github.com/fsoubelet/Movie_Colorbar"
