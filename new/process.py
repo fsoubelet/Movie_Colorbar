@@ -67,6 +67,45 @@ def process_video(
         rmtree(images_dir)
 
 
+def process_directory(
+    directory: Path, method: str, fps: int, outputdir: Path, cleanup: bool = False
+) -> None:
+    """
+    Handles the creation of colorbars from all videos in a
+    directory, with the given method. Will extract frames from
+    each video via ffmpeg, compute colors from the frames, make
+    a colorbar image and save it to disk.
+
+    Parameters
+    ----------
+    directory : pathlib.Path
+        Path to the directory with video files.
+    method : str
+        Method to use to compute the colors from
+        extracted images.
+    fps : int
+        Number of frames to extract per second of video.
+    outputdir : pathlib.Path
+        Path where to save the colorbar images. Each one
+        will be named after the video file it is created
+        from.
+    cleanup : bool, optional
+        Flag to remove the extracted frames directories
+        after creating the colorbars (default `False`).
+    """
+    logger.info(f"Processing all videos in '{directory.name}'")
+    outputdir.mkdir(exist_ok=True)
+
+    video_files = [element for element in directory.iterdir() if _is_handled_video(element)]
+    logger.debug(f"Found {len(video_files)} videos to process")
+
+    # Note: we do not parallelize these calls, as ffmpeg
+    # already parallelizes the extraction of frames.
+    for video in video_files:
+        outputfile = outputdir / f"{video.stem}_{method}_bar.png"
+        process_video(video, method, fps, outputfile, cleanup)
+
+
 # ----- Helpers ----- #
 
 
