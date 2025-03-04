@@ -44,7 +44,9 @@ def get_average_rgb(source_image: Image) -> tuple:
     colors = get_rgb_colors(source_image)
 
     logger.trace("Computing average RGB components of the image")
-    rgb_colors = tuple(sum(y[1][x] * y[0] for y in colors) / sum(z[0] for z in colors) for x in range(3))
+    rgb_colors = tuple(
+        sum(y[1][x] * y[0] for y in colors) / sum(z[0] for z in colors) for x in range(3)
+    )
     return tuple(int(e) for e in rgb_colors)
 
 
@@ -61,7 +63,8 @@ def get_average_rgb_squared(source_image: Image) -> tuple:
     colors = get_rgb_colors(source_image)
     logger.trace("Computing average RGB components squared of the image")
     average_rgb_squared = [
-        sum((y[1][x] ** 2) * y[0] for y in colors) / float(sum(z[0] for z in colors)) for x in range(3)
+        sum((y[1][x] ** 2) * y[0] for y in colors) / float(sum(z[0] for z in colors))
+        for x in range(3)
     ]
 
     return tuple(int(math.sqrt(x)) for x in average_rgb_squared)
@@ -80,7 +83,9 @@ def get_average_hsv(source_image: Image) -> tuple:
     logger.trace("Extracting average HSV components of the image")
     colors = get_rgb_colors(source_image)
     colors_hsv = [(w, colorsys.rgb_to_hsv(*[y / 255.0 for y in x])) for w, x in colors]
-    average = [sum(y[1][x] * y[0] for y in colors_hsv) / sum(z[0] for z in colors_hsv) for x in range(3)]
+    average = [
+        sum(y[1][x] * y[0] for y in colors_hsv) / sum(z[0] for z in colors_hsv) for x in range(3)
+    ]
     average_rgb = colorsys.hsv_to_rgb(*average)
     return tuple(int(x * 255) for x in average_rgb)
 
@@ -177,7 +182,9 @@ def get_kmeans_color(source_image: Image) -> tuple:
             break
 
     logger.trace("Getting group with largest number of colors")
-    group = centers[sorted(range(num_centers), key=lambda x: sum(y[0] for y in color_groups[x]))[-1]]
+    group = centers[
+        sorted(range(num_centers), key=lambda x: sum(y[0] for y in color_groups[x]))[-1]
+    ]
     return tuple(int(e) for e in group)
 
 
@@ -210,7 +217,9 @@ def get_average_xyz(source_image: Image) -> tuple:
     colors = get_rgb_colors(source_image)
     colors_xyz = [(w, convert_rgb_to_xyz(x)) for (w, x) in colors]
 
-    average = tuple(sum(y[1][x] * y[0] for y in colors_xyz) / sum(z[0] for z in colors_xyz) for x in range(3))
+    average = tuple(
+        sum(y[1][x] * y[0] for y in colors_xyz) / sum(z[0] for z in colors_xyz) for x in range(3)
+    )
     return convert_xyz_to_rgb(average)
 
 
@@ -227,7 +236,9 @@ def get_average_lab(source_image: Image) -> tuple:
     logger.trace("Extracting average LAB components of the image")
     colors = get_rgb_colors(source_image)
     colors_lab = [(w, convert_xyz_to_lab(convert_rgb_to_xyz(x))) for (w, x) in colors]
-    average = tuple(sum(y[1][x] * y[0] for y in colors_lab) / sum(z[0] for z in colors_lab) for x in range(3))
+    average = tuple(
+        sum(y[1][x] * y[0] for y in colors_lab) / sum(z[0] for z in colors_lab) for x in range(3)
+    )
     return convert_xyz_to_rgb(convert_lab_to_xyz(average))
 
 

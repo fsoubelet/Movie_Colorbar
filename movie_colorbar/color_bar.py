@@ -92,7 +92,9 @@ def extract_frames(movie_input_path: str, fps: int) -> list:
         logger.debug("Creating 'images' directory to store the video's frames")
         images_directory.mkdir()
     else:
-        logger.error("A directory named 'images' already exists, please remove it to avoid accidents")
+        logger.error(
+            "A directory named 'images' already exists, please remove it to avoid accidents"
+        )
         raise IsADirectoryError("The 'images'  directory should not exist")
 
     logger.info(f"Running ffmpeg, extracting {fps} frames per second of video")
@@ -163,7 +165,9 @@ def _is_handled_video(file_path_string: str = None):
     return Path(file_path_string).suffix.lower() in VALID_VIDEO_EXTENSIONS
 
 
-def process_video(inputpath: Path, outputpath: Path, method: str, frames_per_second: int = 10) -> None:
+def process_video(
+    inputpath: Path, outputpath: Path, method: str, frames_per_second: int = 10
+) -> None:
     """
     Will populate a folder named `images` with every extracted image from the provided video,
     and create the color bar from those images. Deletes said folder afterwards.
