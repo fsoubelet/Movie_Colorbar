@@ -40,6 +40,8 @@ python -m pip install movie_colorbar[fast]
 uv tool install movie_colorbar[fast]
 ```
 
+</details>
+
 ## Usage
 
 Once installed, the package generates two executables (`colorbar` and `movie_colorbar`) to be called from the command line.
