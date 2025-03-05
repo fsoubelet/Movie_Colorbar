@@ -85,6 +85,14 @@ One can also provide a directory as input (and must then provide a directory as 
 Here are examples of colorbars produced from the [Star Wars 9 trailer](https://www.youtube.com/watch?v=P94M4jlrytQ).
 All these files can be found in the `bars` folder of this repository.
 
+<details> <summary><b>How to reproduce</b></summary>
+
+The following command was used to generate all the colorbars:
+
+```bash
+for method in common hsv hue kmeans lab quantized resize rgb rgbsquared xyz; do python -m movie_colorbar ~/Desktop/STARWARS_9_TRAILER.mkv bars/sw9_trailer/SW9_trailer_$method.png --method $method --fps 25; done
+```
+
 </details>
 
 **Kmeans:**
