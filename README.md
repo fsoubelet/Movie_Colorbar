@@ -2,18 +2,31 @@
   <b>movie_colorbar</b>
 </h1>
 
-A simple script to turn a video into a colorbar.
+A command line tool to create colorbars from videos.
 
 ## Install
 
-### Prerequisites
+The package requires `Python 3.10+` versions, and to have have [ffmpgeg][ffmpeg] installed in your path.
 
-This code is compatible with all currently supported Python versions, and requires that you have [ffmpgeg][ffmpeg] installed in your path.
-You can install it in your virtual enrivonment with:
+<details> <summary>In an virtual environment</summary>
+
+One can install from `PyPI` in a virtual enrivonment with:
 
 ```bash
 python -m pip install movie_colorbar
 ```
+
+</details>
+
+<details> <summary>As a uv tool</summary>
+
+The package also supports being installed as a tool with [uv][uv]:
+
+```bash
+uv tool install movie_colorbar
+```
+
+</details>
 
 ## Usage
 
@@ -98,3 +111,4 @@ __Lab:__
 </div>
 
 [ffmpeg]: https://ffmpeg.org/
+[uv]: https://docs.astral.sh/uv/guides/tools/
