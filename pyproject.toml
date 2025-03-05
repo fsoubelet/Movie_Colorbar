@@ -18,7 +18,7 @@ name = "movie_colorbar"
 readme = "README.md"
 description = "Turn a video into a colorbar"
 authors = [
-    {name = "Felix Soubelet", email = "felix.soubelet@cern.ch"},
+    {name = "Felix Soubelet", email = "felix.soubelet@github.com"},
 ]
 license = "MIT"
 dynamic = ["version"]
