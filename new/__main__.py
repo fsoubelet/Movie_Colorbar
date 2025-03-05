@@ -43,7 +43,11 @@ def main(
         min=0,
         help="Number of frames to extract per second of video footage.",
     ),
-    # cleanup option
+    cleanup: bool = Option(
+        default=True,
+        show_choices=True,
+        help="Whether to remove the extracted frames after processing.",
+    ),
     log_level: LogLevels = Option(
         default=LogLevels.info,
         show_choices=True,
@@ -52,7 +56,19 @@ def main(
 ) -> None:
     """Command line tool to create colorbars from videos.
 
-    TODO: info and methodology
+    From the input video individual frames are extracted with ffmpeg
+    and written to disk in a directory placed next to the final output
+    and named after the video. Each frame is reduced to a single color
+    according to the chosen method. Finally a colorbar is created from
+    these determined colors, and written to disk as an image file at
+    the provided output location. By default the extracted frames are
+    removed after processing, but they can be kept if desired (see the
+    'cleanup' option).
+
+    Should the input be a directory, then every video file contained
+    within will be processed, provided it is supported by ffmpeg. In
+    this case the output should also be a directory, in which one
+    colorbar will be created for each video file.
     """
     set_logger_level(log_level)
 
