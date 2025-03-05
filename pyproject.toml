@@ -50,6 +50,9 @@ fast = [
     "joblib >= 1.4",
 ]
 
+[project.scripts]
+colorbar = "new.__main__:app"
+
 [project.urls]
 homepage = "https://github.com/fsoubelet/Movie_Colorbar"
 repository = "https://github.com/fsoubelet/Movie_Colorbar"
