@@ -14,7 +14,7 @@ One can install from `PyPI` in a virtual enrivonment with:
 python -m pip install movie_colorbar
 ```
 
-<details> <summary>As a uv tool</summary>
+<details> <summary><b>As a uv tool</b></summary>
 
 The package also supports being installed as a tool with [uv][uv]:
 
@@ -29,51 +29,46 @@ uv tool install movie_colorbar
 Once installed, the package generates two executables (`colorbar` and `movie_colorbar`) to be called from the command line.
 
 It can also be called directly through `python` or via the `uv tool` interface.
+
+<details> <summary><b>Full command line interface</b></summary>
+
 Detailed usage goes as follows:
 
 ```bash
- Usage: python -m movie_colorbar [OPTIONS] INPUT OUTPUT                                        
-                                                                                               
- Command line tool to create colorbars from videos.                                            
- From the input video individual frames are extracted with ffmpeg and written to disk in a     
- directory placed next to the final output and named after the video. Each frame is reduced to 
- a single color according to the chosen method. Finally a colorbar is created from these       
- determined colors, and written to disk as an image file at the provided output location. By   
- default the extracted frames are removed after processing, but they can be kept if desired    
- (see the 'cleanup' option).                                                                   
- Should the input be a directory, then every video file contained within will be processed,    
- provided it is supported by ffmpeg. In this case the output should also be a directory, in    
- which one colorbar will be created for each video file.                                       
-                                                                                               
-╭─ Arguments ─────────────────────────────────────────────────────────────────────────────────╮
-│ *    input       PATH  Path to the input video file or directory. [required]                │
-│ *    output      PATH  Path to the output colorbar image or directory. [required]           │
-╰─────────────────────────────────────────────────────────────────────────────────────────────╯
-╭─ Options ───────────────────────────────────────────────────────────────────────────────────╮
-│ --method                                [common|hsv|hue|kmeans|l  Method used to calculate  │
-│                                         ab|quantized|resize|rgb|  the color for each frame. │
-│                                         rgbsquared|xyz]           [default: rgb]            │
-│ --fps                                   INTEGER RANGE [x>=0]      Number of frames to       │
-│                                                                   extract per second of     │
-│                                                                   video footage.            │
-│                                                                   [default: 10]             │
-│ --cleanup               --no-cleanup                              Whether to remove the     │
-│                                                                   extracted frames after    │
-│                                                                   processing.               │
-│                                                                   [default: cleanup]        │
-│ --log-level                             [trace|debug|info|warnin  The base console logging  │
-│                                         g|error|critical]         level.                    │
-│                                                                   [default: info]           │
-│ --install-completion                                              Install completion for    │
-│                                                                   the current shell.        │
-│ --show-completion                                                 Show completion for the   │
-│                                                                   current shell, to copy it │
-│                                                                   or customize the          │
-│                                                                   installation.             │
-│ --help                                                            Show this message and     │
-│                                                                   exit.                     │
-╰─────────────────────────────────────────────────────────────────────────────────────────────╯
+ Usage: python -m movie_colorbar [OPTIONS] INPUT OUTPUT                                                                              
+                                                                                                                                     
+ Command line tool to create colorbars from videos.                                                                                  
+ From the input video individual frames are extracted with ffmpeg and written to disk in a directory placed next to the final output 
+ and named after the video. Each frame is reduced to a single color according to the chosen method. Finally a colorbar is created    
+ from these determined colors, and written to disk as an image file at the provided output location. By default the extracted frames 
+ are removed after processing, but they can be kept if desired (see the 'cleanup' option).                                           
+ Should the input be a directory, then every video file contained within will be processed, provided it is supported by ffmpeg. In   
+ this case the output should also be a directory, in which one colorbar will be created for each video file.                         
+                                                                                                                                     
+╭─ Arguments ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ *    input       PATH  Path to the input video file or directory. [required]                                                      │
+│ *    output      PATH  Path to the output colorbar image or directory. [required]                                                 │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Options ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --method                                [common|hsv|hue|kmeans|lab|quantized|resize  Method used to calculate the color for each  │
+│                                         |rgb|rgbsquared|xyz]                         frame.                                       │
+│                                                                                      [default: rgb]                               │
+│ --fps                                   INTEGER RANGE [x>=0]                         Number of frames to extract per second of    │
+│                                                                                      video footage.                               │
+│                                                                                      [default: 10]                                │
+│ --cleanup               --no-cleanup                                                 Whether to remove the extracted frames after │
+│                                                                                      processing.                                  │
+│                                                                                      [default: cleanup]                           │
+│ --log-level                             [trace|debug|info|warning|error|critical]    The base console logging level.              │
+│                                                                                      [default: info]                              │
+│ --install-completion                                                                 Install completion for the current shell.    │
+│ --show-completion                                                                    Show completion for the current shell, to    │
+│                                                                                      copy it or customize the installation.       │
+│ --help                                                                               Show this message and exit.                  │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ```
+
+</details>
 
 An example command is then:
 
