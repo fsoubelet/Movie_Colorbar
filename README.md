@@ -70,19 +70,18 @@ Detailed usage goes as follows:
 
 </details>
 
-An example command is then:
+Here is an example command:
 
 ```bash
-python -m movie_colorbar ~/Desktop/STARWARS_9_TRAILER.webm --title sw9_trailer --method rgbsquared --fps 25
+python -m movie_colorbar ~/Desktop/STARWARS_9_TRAILER.mkv ~/Desktop/colorbar.png --method rgbsquared --fps 25
 ```
 
-The script will call `ffmpeg` to extract 25 (in this case) images per second from the video file.
-It will then apply the chosen method - here `rgbsquared` - to determine the average color of each frame.
+This will extract 25 (in this case) images per second of video via `ffmpeg`, then determine a color for each frame with the chosen method, here `rgbsquared`.
 Finally, it creates the colorbar with all averages and saves it in a new folder titled `bars/title`, with `title` being the argument you provided.
 The final output's name is a concatenation of the provided file, and of the method used.
 Giving a directory as input will process all video files found in this directory.
 
-It is recommended to decrease the fps when processing long videos such as entire movies.
+Note: It is recommended to decrease the fps when processing long videos such as entire movies.
 
 ## TODO
 
