@@ -8,15 +8,11 @@ A command line tool to create colorbars from videos.
 
 The package requires `Python 3.10+` versions, and to have have [ffmpgeg][ffmpeg] installed in your path.
 
-<details> <summary>In an virtual environment</summary>
-
 One can install from `PyPI` in a virtual enrivonment with:
 
 ```bash
 python -m pip install movie_colorbar
 ```
-
-</details>
 
 <details> <summary>As a uv tool</summary>
 
@@ -30,8 +26,9 @@ uv tool install movie_colorbar
 
 ## Usage
 
-With this package is installed in the activated enrivonment, it can be called through `python -m movie_colorbar` or through a newly created `colorbar` command.
+Once installed, the package generates two executables (`colorbar` and `movie_colorbar`) to be called from the command line.
 
+It can also be called directly through `python` or via the `uv tool` interface.
 Detailed usage goes as follows:
 
 ```bash
