@@ -80,7 +80,7 @@ One can also provide a directory as input (and must then provide a directory as 
 
 **Note:** It is recommended to decrease the fps when processing long videos such as entire movies.
 
-## Output Examples
+## Examples
 
 Here are examples of colorbars produced from the [Star Wars 9 trailer](https://www.youtube.com/watch?v=P94M4jlrytQ).
 All these files can be found in the `bars` folder of this repository.
