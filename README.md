@@ -24,6 +24,22 @@ uv tool install movie_colorbar
 
 </details>
 
+### Speedups
+
+If the `joblib` and/or `numba` packages are available in the environment, they will be used to speed up the processing of video frames and color calculations.
+This can lead to drastic speedups when extracting a high number of images (by processing long videos or simply setting a high `fps` option value).
+One can install these along with the package via the `fast` extra dependency group:
+
+```bash
+python -m pip install movie_colorbar[fast]
+```
+
+<details> <summary><b>As a uv tool</b></summary>
+
+```bash
+uv tool install movie_colorbar[fast]
+```
+
 ## Usage
 
 Once installed, the package generates two executables (`colorbar` and `movie_colorbar`) to be called from the command line.
