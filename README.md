@@ -88,6 +88,22 @@ Detailed usage goes as follows:
 
 </details>
 
+<details> <summary><b>As a uv tool</b></summary>
+
+One can call the tool via the package name with `uvx`:
+
+```bash
+uvx movie_colorbar [OPTIONS] INPUT OUTPUT
+```
+
+It is also possible to use the `colorbar` command alias by specifying the tool to source from:
+
+```bash
+uvx --from movie_colorbar colorbar [OPTIONS] INPUT OUTPUT
+```
+
+</details>
+
 Here is an example command:
 
 ```bash
