@@ -12,7 +12,7 @@ from colorsys import rgb_to_hsv as _rgb_to_hsv
 from colorsys import rgb_to_yiq as _rgb_to_yiq
 from colorsys import yiq_to_rgb as _yiq_to_rgb
 
-from new.jit import maybe_jit
+from movie_colorbar.jit import maybe_jit
 
 # We re-export the colorsys functions with a
 # potential JIT-compilation by numba

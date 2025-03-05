@@ -9,8 +9,8 @@ from pathlib import Path
 from loguru import logger
 from typer import Argument, Exit, Option, Typer
 
-from new.constants import LogLevels, Methods
-from new.process import process_directory, process_video
+from movie_colorbar.constants import LogLevels, Methods
+from movie_colorbar.process import process_directory, process_video
 
 app = Typer(no_args_is_help=True)
 

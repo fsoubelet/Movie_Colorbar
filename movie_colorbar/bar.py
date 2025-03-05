@@ -19,8 +19,8 @@ try:
 except ImportError:
     JOBLIB_AVAILABLE: bool = False
 
-from new.constants import Methods
-from new.image import (
+from movie_colorbar.constants import Methods
+from movie_colorbar.image import (
     get_average_hsv_as_rgb,
     get_average_hue_as_rgb,
     get_average_lab_as_rgb,

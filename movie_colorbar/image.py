@@ -11,7 +11,7 @@ import random
 from loguru import logger
 from PIL import Image
 
-from new.colors import (
+from movie_colorbar.colors import (
     convert_lab_to_xyz,
     convert_rgb_to_xyz,
     convert_xyz_to_lab,
@@ -19,7 +19,7 @@ from new.colors import (
     cs_hsv_to_rgb,
     cs_rgb_to_hsv,
 )
-from new.jit import maybe_jit
+from movie_colorbar.jit import maybe_jit
 
 
 def get_rgb_counts_and_colors(image: Image) -> list[tuple[int, tuple[int, int, int]]]:

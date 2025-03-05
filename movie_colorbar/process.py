@@ -13,9 +13,9 @@ from shutil import rmtree
 from loguru import logger
 from PIL import Image
 
-from new.bar import create_colorbar_from_images
-from new.constants import VALID_VIDEO_EXTENSIONS
-from new.extract import extract_frames_from_video
+from movie_colorbar.bar import create_colorbar_from_images
+from movie_colorbar.constants import VALID_VIDEO_EXTENSIONS
+from movie_colorbar.extract import extract_frames_from_video
 
 # ----- Video Processing ----- #
 

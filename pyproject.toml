@@ -51,7 +51,7 @@ fast = [
 ]
 
 [project.scripts]
-colorbar = "new.__main__:app"
+colorbar = "movie_colorbar.__main__:app"
 
 [project.urls]
 homepage = "https://github.com/fsoubelet/Movie_Colorbar"
