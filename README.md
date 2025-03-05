@@ -53,16 +53,16 @@ It can also be called directly through `python` or via the `uv tool` interface.
 Detailed usage goes as follows:
 
 ```bash
- Usage: python -m movie_colorbar [OPTIONS] INPUT OUTPUT                                                                              
-                                                                                                                                     
- Command line tool to create colorbars from videos.                                                                                  
- From the input video individual frames are extracted with ffmpeg and written to disk in a directory placed next to the final output 
- and named after the video. Each frame is reduced to a single color according to the chosen method. Finally a colorbar is created    
- from these determined colors, and written to disk as an image file at the provided output location. By default the extracted frames 
- are removed after processing, but they can be kept if desired (see the 'cleanup' option).                                           
- Should the input be a directory, then every video file contained within will be processed, provided it is supported by ffmpeg. In   
- this case the output should also be a directory, in which one colorbar will be created for each video file.                         
-                                                                                                                                     
+ Usage: python -m movie_colorbar [OPTIONS] INPUT OUTPUT
+
+ Command line tool to create colorbars from videos.
+ From the input video individual frames are extracted with ffmpeg and written to disk in a directory placed next to the final output
+ and named after the video. Each frame is reduced to a single color according to the chosen method. Finally a colorbar is created
+ from these determined colors, and written to disk as an image file at the provided output location. By default the extracted frames
+ are removed after processing, but they can be kept if desired (see the 'cleanup' option).
+ Should the input be a directory, then every video file contained within will be processed, provided it is supported by ffmpeg. In
+ this case the output should also be a directory, in which one colorbar will be created for each video file.
+
 ╭─ Arguments ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │ *    input       PATH  Path to the input video file or directory. [required]                                                      │
 │ *    output      PATH  Path to the output colorbar image or directory. [required]                                                 │
