@@ -80,13 +80,6 @@ One can also provide a directory as input (and must then provide a directory as 
 
 **Note:** It is recommended to decrease the fps when processing long videos such as entire movies.
 
-## TODO
-
-- [x] Delete the `images` folder after completion.
-- [x] Turn into a package.
-- [x] Improving the command line experience.
-- [ ] Offer an option to do all at the same time.
-
 ## Output example
 
 Here is an example of what the script outputs, when ran on the last [Star Wars 9 trailer](https://www.youtube.com/watch?v=P94M4jlrytQ).
