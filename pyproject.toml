@@ -52,6 +52,7 @@ fast = [
 
 [project.scripts]
 colorbar = "movie_colorbar.__main__:app"
+movie_colorbar = "movie_colorbar.__main__:app"  # for uv tool install
 
 [project.urls]
 homepage = "https://github.com/fsoubelet/Movie_Colorbar"
