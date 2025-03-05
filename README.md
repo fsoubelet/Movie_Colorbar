@@ -85,16 +85,16 @@ One can also provide a directory as input (and must then provide a directory as 
 Here is an example of what the script outputs, when ran on the last [Star Wars 9 trailer](https://www.youtube.com/watch?v=P94M4jlrytQ).
 All methods output can be found in the `bars` folder of this repository.
 
-__Kmeans:__
+**Kmeans:**
 ![Example_sw9_trailer_kmeans](bars/sw9_trailer/SW9_trailer_kmeans.png)
 
-__Rgb:__
+**Rgb:**
 ![Example_sw9_trailer_rgb](bars/sw9_trailer/SW9_trailer_rgb.png)
 
-__Rgbsquared:__
+**Rgbsquared:**
 ![Example_sw9_trailer_rgbsquared](bars/sw9_trailer/SW9_trailer_rgbsquared.png)
 
-__Lab:__
+**Lab:**
 ![Example_sw9_trailer_lab](bars/sw9_trailer/SW9_trailer_lab.png)
 
 ---
