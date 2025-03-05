@@ -72,6 +72,28 @@ def main(
     """
     set_logger_level(log_level)
 
+    # Handle a single file provided as input
+    if input.is_file():
+        # Make sure the output is a file as well
+        if output.exists() and not output.is_file():
+            logger.error("The output path should match the type of the input path")
+            raise Exit(code=1)
+        # Process the video (skipped if unsupported format)
+        process_video(video=input, method=method, fps=fps, outputpath=output, cleanup=cleanup)
+
+    # Handle a directory provided as input
+    elif input.is_dir():
+        # Make sure the output is a directory as well
+        if output.exists() and not output.is_dir():
+            logger.error("The output path should match the type of the input path")
+            raise Exit(code=1)
+        # Process all videos in the directory
+        process_directory(
+            directory=input, method=method, fps=fps, outputdir=output, cleanup=cleanup
+        )
+
+    logger.success("All done!")
+
 
 # ----- Logger helper ----- #
 
