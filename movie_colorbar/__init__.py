@@ -1,7 +1,12 @@
-__title__ = "movie_colorbar"
-__description__ = "A simple script to turn a video into a colorbar."
-__url__ = "https://github.com/fsoubelet/Movie_Colorbar"
-__version__ = "0.2.2"
-__author__ = "Felix Soubelet"
-__author_email__ = "felix.soubelet@liverpool.ac.uk"
-__license__ = "MIT"
+__version__ = "0.3.0"
+
+from .bar import create_colorbar_from_images
+from .extract import extract_frames_from_video
+from .process import process_directory, process_video
+
+__all__ = [
+    "create_colorbar_from_images",
+    "extract_frames_from_video",
+    "process_video",
+    "process_directory",
+]

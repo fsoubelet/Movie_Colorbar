@@ -18,11 +18,11 @@ name = "movie_colorbar"
 readme = "README.md"
 description = "Turn a video into a colorbar"
 authors = [
-    {name = "Felix Soubelet", email = "felix.soubelet@cern.ch"},
+    {name = "Felix Soubelet", email = "felix.soubelet@github.com"},
 ]
 license = "MIT"
 dynamic = ["version"]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -30,10 +30,10 @@ classifiers = [
     "Natural Language :: English",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: Implementation :: CPython",
     "Topic :: Utilities",
 ]
@@ -44,10 +44,53 @@ dependencies = [
     "typer >= 0.10",
 ]
 
+[project.optional-dependencies]
+fast = [
+    "numba >= 0.60.0",
+    "joblib >= 1.4",
+]
+
+[project.scripts]
+colorbar = "movie_colorbar.__main__:app"
+movie_colorbar = "movie_colorbar.__main__:app"  # for uv tool install
+
 [project.urls]
 homepage = "https://github.com/fsoubelet/Movie_Colorbar"
 repository = "https://github.com/fsoubelet/Movie_Colorbar"
 
+# ----- Dev Tools Configuration ----- #
+
+[tool.isort]
+atomic = true
+ensure_newline_before_comments = true
+filter_files = true
+force_grid_wrap = 0
+force_single_line = false
+include_trailing_comma = true
+known_first_party = "movie_colorbar"
+line_length = 100
+lines_between_types = 1
+multi_line_output = 3
+use_parentheses = true
+profile = "black"
+
+[tool.black]
+line-length = 100
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
 [tool.ruff]
-# Generate Python 3.9-compatible code.
-target-version = "py39"
+target-version = "py310"  # Assume Python 3.10+
